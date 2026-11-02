@@ -3,6 +3,7 @@ import { useActionState } from "react";
 import Link from "next/link";
 import { loginMember, registerMember, updateProfile, type AuthState } from "@/app/(site)/member-actions";
 import type { Dict } from "@/lib/i18n";
+import { CountrySelect } from "./CountrySelect";
 
 const field = "w-full rounded-xl border border-green-100 bg-white px-4 py-3 text-base outline-none transition focus:ring-2 focus:ring-gold-500";
 const lbl = "grid gap-1.5 text-sm font-semibold text-green-900";
@@ -20,12 +21,10 @@ export function RegisterForm({ locale, d, countries }: { locale: "ar" | "en"; d:
         <label className={lbl}>{d.lastName} *<input name="lastName" required autoComplete="family-name" defaultValue={s.values?.lastName} className={field} /></label>
         <label className={lbl}>{d.email} *<input name="email" type="email" required autoComplete="email" dir="ltr" defaultValue={s.values?.email} className={field} /></label>
         <label className={lbl}>{d.dob}<input name="dob" type="date" autoComplete="bday" defaultValue={s.values?.dob} className={field} /></label>
-        <label className={lbl + " sm:col-span-2"}>{d.country} *
-          <select key={s.values?.country ?? "none"} name="country" required defaultValue={s.values?.country ?? ""} className={field}>
-            <option value="" disabled>{d.selectCountry}</option>
-            {countries.map((c) => <option key={c.code} value={c.code}>{c.name}</option>)}
-          </select>
-        </label>
+        <div className={lbl + " sm:col-span-2"}>
+          <span>{d.country} *</span>
+          <CountrySelect key={s.values?.country ?? "none"} name="country" countries={countries} defaultValue={s.values?.country ?? ""} placeholder={d.selectCountry} searchPlaceholder={d.searchCountry} noMatch={d.noMatch} required />
+        </div>
         <label className={lbl}>{d.password} *<input name="password" type="password" required minLength={8} autoComplete="new-password" dir="ltr" className={field} /></label>
         <label className={lbl}>{d.password2} *<input name="password2" type="password" required minLength={8} autoComplete="new-password" dir="ltr" className={field} /></label>
       </div>
@@ -61,9 +60,10 @@ export function ProfileForm({ d, countries, first, last, country }: { d: Dict["a
       <div className="grid gap-4 sm:grid-cols-2">
         <label className={lbl}>{d.firstName}<input name="firstName" required defaultValue={first} className={field} /></label>
         <label className={lbl}>{d.lastName}<input name="lastName" required defaultValue={last} className={field} /></label>
-        <label className={lbl}>{d.country}
-          <select name="country" required defaultValue={country} className={field}>{countries.map((c) => <option key={c.code} value={c.code}>{c.name}</option>)}</select>
-        </label>
+        <div className={lbl}>
+          <span>{d.country}</span>
+          <CountrySelect name="country" countries={countries} defaultValue={country} placeholder={d.selectCountry} searchPlaceholder={d.searchCountry} noMatch={d.noMatch} required />
+        </div>
         <label className={lbl}>{d.photo}<input name="photo" type="file" accept="image/jpeg,image/png,image/webp" className={field} /></label>
       </div>
       <button disabled={pending} className="btn btn-green justify-self-start disabled:opacity-60">{d.save}</button>

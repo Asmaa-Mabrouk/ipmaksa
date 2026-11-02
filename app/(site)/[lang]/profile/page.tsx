@@ -47,8 +47,8 @@ export default async function Profile({ params }: { params: Promise<{ lang: stri
           <ul className="mt-5 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {earned.map(({ b, def }) => (
               <li key={b.id} className="flex items-start gap-4 rounded-2xl border border-green-100 bg-white p-5 shadow-sm">
-                <span className="relative flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-full bg-gold-100 text-gold-600 ring-2 ring-gold-500">
-                  {def.image ? <Image src={def.image} alt="" fill sizes="80px" className="object-contain p-1" /> : <Icon name={def.icon} className="h-10 w-10" />}
+                <span className={"relative flex shrink-0 items-center justify-center " + (def.image ? "h-24 w-24" : "h-20 w-20 overflow-hidden rounded-full bg-gold-100 text-gold-600 ring-2 ring-gold-500")}>
+                  {def.image ? <Image src={def.image} alt="" fill sizes="96px" className="object-contain drop-shadow-md" /> : <Icon name={def.icon} className="h-10 w-10" />}
                 </span>
                 <div>
                   <h3 className="text-lg font-extrabold leading-snug text-green-900">{t(def.title, lang)}</h3>

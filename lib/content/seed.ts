@@ -763,7 +763,7 @@ export const SEED: Record<string, Record<string, unknown>> = {
     membership: {
       title: l("عضو IPMA السعودية", "IPMA KSA Member"),
       description: l("عضوية معتمدة في IPMA السعودية.", "Verified membership of IPMA KSA."),
-      image: "",
+      image: "/images/badge-member.webp",
       icon: "card",
       order: 1,
     },

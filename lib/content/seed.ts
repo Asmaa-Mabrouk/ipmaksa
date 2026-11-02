@@ -77,7 +77,7 @@ const home = {
     {
       title: l("IPMA Delta", "IPMA Delta"),
       text: l(
-        "التقييم المؤسسي، نُفّذ لصالح أرامكو السعودية (2025) وWTCO (2026).",
+        "التقييم المؤسسي، نُفّذ لصالح أرامكو السعودية (2025) و WTCO (2026).",
         "Organizational assessment, delivered for Saudi Aramco (2025) and WTCO (2026).",
       ),
       status: "live",
@@ -124,7 +124,7 @@ const home = {
     {
       title: l("التميز في المشاريع", "Project Excellence"),
       text: l(
-        "بعد أن يعمل 4-L-C وDelta على نطاق واسع.",
+        "بعد أن يعمل IPMA 4-L-C و IPMA Delta على نطاق واسع.",
         "Once 4-L-C and Delta are running at scale.",
       ),
       status: "later",
@@ -147,7 +147,7 @@ const home = {
 const settings = {
   email: "care@ipmaksa.world",
   phone: "+966 50 365 6644",
-  whatsapp: "",
+  whatsapp: "966503656644",
   address: l("الظهران، المملكة العربية السعودية", "Dhahran, Saudi Arabia"),
   hours: l("", ""),
   linkedin: "https://www.linkedin.com/company/ipma-ksa",

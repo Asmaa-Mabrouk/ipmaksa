@@ -51,6 +51,10 @@ const ui = {
     live: { live: "Live", "setting-up": "Setting up", introduced: "Introduced", later: "Later" },
     exams: {
       register: "Register or ask",
+      registerNow: "Register now",
+      askWhatsapp: "Ask on WhatsApp",
+      askEmail: "Email us",
+      waMessage: "Hello, I would like to register or ask about: ",
       none: "No upcoming dates have been published yet. Please check back soon.",
       past: "Completed",
       location: "Location",
@@ -220,6 +224,10 @@ const ui = {
     live: { live: "متاح", "setting-up": "قيد الإعداد", introduced: "تم تقديمه", later: "لاحقاً" },
     exams: {
       register: "سجّل أو استفسر",
+      registerNow: "سجّل الآن",
+      askWhatsapp: "اسأل عبر واتساب",
+      askEmail: "راسلنا بالبريد",
+      waMessage: "السلام عليكم، أود التسجيل أو الاستفسار عن: ",
       none: "لم تُنشر مواعيد قادمة بعد. يرجى العودة قريباً.",
       past: "مكتملة",
       location: "المكان",

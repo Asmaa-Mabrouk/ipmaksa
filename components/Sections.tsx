@@ -39,8 +39,9 @@ const statusStyle: Record<string, string> = {
   closed: "bg-ink/10 text-ink/60",
 };
 
-export function ExamCards({ exams, locale, email, limit }: { exams: Doc<ExamDoc>[]; locale: Locale; email: string; limit?: number }) {
+export function ExamCards({ exams, locale, email, whatsapp = "", limit }: { exams: Doc<ExamDoc>[]; locale: Locale; email: string; whatsapp?: string; limit?: number }) {
   const d = getDict(locale);
+  const wa = whatsapp.replace(/\D/g, "");
   const list = (limit ? exams.filter((e) => e.data.status !== "closed").slice(0, limit) : exams);
   if (!list.length) return <p className="rounded-2xl bg-white p-8 text-center text-ink/70 shadow-sm">{d.exams.none}</p>;
   return (
@@ -75,9 +76,21 @@ export function ExamCards({ exams, locale, email, limit }: { exams: Doc<ExamDoc>
               {t(e.location, locale) && <p className="mt-1 inline-flex items-center gap-1.5 text-sm text-ink/70"><Icon name="pin" className="h-4 w-4 text-gold-600" />{t(e.location, locale)}</p>}
               {t(e.note, locale) && <p className="mt-1 text-sm text-ink/70">{t(e.note, locale)}</p>}
               {e.status !== "closed" && (
-                <a href={e.link || `mailto:${email}?subject=${encodeURIComponent(t(e.title, locale))}`} {...(e.link ? { target: "_blank", rel: "noopener noreferrer" } : {})} className="mt-3 inline-flex items-center gap-1.5 text-sm font-bold text-green-700 hover:text-gold-600">
-                  {d.exams.register} <Icon name="arrow" className="h-4 w-4 rtl:rotate-180" />
-                </a>
+                <div className="mt-4 flex flex-wrap items-center gap-2">
+                  {e.link && (
+                    <a href={e.link} target="_blank" rel="noopener noreferrer" className="btn btn-green !px-4 !py-2 text-sm">{d.exams.registerNow}</a>
+                  )}
+                  {wa && (
+                    <a href={`https://wa.me/${wa}?text=${encodeURIComponent(d.exams.waMessage + t(e.title, locale))}`} target="_blank" rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 rounded-full bg-[#1f8f4e] px-4 py-2 text-sm font-bold text-white transition hover:bg-[#177a41]">
+                      <Icon name="whatsapp" className="h-5 w-5" />{d.exams.askWhatsapp}
+                    </a>
+                  )}
+                  <a href={`mailto:${email}?subject=${encodeURIComponent(t(e.title, locale))}`}
+                    className="inline-flex items-center gap-2 rounded-full border border-green-700 px-4 py-2 text-sm font-bold text-green-800 transition hover:bg-green-50">
+                    <Icon name="mail" className="h-5 w-5" />{d.exams.askEmail}
+                  </a>
+                </div>
               )}
             </div>
           </li>

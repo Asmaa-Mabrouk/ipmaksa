@@ -16,7 +16,12 @@ const SECTORS = [
   { img: "sector-mobility", ar: "النقل", en: "Mobility" },
   { img: "sector-industry", ar: "الصناعة", en: "Industry" },
 ];
-const dot: Record<string, string> = { live: "bg-green-600", "setting-up": "bg-gold-500", introduced: "bg-green-100 ring-1 ring-green-600", later: "bg-ink/20" };
+const LIVE_STYLE: Record<string, { border: string; bar: string; tile: string; pill: string; icon: string }> = {
+  live: { border: "border-green-100", bar: "bg-green-600", tile: "bg-green-900 text-gold-300", pill: "bg-green-100 text-green-800", icon: "M5 12.5l4.5 4.5L19 7.5" },
+  "setting-up": { border: "border-gold-500/40", bar: "bg-gold-500", tile: "bg-gold-100 text-gold-600", pill: "bg-gold-100 text-gold-600", icon: "M12 7v5l3 2M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z" },
+  introduced: { border: "border-green-100", bar: "bg-green-300", tile: "bg-green-50 text-green-700", pill: "bg-green-50 text-green-700", icon: "M5 21V4m0 0h11l-2 4 2 4H5" },
+  later: { border: "border-ink/10", bar: "bg-ink/20", tile: "bg-sand text-ink/50", pill: "bg-sand text-ink/60", icon: "M8 3v3m8-3v3M4 9h16M5 5h14a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z" },
+};
 
 export default async function Home({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
@@ -105,14 +110,23 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
       <section className="bg-white py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <SectionTitle title={t(h.liveTitle, lang)} intro={t(h.liveText, lang)} />
-          <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {h.live.map((x, i) => (
-              <li key={i} className="rounded-2xl border border-green-100 bg-white p-5">
-                <div className="flex items-center gap-2 text-sm font-bold text-ink/70"><span className={"h-3 w-3 rounded-full " + dot[x.status]} />{d.live[x.status]}</div>
-                <h3 className="mt-2 text-lg font-extrabold text-green-900" dir="auto">{t(x.title, lang)}</h3>
-                <p className="mt-1 leading-7 text-ink/75">{t(x.text, lang)}</p>
-              </li>
-            ))}
+          <ul className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {h.live.map((x, i) => {
+              const st = LIVE_STYLE[x.status] ?? LIVE_STYLE.later;
+              return (
+                <li key={i} className={"group relative flex flex-col overflow-hidden rounded-3xl border bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md " + st.border}>
+                  <span className={"absolute inset-y-0 start-0 w-1.5 " + st.bar} aria-hidden="true" />
+                  <div className="flex items-start justify-between gap-3">
+                    <span className={"flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl " + st.tile}>
+                      <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={st.icon} /></svg>
+                    </span>
+                    <span className={"rounded-full px-3 py-1 text-xs font-extrabold " + st.pill}>{d.live[x.status]}</span>
+                  </div>
+                  <h3 className="mt-4 text-xl font-extrabold leading-snug text-green-900" dir="auto">{t(x.title, lang)}</h3>
+                  <p className="mt-2 leading-8 text-ink/75">{t(x.text, lang)}</p>
+                </li>
+              );
+            })}
           </ul>
         </div>
       </section>
@@ -126,7 +140,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
           <SectionTitle title={d.sections.exams} intro={d.sections.examsIntro} />
           <Link href={`${base}/exam-dates`} className="btn btn-green">{d.viewAll}</Link>
         </div>
-        <div className="mt-8"><ExamCards exams={exams} locale={lang} email={s.email} limit={4} /></div>
+        <div className="mt-8"><ExamCards exams={exams} locale={lang} email={s.email} whatsapp={s.whatsapp} limit={4} /></div>
       </section>
 
       {/* HOW TO PREPARE + FAQ */}

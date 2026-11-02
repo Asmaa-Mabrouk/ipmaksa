@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { Markdown } from "@/lib/markdown";
 import { SectionTitle } from "./Sections";
 import { getDict, t } from "@/lib/i18n";
 import type { JourneyDoc, Locale } from "@/lib/content/types";
@@ -79,14 +78,73 @@ function RoleRow({ r, ri, n, locale }: { r: JourneyDoc["roles"][number]; ri: num
   );
 }
 
-/** How to prepare (ICB4 etc.). */
+/** How to prepare: ICB4 hero, structure chips, one card per level, and two notes. */
 export function PrepareBlock({ j, locale }: { j: JourneyDoc; locale: Locale }) {
+  const chip = "rounded-full border border-gold-500/60 bg-white px-4 py-1.5 text-sm font-bold text-green-900";
   return (
     <section id="prepare" className="bg-green-50 py-20">
-      <div className="mx-auto max-w-4xl px-4 sm:px-6">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <SectionTitle title={t(j.prepareTitle, locale)} />
-        <div className="mt-8 rounded-2xl border border-green-100 bg-white p-6 shadow-sm sm:p-10">
-          <Markdown source={t(j.prepareBody, locale)} />
+
+        {/* ICB4 hero */}
+        <div className="relative mt-10 grid overflow-hidden rounded-3xl bg-green-900 text-white shadow-lg lg:grid-cols-[1.4fr_1fr]">
+          <div className="najdi absolute inset-x-0 top-0" aria-hidden="true" />
+          <div className="flex flex-col gap-5 p-7 pt-9 sm:flex-row sm:items-center sm:p-10 sm:pt-12">
+            <div className="flex h-24 w-24 shrink-0 items-center justify-center rounded-2xl bg-gold-500 text-3xl font-black tracking-tight text-green-950 shadow-md">ICB4</div>
+            <p className="text-lg leading-8 text-white/95 sm:text-xl sm:leading-9">{t(j.prepareIntro, locale)}</p>
+          </div>
+          <div className="flex flex-col justify-center gap-3 border-t border-white/10 bg-green-950/40 p-7 pt-8 sm:p-10 lg:border-s lg:border-t-0">
+            <p className="text-sm font-bold uppercase tracking-wide text-gold-300">{t(j.icbTitle, locale)}</p>
+            <p className="leading-7 text-white/85">{t(j.icbText, locale)}</p>
+            {j.icbUrl && (
+              <a href={j.icbUrl} target="_blank" rel="noopener noreferrer" className="btn btn-gold mt-1 justify-self-start" dir="auto">
+                {t(j.icbButton, locale)}
+                <svg viewBox="0 0 20 20" className="h-4 w-4 rtl:-scale-x-100" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 15 15 5M7 5h8v8" /></svg>
+              </a>
+            )}
+          </div>
+        </div>
+
+        {/* structure */}
+        <div className="mt-10 rounded-3xl border border-green-100 bg-white p-7 shadow-sm sm:p-10">
+          <h3 className="text-2xl font-extrabold text-green-900">{t(j.structureTitle, locale)}</h3>
+          <p className="mt-2 max-w-3xl text-lg leading-8 text-ink/80">{t(j.structureText, locale)}</p>
+          <div className="mt-6 grid gap-6 md:grid-cols-2">
+            <div>
+              <p className="mb-3 text-sm font-extrabold uppercase tracking-wide text-gold-600">{t(j.domainsLabel, locale)}</p>
+              <ul className="flex flex-wrap gap-2">{j.domains.map((x, i) => <li key={i} className={chip}>{t(x.name, locale)}</li>)}</ul>
+            </div>
+            <div>
+              <p className="mb-3 text-sm font-extrabold uppercase tracking-wide text-gold-600">{t(j.areasLabel, locale)}</p>
+              <ul className="flex flex-wrap gap-2">{j.areas.map((x, i) => <li key={i} className={chip}>{t(x.name, locale)}</li>)}</ul>
+            </div>
+          </div>
+        </div>
+
+        {/* levels */}
+        <h3 className="mt-12 text-2xl font-extrabold text-green-900">{t(j.levelsTitle, locale)}</h3>
+        <ul className="mt-5 grid gap-5 md:grid-cols-3">
+          {j.levels.map((lv, i) => (
+            <li key={i} className="flex flex-col rounded-3xl border border-green-100 bg-white p-6 shadow-sm">
+              <div className="flex items-center gap-4">
+                <span className="flex h-16 min-w-16 items-center justify-center rounded-2xl bg-green-900 px-3 text-2xl font-black text-gold-300" dir="ltr">{lv.badge}</span>
+                <p className="text-xl font-extrabold text-green-900">{t(lv.label, locale)}</p>
+              </div>
+              <p className="mt-4 leading-8 text-ink/80">{t(lv.text, locale)}</p>
+            </li>
+          ))}
+        </ul>
+
+        {/* notes */}
+        <div className="mt-8 grid gap-5 md:grid-cols-2">
+          <div className="flex gap-4 rounded-2xl border border-green-100 bg-white p-5">
+            <svg viewBox="0 0 24 24" className="mt-1 h-7 w-7 shrink-0 text-green-700" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M9 11l3 3 8-8" /><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9" /></svg>
+            <p className="leading-8 text-ink/85">{t(j.guideNote, locale)}</p>
+          </div>
+          <div className="flex gap-4 rounded-2xl border-2 border-gold-500 bg-gold-100/60 p-5">
+            <svg viewBox="0 0 24 24" className="mt-1 h-7 w-7 shrink-0 text-gold-600" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="m8.5 12 2.5 2.5L16 9.5" /></svg>
+            <p className="font-extrabold leading-8 text-green-900">{t(j.freeNote, locale)}</p>
+          </div>
         </div>
       </div>
     </section>

@@ -3,16 +3,7 @@ import { useRef, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { uploadPhoto } from "@/app/(site)/member-actions";
-
-/** Square-crops and shrinks the chosen picture in the browser so uploads stay small and fast. */
-async function shrink(file: File, size = 512): Promise<Blob> {
-  const bmp = await createImageBitmap(file);
-  const side = Math.min(bmp.width, bmp.height);
-  const c = document.createElement("canvas");
-  c.width = c.height = Math.min(size, side);
-  c.getContext("2d")!.drawImage(bmp, (bmp.width - side) / 2, (bmp.height - side) / 2, side, side, 0, 0, c.width, c.height);
-  return new Promise((res, rej) => c.toBlob((b) => (b ? res(b) : rej(new Error("blob"))), "image/jpeg", 0.88));
-}
+import { shrinkImage } from "@/lib/shrink-image";
 
 export function AvatarUpload({ photo, initial, name, label, errorText }: { photo: string; initial: string; name: string; label: string; errorText: string }) {
   const input = useRef<HTMLInputElement>(null);
@@ -24,9 +15,8 @@ export function AvatarUpload({ photo, initial, name, label, errorText }: { photo
     if (!file) return;
     setBusy(true); setErr("");
     try {
-      const blob = await shrink(file);
       const fd = new FormData();
-      fd.set("photo", new File([blob], "photo.jpg", { type: "image/jpeg" }));
+      fd.set("photo", await shrinkImage(file));
       const r = await uploadPhoto(fd);
       if (r.ok) router.refresh(); else setErr(errorText);
     } catch {

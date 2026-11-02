@@ -54,38 +54,57 @@ export const JOURNEY: JourneyDoc = {
   noteStrong: l("الخطوة الأخيرة هي المقابلة، دائماً مع مقيّمين اثنين.", "Final step is the interview, always with two assessors."),
   noteText: l("18 شهراً كحد أقصى من التقديم حتى منح الشهادة.", "18 months maximum from application to certificate award."),
   prepareTitle: l("كيف أستعد؟", "How to prepare"),
-  prepareBody: l(
-    `للاستعداد، ادرس **خط الأساس للكفاءات الفردية (ICB4)**، وهو المعيار الذي تقوم عليه شهادة IPMA.
-
-## كيف تحصل عليه
-يمكنك تنزيل ICB4 من بوابة MyIPMA: [myipma.ipma.world](https://myipma.ipma.world)
-
-## ماذا تدرس حسب المستوى
-ICB4 كتاب واحد يغطي ثلاثة مجالات: المشاريع والبرامج والمحافظ. ولكل مجال عناصر كفاءة في ثلاثة محاور: المنظور والأشخاص والممارسة.
-
-- **المستوى D:** عناصر كفاءة إدارة المشاريع، مع التركيز على المعرفة.
-- **المستوى C:** عناصر كفاءة إدارة المشاريع، مع التركيز على تطبيقها في مشاريعك.
-- **المستويان B وA:** جميع عناصر الكفاءة للمجال الذي تتقدم إليه (مشاريع أو برامج أو محافظ)، مطبّقة في بيئات معقدة (المستوى B) أو شديدة التعقيد (المستوى A).
-
-يضم نموذج التقييم الذاتي في حزمة الطلب عناصر الكفاءة نفسها، لذلك يصلح أيضاً دليلاً للدراسة.
-
-**إتمام أي دورة تدريبية ليس إلزامياً للحصول على شهادة IPMA.**`,
-    `To prepare, please study the **IPMA Individual Competence Baseline (ICB4)**, the standard on which IPMA certification is based.
-
-## How to get it
-The ICB4 is available to download from the MyIPMA portal: [myipma.ipma.world](https://myipma.ipma.world)
-
-## What to study, by level
-The ICB4 is a single book covering three domains: project, programme and portfolio management. Each domain has competence elements in three areas: Perspective, People and Practice.
-
-- **Level D:** the project management competence elements, with a focus on knowledge.
-- **Level C:** the project management competence elements, with a focus on applying them in your own projects.
-- **Levels B and A:** all competence elements for the domain you are applying for (project, programme or portfolio), applied to complex (Level B) or very complex (Level A) settings.
-
-The Self-Assessment Form in your application pack lists the same competence elements, so it is also a useful study guide.
-
-**Completing any training course is not mandatory for IPMA certification.**`,
+  prepareIntro: l(
+    "للاستعداد، ادرس خط الأساس للكفاءات الفردية (ICB4)، وهو المعيار الذي تقوم عليه شهادة IPMA.",
+    "To prepare, please study the IPMA Individual Competence Baseline (ICB4), the standard on which IPMA certification is based.",
   ),
+  icbTitle: l("كيف تحصل عليه", "How to get it"),
+  icbText: l("يمكنك تنزيل ICB4 من بوابة MyIPMA.", "The ICB4 is available to download from the MyIPMA portal."),
+  icbButton: l("افتح بوابة MyIPMA", "Open the MyIPMA portal"),
+  icbUrl: "https://myipma.ipma.world",
+  structureTitle: l("ماذا يغطي ICB4", "What the ICB4 covers"),
+  structureText: l(
+    "ICB4 كتاب واحد يغطي ثلاثة مجالات، ولكل مجال عناصر كفاءة في ثلاثة محاور.",
+    "The ICB4 is a single book covering three domains. Each domain has competence elements in three areas.",
+  ),
+  domainsLabel: l("المجالات", "Domains"),
+  domains: [
+    { name: l("المشاريع", "Project") },
+    { name: l("البرامج", "Programme") },
+    { name: l("المحافظ", "Portfolio") },
+  ],
+  areasLabel: l("المحاور", "Areas"),
+  areas: [
+    { name: l("المنظور", "Perspective") },
+    { name: l("الأشخاص", "People") },
+    { name: l("الممارسة", "Practice") },
+  ],
+  levelsTitle: l("ماذا تدرس حسب المستوى", "What to study, by level"),
+  levels: [
+    {
+      badge: "D",
+      label: l("المستوى D", "Level D"),
+      text: l("عناصر كفاءة إدارة المشاريع، مع التركيز على المعرفة.", "The project management competence elements, with a focus on knowledge."),
+    },
+    {
+      badge: "C",
+      label: l("المستوى C", "Level C"),
+      text: l("عناصر كفاءة إدارة المشاريع، مع التركيز على تطبيقها في مشاريعك.", "The project management competence elements, with a focus on applying them in your own projects."),
+    },
+    {
+      badge: "B · A",
+      label: l("المستويان B و A", "Levels B and A"),
+      text: l(
+        "جميع عناصر الكفاءة للمجال الذي تتقدم إليه (مشاريع أو برامج أو محافظ)، مطبّقة في بيئات معقدة (المستوى B) أو شديدة التعقيد (المستوى A).",
+        "All competence elements for the domain you are applying for (project, programme or portfolio), applied to complex (Level B) or very complex (Level A) settings.",
+      ),
+    },
+  ],
+  guideNote: l(
+    "يضم نموذج التقييم الذاتي في حزمة الطلب عناصر الكفاءة نفسها، لذلك يصلح أيضاً دليلاً للدراسة.",
+    "The Self-Assessment Form in your application pack lists the same competence elements, so it is also a useful study guide.",
+  ),
+  freeNote: l("إتمام أي دورة تدريبية ليس إلزامياً للحصول على شهادة IPMA.", "Completing any training course is not mandatory for IPMA certification."),
   faqTitle: l("الأسئلة الأكثر شيوعاً", "Frequently asked questions"),
   faqIntro: l("إجابات سريعة قبل أن تتقدم", "Quick answers before you apply"),
   faqs: [

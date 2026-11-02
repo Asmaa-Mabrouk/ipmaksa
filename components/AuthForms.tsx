@@ -4,6 +4,7 @@ import Link from "next/link";
 import { loginMember, registerMember, updateProfile, type AuthState } from "@/app/(site)/member-actions";
 import type { Dict } from "@/lib/i18n";
 import { CountrySelect } from "./CountrySelect";
+import { PhotoPicker } from "./PhotoPicker";
 import { EMAIL_RE, FieldError, PasswordInput, borderOf, inputCls, useValidation, type Errors } from "./formKit";
 
 const lbl = "grid gap-1.5 text-sm font-semibold text-green-900";
@@ -128,7 +129,10 @@ export function ProfileForm({ d, countries, first, last, country }: { d: A; coun
         <Text name="firstName" label={d.firstName} errors={v.errors} defaultValue={first} required={false} />
         <Text name="lastName" label={d.lastName} errors={v.errors} defaultValue={last} required={false} />
         <Country d={d} countries={countries} errors={v.errors} value={country} onPick={() => v.clearKey("country")} />
-        <label className={lbl + " sm:col-span-2"}>{d.photo}<input name="photo" type="file" accept="image/jpeg,image/png,image/webp" className={`${inputCls} ${borderOf(false)}`} /></label>
+        <div className={lbl + " sm:col-span-2"}>
+          <span>{d.photo}</span>
+          <PhotoPicker name="photo" label={d.choosePhoto} selected={d.photoSelected} remove={d.removePhoto} errorText={d.errors.photo} />
+        </div>
       </div>
       <button disabled={pending} className="btn btn-green justify-self-start disabled:opacity-60">{d.save}</button>
       <p role="status" className={"min-h-5 text-sm font-semibold " + (s.saved ? "text-green-700" : "text-red-700")}>{s.saved ? d.saved : err(d, s)}</p>

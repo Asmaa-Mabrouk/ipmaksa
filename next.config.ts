@@ -4,6 +4,8 @@ const supa = process.env.SUPABASE_URL ? new URL(process.env.SUPABASE_URL) : null
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  // Admin image uploads go through server actions: allow up to 6 MB (default is 1 MB).
+  experimental: { serverActions: { bodySizeLimit: "6mb" } },
   images: {
     formats: ["image/avif", "image/webp"],
     remotePatterns: supa ? [{ protocol: "https", hostname: supa.hostname, pathname: "/storage/v1/object/public/**" }] : [],

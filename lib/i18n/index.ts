@@ -95,6 +95,7 @@ const ui = {
       save: "Save changes",
       saved: "Your details were saved.",
       photo: "Profile photo",
+      changePhoto: "Change profile photo",
       showPassword: "Show password",
       hidePassword: "Hide password",
       errors: {
@@ -260,6 +261,7 @@ const ui = {
       save: "حفظ التغييرات",
       saved: "تم حفظ بياناتك.",
       photo: "الصورة الشخصية",
+      changePhoto: "تغيير الصورة الشخصية",
       showPassword: "إظهار كلمة المرور",
       hidePassword: "إخفاء كلمة المرور",
       errors: {

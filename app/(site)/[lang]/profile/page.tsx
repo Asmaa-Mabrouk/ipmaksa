@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound, redirect } from "next/navigation";
 import { ProfileForm } from "@/components/AuthForms";
+import { AvatarUpload } from "@/components/AvatarUpload";
 import { Icon } from "@/components/Icon";
 import { fmtDate } from "@/components/Sections";
 import { countryList } from "@/lib/countries";
@@ -30,9 +31,7 @@ export default async function Profile({ params }: { params: Promise<{ lang: stri
   return (
     <div className="mx-auto max-w-5xl px-4 py-12 sm:px-6">
       <section className="flex flex-wrap items-center gap-6 rounded-3xl bg-green-900 p-6 text-white shadow-lg sm:p-8">
-        <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-full bg-green-700 ring-4 ring-gold-500 sm:h-28 sm:w-28">
-          {m.data.photo ? <Image src={m.data.photo} alt={name} fill sizes="112px" className="object-cover" /> : <span className="flex h-full items-center justify-center text-4xl font-extrabold text-gold-300">{m.data.firstName.charAt(0)}</span>}
-        </div>
+        <AvatarUpload photo={m.data.photo} initial={m.data.firstName.charAt(0)} name={name} label={d.changePhoto} errorText={d.errors.photo} />
         <div className="min-w-0 flex-1">
           <h1 className="text-3xl font-extrabold">{name}</h1>
           <p className="mt-1 break-all text-white/80" dir="ltr">{m.data.email}</p>

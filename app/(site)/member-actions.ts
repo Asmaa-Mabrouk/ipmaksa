@@ -94,3 +94,21 @@ export async function updateProfile(_: AuthState, fd: FormData): Promise<AuthSta
   revalidatePath("/", "layout");
   return { saved: true };
 }
+
+/** Change only the profile photo (the browser resizes it to a small square first). */
+export async function uploadPhoto(fd: FormData): Promise<{ ok: boolean; error?: "photo" | "generic" }> {
+  const m = await getMember();
+  if (!m) return { ok: false, error: "generic" };
+  const f = fd.get("photo");
+  if (!(f instanceof File) || f.size === 0) return { ok: false, error: "photo" };
+  const ext = PHOTO[f.type];
+  if (!ext || f.size > 2 * 1024 * 1024) return { ok: false, error: "photo" };
+  try {
+    const photo = await getStore().putFile(`member-${m.id}-${Date.now()}${ext}`, Buffer.from(await f.arrayBuffer()), f.type);
+    await getStore().put("members", m.id, { ...m.data, photo } as unknown as Record<string, unknown>);
+  } catch {
+    return { ok: false, error: "generic" };
+  }
+  revalidatePath("/", "layout");
+  return { ok: true };
+}

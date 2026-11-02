@@ -593,17 +593,6 @@ const exams = {
     note: l("", ""),
     order: 4,
   },
-  "pm-fundamentals-pilot": {
-    title: l("الدفعة التجريبية لأساسيات إدارة المشاريع", "PM Fundamentals pilot cohort"),
-    programme: "PM Fundamentals",
-    date: "",
-    dateText: l("ديسمبر 2026", "December 2026"),
-    location: l("المملكة العربية السعودية", "Saudi Arabia"),
-    status: "soon",
-    link: "",
-    note: l("بالتنسيق مع CVMB.", "In coordination with CVMB."),
-    order: 2,
-  },
   "cct-first-candidates": {
     title: l("أول مرشحي IPMA CCT", "First IPMA CCT candidates"),
     programme: "IPMA CCT",

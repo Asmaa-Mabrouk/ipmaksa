@@ -64,13 +64,6 @@ export async function uploadImage(fd: FormData): Promise<{ url?: string; error?:
   }
 }
 
-export async function removeSubscriber(id: string) {
-  await requireAdmin();
-  if (!/^[a-f0-9]{24}$/.test(id)) return;
-  await getStore().remove("subscribers", id);
-  revalidatePath("/admin/subscribers");
-}
-
 export async function messageAction(id: string, op: "read" | "delete") {
   await requireAdmin();
   if (!/^[0-9]+-[a-f0-9]{6}$/.test(id)) return;

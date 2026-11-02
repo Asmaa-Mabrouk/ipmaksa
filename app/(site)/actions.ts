@@ -3,7 +3,7 @@ import crypto from "node:crypto";
 import { headers } from "next/headers";
 import { getStore } from "@/lib/content/store";
 import { getSettings } from "@/lib/content/api";
-import type { MessageDoc, SubscriberDoc } from "@/lib/content/types";
+import type { MessageDoc } from "@/lib/content/types";
 
 export type FormState = { status: "idle" | "ok" | "already" | "invalid" | "error" };
 
@@ -27,15 +27,6 @@ function looksLikeBot(fd: FormData) {
   if (clean(fd.get("website"), 100)) return true;
   const t = Number(clean(fd.get("t"), 20));
   return Number.isFinite(t) && t > 0 && Date.now() - t < 1500;
-}
-
-export async function unsubscribe(id: string, token: string): Promise<boolean> {
-  if (!/^[a-f0-9]{24}$/.test(id) || !/^[a-f0-9]{32}$/.test(token)) return false;
-  const store = getStore();
-  const row = await store.get("subscribers", id);
-  if (!row || (row.data as unknown as SubscriberDoc).token !== token) return false;
-  await store.remove("subscribers", id);
-  return true;
 }
 
 export async function sendContact(_: FormState, fd: FormData): Promise<FormState> {

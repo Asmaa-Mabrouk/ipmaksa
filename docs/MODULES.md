@@ -17,7 +17,6 @@ Stack: Next.js 16 (App Router), React 19, Tailwind v4, TypeScript, PostgreSQL 16
 | News and article | `/news`, `/news/[slug]` | `news` |
 | Contact | `/contact` | `settings` + form → `messages` |
 | Register / Sign in / Profile | `/register`, `/login`, `/profile` | `members` (dynamic pages) |
-| Unsubscribe | `/newsletter/unsubscribe` | legacy `subscribers` (newsletter sign-up itself was removed) |
 
 Every page is statically generated, except profile, login and register which read the member cookie.
 `/` and unprefixed paths redirect to `/ar` or `/en` using the `lang` cookie (`proxy.ts`).
@@ -46,7 +45,7 @@ Design tokens live in `app/globals.css` (`@theme`): deep green, gold, cream, a s
 | `file-store.ts`, `supabase-store.ts` | Alternative stores |
 | `api.ts` | Read helpers used by the pages (`getHome`, `getJourney`, `getEvents`, …) |
 
-Collections: `home`, `pages`, `team`, `exams`, `journey`, `events`, `benefits`, `badges`, `news`, `settings`. System collections: `members`, `messages`, `subscribers`.
+Collections: `home`, `pages`, `team`, `exams`, `journey`, `events`, `benefits`, `badges`, `news`, `settings`. System collections: `members`, `messages`.
 Built-in content is copied into the database the first time a collection is edited, so later edits are never overwritten by the seed.
 
 ## 4. Content admin (`app/(admin)/admin/…`)
@@ -56,13 +55,12 @@ Separate layout and host (`admin.<domain>`; in development `admin.localhost:3000
 | Screen | Purpose |
 |---|---|
 | Login | Email + password (scrypt hash in `ADMIN_USERS`), rate limited, signed session cookie |
-| Dashboard | Counts of members, messages, subscribers and shortcuts |
+| Dashboard | Counts of members and unread messages, and shortcuts |
 | Content lists and editors (`c/[collection]`) | Schema-driven forms: bilingual fields, lists with reorder, image upload, delete |
 | Members & badges | List members, award or remove badges with an optional note, delete an account |
 | Messages | Contact-form inbox: read, mark as read, delete |
-| Subscribers | Legacy newsletter list with CSV export |
 
-Server actions (`actions.ts`): `saveDoc`, `deleteDoc`, `uploadImage`, `setMemberBadges`, `deleteMember`, `messageAction`, `removeSubscriber`, `loginAction`, `logoutAction`. Each one re-checks the admin session.
+Server actions (`actions.ts`): `saveDoc`, `deleteDoc`, `uploadImage`, `setMemberBadges`, `deleteMember`, `messageAction`, `loginAction`, `logoutAction`. Each one re-checks the admin session.
 
 ## 5. Member accounts (`lib/members.ts`, `app/(site)/member-actions.ts`)
 

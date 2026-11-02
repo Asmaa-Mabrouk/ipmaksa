@@ -372,8 +372,8 @@ const pages: Record<string, P> = {
       "How IPMA KSA collects, uses and protects your information.",
     ),
     body: l(
-      "## البيانات التي نجمعها\nنجمع الاسم والبريد الإلكتروني عند الاشتراك في النشرة البريدية أو التواصل معنا.\n\n## كيف نستخدمها\nنستخدمها للرد على استفساراتكم ولإرسال أخبار الجمعية ومواعيد الاختبارات والفعاليات. ولا نبيع بياناتكم أو نشاركها مع أطراف أخرى لأغراض تسويقية.\n\n## حقوقكم\nيمكنكم إلغاء الاشتراك في أي وقت عبر الرابط المرفق بالنشرة أو بمراسلتنا على care@ipmaksa.world.",
-      "## Information we collect\nWe collect your name and email address when you subscribe to the newsletter or contact us.\n\n## How we use it\nWe use it to answer your inquiries and to send association news, exam dates and events. We do not sell your information or share it with third parties for marketing.\n\n## Your rights\nYou can unsubscribe at any time using the link in our newsletter, or by writing to care@ipmaksa.world.",
+      "## البيانات التي نجمعها\nنجمع الاسم والبريد الإلكتروني عند إنشاء حساب أو التواصل معنا.\n\n## كيف نستخدمها\nنستخدمها للرد على استفساراتكم ولإرسال أخبار الجمعية ومواعيد الاختبارات والفعاليات. ولا نبيع بياناتكم أو نشاركها مع أطراف أخرى لأغراض تسويقية.\n\n## حقوقكم\nيمكنكم إلغاء الاشتراك في أي وقت عبر الرابط المرفق بالنشرة أو بمراسلتنا على care@ipmaksa.world.",
+      "## Information we collect\nWe collect your name and email address when you create an account or contact us.\n\n## How we use it\nWe use it to answer your inquiries and to send association news, exam dates and events. We do not sell your information or share it with third parties for marketing.\n\n## Your rights\nYou can ask us to stop contacting you or delete your account at any time by writing to care@ipmaksa.world.",
     ),
   }),
   // Pages with their own layout: only the heading, intro and optional text are edited here.
@@ -386,8 +386,8 @@ const pages: Record<string, P> = {
       "Join the community of professionals and organizations building the future of project management in the Kingdom.",
     ),
     body: l(
-      "العضوية مفتوحة للمهنيين في جميع مراحل مسيرتهم وللمؤسسات. ابدأ بالاشتراك في نشرتنا البريدية وسيتواصل معك فريقنا بالتفاصيل.",
-      "Membership is open to professionals at every career stage and to organizations. Start by subscribing to our newsletter and our team will follow up with the details.",
+      "العضوية مفتوحة للمهنيين في جميع مراحل مسيرتهم وللمؤسسات. ابدأ بإنشاء حساب مجاني وسيتواصل معك فريقنا بالتفاصيل.",
+      "Membership is open to professionals at every career stage and to organizations. Start by creating a free account and our team will follow up with the details.",
     ),
   }),
   team: page({

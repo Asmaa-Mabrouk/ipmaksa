@@ -8,7 +8,7 @@ create table if not exists public.documents (
 );
 
 -- The site talks to this table only from the server with the service-role key.
--- Row Level Security is enabled with no public policies, so the anon key can never read subscribers or messages.
+-- Row Level Security is enabled with no public policies, so the anon key can never read members or messages.
 alter table public.documents enable row level security;
 
 -- Public bucket for uploaded images (read-only for the public; uploads go through the server).

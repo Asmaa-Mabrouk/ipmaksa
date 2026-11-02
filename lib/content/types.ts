@@ -95,15 +95,6 @@ export type NewsDoc = {
   published: boolean;
 };
 
-export type SubscriberDoc = {
-  email: string;
-  name: string;
-  lang: Locale;
-  source: string;
-  token: string;
-  createdAt: string;
-};
-
 export type MessageDoc = {
   name: string;
   email: string;

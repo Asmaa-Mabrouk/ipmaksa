@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Icon } from "@/components/Icon";
-import { BenefitsGrid, NewsletterBand, PageHero, SectionTitle } from "@/components/Sections";
+import { BenefitsGrid, JoinBand, PageHero, SectionTitle } from "@/components/Sections";
 import { getBenefits, getPage } from "@/lib/content/api";
 import { getDict, isLocale, t } from "@/lib/i18n";
 
@@ -28,7 +28,7 @@ export default async function Membership({ params }: { params: Promise<{ lang: s
           </p>
         )}
       </section>
-      <NewsletterBand locale={lang} source="membership" title={d.joinCta} />
+      <JoinBand locale={lang} title={d.joinCta} />
     </>
   );
 }

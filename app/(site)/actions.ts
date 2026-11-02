@@ -29,32 +29,6 @@ function looksLikeBot(fd: FormData) {
   return Number.isFinite(t) && t > 0 && Date.now() - t < 1500;
 }
 
-export async function subscribe(_: FormState, fd: FormData): Promise<FormState> {
-  try {
-    if (looksLikeBot(fd)) return { status: "ok" };
-    if (limited(`sub:${await ip()}`, 5, 10 * 60_000)) return { status: "error" };
-    const email = clean(fd.get("email"), 320).toLowerCase();
-    if (!EMAIL.test(email)) return { status: "invalid" };
-    const lang = clean(fd.get("lang"), 2) === "en" ? "en" : "ar";
-    const id = crypto.createHash("sha256").update(email).digest("hex").slice(0, 24);
-    const store = getStore();
-    if (await store.get("subscribers", id)) return { status: "already" };
-    const doc: SubscriberDoc = {
-      email,
-      name: clean(fd.get("name"), 100),
-      lang,
-      source: clean(fd.get("source"), 40) || "site",
-      token: crypto.randomBytes(16).toString("hex"),
-      createdAt: new Date().toISOString(),
-    };
-    await store.put("subscribers", id, doc as unknown as Record<string, unknown>);
-    return { status: "ok" };
-  } catch (e) {
-    console.error("subscribe failed", e);
-    return { status: "error" };
-  }
-}
-
 export async function unsubscribe(id: string, token: string): Promise<boolean> {
   if (!/^[a-f0-9]{24}$/.test(id) || !/^[a-f0-9]{32}$/.test(token)) return false;
   const store = getStore();

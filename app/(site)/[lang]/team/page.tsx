@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { NewsletterBand, PageHero, TeamCard } from "@/components/Sections";
+import { JoinBand, PageHero, TeamCard } from "@/components/Sections";
 import { getPage, getTeam } from "@/lib/content/api";
 import { getDict, isLocale, t } from "@/lib/i18n";
 
@@ -38,7 +38,7 @@ export default async function TeamPage({ params }: { params: Promise<{ lang: str
         })}
         {page && t(page.data.body, lang) && <p className="rounded-2xl bg-green-50 p-5 font-semibold text-green-900">{t(page.data.body, lang)}</p>}
       </div>
-      <NewsletterBand locale={lang} source="team" />
+      <JoinBand locale={lang} />
     </>
   );
 }

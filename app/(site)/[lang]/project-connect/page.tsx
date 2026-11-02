@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { EventCards, NewsletterBand, PageHero } from "@/components/Sections";
+import { EventCards, JoinBand, PageHero } from "@/components/Sections";
 import { getEvents, getPage } from "@/lib/content/api";
 import { getDict, isLocale, t } from "@/lib/i18n";
 import { Markdown } from "@/lib/markdown";
@@ -42,7 +42,7 @@ export default async function ProjectConnect({ params }: { params: Promise<{ lan
           </section>
         )}
       </div>
-      <NewsletterBand locale={lang} source="project-connect" />
+      <JoinBand locale={lang} />
     </>
   );
 }

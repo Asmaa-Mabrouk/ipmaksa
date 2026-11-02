@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { NewsletterBand, PageHero } from "@/components/Sections";
+import { JoinBand, PageHero } from "@/components/Sections";
 import { getPage, getPages } from "@/lib/content/api";
 import { LOCALES, getDict, isLocale, t } from "@/lib/i18n";
 import { Markdown } from "@/lib/markdown";
@@ -45,7 +45,7 @@ export default async function ContentPage({ params }: { params: Promise<{ lang: 
           </aside>
         )}
       </div>
-      <NewsletterBand locale={lang} source={`page-${slug}`} />
+      <JoinBand locale={lang} />
     </>
   );
 }

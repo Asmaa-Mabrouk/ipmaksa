@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Icon } from "./Icon";
-import { NewsletterForm } from "./NewsletterForm";
 import { telHref } from "./SiteChrome";
 import { getDict, t } from "@/lib/i18n";
 import type { BenefitDoc, Doc, ExamDoc, Locale, NewsDoc, ProjectEventDoc, SiteSettings, TeamDoc } from "@/lib/content/types";
@@ -151,20 +150,19 @@ export function NewsCards({ items, locale }: { items: Doc<NewsDoc>[]; locale: Lo
   );
 }
 
-export function NewsletterBand({ locale, image, title, text, source }: { locale: Locale; image?: string; title?: string; text?: string; source: string }) {
+export function JoinBand({ locale, image, title, text }: { locale: Locale; image?: string; title?: string; text?: string; source?: string }) {
   const d = getDict(locale);
   return (
     <section id="join" className="relative isolate overflow-hidden bg-green-900 text-white">
       {image && <Image src={image} alt="" fill sizes="100vw" className="-z-10 object-cover opacity-25" />}
       <div className="absolute inset-0 -z-10 bg-gradient-to-br from-green-950/90 to-green-800/70" />
-      <div className="mx-auto grid max-w-7xl gap-10 px-4 py-16 sm:px-6 lg:grid-cols-2 lg:items-center">
-        <div>
-          <div className="mb-4 h-1 w-14 rounded bg-gold-500" />
-          <h2 className="text-3xl font-extrabold leading-tight sm:text-4xl">{title || d.newsletter.title}</h2>
-          <p className="mt-3 text-lg leading-8 text-white/85">{text || d.newsletter.text}</p>
-        </div>
-        <div className="rounded-2xl bg-white/10 p-6 ring-1 ring-white/15 backdrop-blur">
-          <NewsletterForm locale={locale} d={d.newsletter} source={source} />
+      <div className="mx-auto max-w-4xl px-4 py-16 text-center sm:px-6">
+        <div className="mx-auto mb-4 h-1 w-14 rounded bg-gold-500" />
+        <h2 className="text-3xl font-extrabold leading-tight sm:text-4xl">{title || d.account.registerTitle}</h2>
+        <p className="mx-auto mt-3 max-w-2xl text-lg leading-8 text-white/85">{text || d.account.registerText}</p>
+        <div className="mt-8 flex flex-wrap justify-center gap-3">
+          <Link href={`/${locale}/register`} className="btn btn-gold">{d.account.register}</Link>
+          <Link href={`/${locale}/login`} className="btn btn-outline text-white">{d.account.signIn}</Link>
         </div>
       </div>
     </section>

@@ -137,8 +137,8 @@ const home = {
   gpmfImage: "/images/gpmf-group.webp",
   joinTitle: l("انضم إلينا", "Join us"),
   joinText: l(
-    "كن جزءاً من مجتمع المهنيين الذين يبنون مستقبل إدارة المشاريع في المملكة. اشترك في نشرتنا البريدية لتصلك مواعيد الاختبارات والفعاليات والبرامج الجديدة.",
-    "Be part of the community building the future of project management in the Kingdom. Subscribe to our newsletter for exam dates, events and new programs.",
+    "كن جزءاً من مجتمع المهنيين الذين يبنون مستقبل إدارة المشاريع في المملكة. أنشئ حساباً مجانياً لتحصل على ملفك الشخصي في IPMA السعودية وتشاهد الشارات التي مُنحت لك.",
+    "Be part of the community building the future of project management in the Kingdom. Create a free account to get your IPMA KSA profile and see the badges awarded to you.",
   ),
   joinImage: "/images/red-sea.webp",
 };

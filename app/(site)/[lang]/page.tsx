@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Icon } from "@/components/Icon";
-import { BenefitsGrid, EventCards, ExamCards, NewsCards, NewsletterBand, SectionTitle, TeamCard } from "@/components/Sections";
+import { BenefitsGrid, EventCards, ExamCards, NewsCards, JoinBand, SectionTitle, TeamCard } from "@/components/Sections";
 import { telHref } from "@/components/SiteChrome";
 import { getBenefits, getEvents, getExams, getHome, getNews, getSettings, getTeam } from "@/lib/content/api";
 import { getDict, isLocale, t } from "@/lib/i18n";
@@ -36,7 +36,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
           <h1 className="reveal mt-5 max-w-3xl text-4xl font-extrabold leading-tight sm:text-6xl">{t(h.heroTitle, lang)}</h1>
           <p className="reveal mt-5 max-w-2xl text-lg leading-8 text-white/90 sm:text-xl">{t(h.heroText, lang)}</p>
           <div className="reveal mt-8 flex flex-wrap gap-3">
-            <Link href={`${base}/membership#join`} className="btn btn-gold">{d.joinCta}</Link>
+            <Link href={`${base}/register`} className="btn btn-gold">{d.joinCta}</Link>
             <Link href={`${base}/exam-dates`} className="btn btn-outline text-white">{d.nav.examDates}</Link>
           </div>
           <div className="reveal mt-10 flex flex-wrap gap-3 text-sm">
@@ -179,7 +179,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
         </section>
       )}
 
-      <NewsletterBand locale={lang} image={h.joinImage} title={t(h.joinTitle, lang)} text={t(h.joinText, lang)} source="home" />
+      <JoinBand locale={lang} image={h.joinImage} title={t(h.joinTitle, lang)} text={t(h.joinText, lang)} />
     </>
   );
 }

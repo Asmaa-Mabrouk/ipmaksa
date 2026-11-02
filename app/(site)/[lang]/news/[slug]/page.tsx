@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { NewsletterBand, fmtDate } from "@/components/Sections";
+import { JoinBand, fmtDate } from "@/components/Sections";
 import { getNews, getNewsItem } from "@/lib/content/api";
 import { LOCALES, getDict, isLocale, t } from "@/lib/i18n";
 import { Markdown } from "@/lib/markdown";
@@ -36,7 +36,7 @@ export default async function NewsArticle({ params }: { params: Promise<{ lang: 
         )}
         <Markdown source={t(n.data.body, lang)} className="mt-8" />
       </article>
-      <NewsletterBand locale={lang} source="news-article" />
+      <JoinBand locale={lang} />
     </>
   );
 }

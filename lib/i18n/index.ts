@@ -49,7 +49,7 @@ const ui = {
     live: { live: "Live", "setting-up": "Setting up", introduced: "Introduced", later: "Later" },
     exams: {
       register: "Register or ask",
-      none: "No upcoming dates have been published yet. Join our newsletter to be notified first.",
+      none: "No upcoming dates have been published yet. Please check back soon.",
       past: "Completed",
       location: "Location",
       programme: "Program",
@@ -107,7 +107,7 @@ const ui = {
     events: {
       upcoming: "Upcoming webinars and workshops",
       past: "Past sessions",
-      none: "New sessions are being scheduled. Join our newsletter to hear first.",
+      none: "New sessions are being scheduled. Please check back soon.",
       register: "Register",
       recording: "Watch recording",
       webinar: "Webinar",
@@ -204,7 +204,7 @@ const ui = {
     live: { live: "متاح", "setting-up": "قيد الإعداد", introduced: "تم تقديمه", later: "لاحقاً" },
     exams: {
       register: "سجّل أو استفسر",
-      none: "لم تُنشر مواعيد قادمة بعد. اشترك في نشرتنا لتكون أول من يعلم.",
+      none: "لم تُنشر مواعيد قادمة بعد. يرجى العودة قريباً.",
       past: "مكتملة",
       location: "المكان",
       programme: "البرنامج",
@@ -262,7 +262,7 @@ const ui = {
     events: {
       upcoming: "الندوات وورش العمل القادمة",
       past: "الجلسات السابقة",
-      none: "تتم جدولة جلسات جديدة. اشترك في نشرتنا لتكون أول من يعلم.",
+      none: "تتم جدولة جلسات جديدة. يرجى العودة قريباً.",
       register: "سجّل الآن",
       recording: "شاهد التسجيل",
       webinar: "ندوة إلكترونية",

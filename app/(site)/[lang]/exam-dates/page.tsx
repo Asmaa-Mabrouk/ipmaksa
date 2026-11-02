@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { ExamCards, NewsletterBand, PageHero } from "@/components/Sections";
+import { ExamCards, JoinBand, PageHero } from "@/components/Sections";
 import { getExams, getPage, getSettings } from "@/lib/content/api";
 import { getDict, isLocale, t } from "@/lib/i18n";
 
@@ -35,7 +35,7 @@ export default async function ExamDates({ params }: { params: Promise<{ lang: st
           </section>
         )}
       </div>
-      <NewsletterBand locale={lang} source="exam-dates" />
+      <JoinBand locale={lang} />
     </>
   );
 }

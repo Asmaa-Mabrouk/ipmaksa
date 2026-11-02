@@ -54,6 +54,10 @@ function FieldEditor({ f, value, onChange }: { f: Field; value: unknown; onChang
     const set = (next: Obj[]) => onChange(next);
     return (
       <div className="grid gap-3">
+        <div>
+          <p className="text-lg font-extrabold text-green-900">{f.label}</p>
+          {f.help && <p className="text-xs text-ink/60">{f.help}</p>}
+        </div>
         {items.map((item, i) => (
           <div key={i} className="rounded-xl border border-green-100 bg-sand/60 p-4">
             <div className="mb-3 flex items-center justify-between">

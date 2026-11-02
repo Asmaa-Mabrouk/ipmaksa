@@ -204,8 +204,8 @@ export const COLLECTIONS: CollectionDef[] = [
   },
   {
     id: "journey",
-    label: "How certification works (cycle, preparation, FAQ)",
-    description: "The 6-stage application-to-certificate table, the 'How to prepare' text and the frequently asked questions. Shown on the home page and on the How certification works page.",
+    label: "How certification works",
+    description: "Cycle table, how to prepare and FAQ. The 6-stage application-to-certificate table, the 'How to prepare' text and the frequently asked questions. Shown on the home page and on the How certification works page.",
     single: "main",
     fields: [
       { key: "cycleTitle", label: "Cycle – section title", type: "text", i18n: true },

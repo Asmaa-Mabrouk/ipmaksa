@@ -38,3 +38,9 @@ subscribers (CSV download) and contact messages.
   `needsReview` in Pages need checking by the team.
 - Newsletter: sign-ups are collected and exported; send campaigns from a mail provider by importing the CSV.
 - Layout and colors follow the 2026 IPMA KSA deck (green, gold, cream). Logos are in `public/images`.
+
+## Documentation
+
+- [Project modules](docs/MODULES.md)
+- [Admin tutorial (PDF)](docs/IPMA-KSA-Admin-Tutorial.pdf): add a Project Connect webinar and edit sections
+- Rebuild the PDF: `python3 scripts/build-tutorial.py`

@@ -44,6 +44,7 @@ body { font-family: var(--font-sans); background: var(--color-cream); color: var
 
 .prose-ipma { line-height: 1.9; font-size: 1.0625rem; color: #26352f; }
 .prose-ipma > * + * { margin-top: 1rem; }
+.prose-ipma > :first-child { margin-top: 0; }
 .prose-ipma h2 { font-size: 1.5rem; font-weight: 800; color: var(--color-green-800); margin-top: 2rem; }
 .prose-ipma h3 { font-size: 1.2rem; font-weight: 700; color: var(--color-green-800); margin-top: 1.5rem; }
 .prose-ipma ul, .prose-ipma ol { padding-inline-start: 1.4rem; }
@@ -54,7 +55,7 @@ body { font-family: var(--font-sans); background: var(--color-cream); color: var
 .prose-ipma a { color: var(--color-green-700); text-decoration: underline; text-underline-offset: 3px; }
 .prose-ipma a:hover { color: var(--color-gold-600); }
 
-.btn { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; border-radius: 999px; padding: .7rem 1.4rem; font-weight: 700; transition: background .2s, color .2s, transform .2s; cursor: pointer; }
+.btn { display: inline-flex; white-space: nowrap; text-align: center; align-items: center; justify-content: center; gap: .5rem; border-radius: 999px; padding: .7rem 1.4rem; font-weight: 700; transition: background .2s, color .2s, transform .2s; cursor: pointer; }
 .btn-gold { background: var(--color-gold-500); color: var(--color-green-950); }
 .btn-gold:hover { background: var(--color-gold-300); }
 .btn-green { background: var(--color-green-700); color: #fff; }

@@ -27,7 +27,7 @@ export function NewsletterForm({ locale, d, source = "site", tone = "dark" }: { 
       <button disabled={pending} className="btn btn-gold justify-self-start disabled:opacity-60">
         {pending ? d.sending : d.button}
       </button>
-      <p role="status" aria-live="polite" className={"min-h-6 text-sm font-semibold " + (good ? (tone === "dark" ? "text-gold-300" : "text-green-700") : tone === "dark" ? "text-red-200" : "text-red-700")}>{msg}</p>
+      <p role="status" aria-live="polite" className={"min-h-5 text-sm font-semibold " + (good ? (tone === "dark" ? "text-gold-300" : "text-green-700") : tone === "dark" ? "text-red-200" : "text-red-700")}>{msg}</p>
       <p className={"text-xs " + (tone === "dark" ? "text-white/70" : "text-ink/60")}>{d.fine}</p>
     </form>
   );

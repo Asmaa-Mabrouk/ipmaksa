@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
     description: d.tagline,
     alternates: { languages: { ar: "/ar", en: "/en" } },
     openGraph: { siteName: d.siteName, locale: lang === "ar" ? "ar_SA" : "en_US", type: "website", images: ["/images/hero-village.webp"] },
-    icons: { icon: "/flags/sa.svg" },
+    icons: { icon: [{ url: "/favicon.ico", sizes: "any" }, { url: "/icon.png", type: "image/png", sizes: "512x512" }], apple: "/apple-touch-icon.png" },
   };
 }
 

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { EventCards, NewsletterBand, PageHero } from "@/components/Sections";
 import { getEvents, getPage } from "@/lib/content/api";
@@ -26,7 +27,12 @@ export default async function ProjectConnect({ params }: { params: Promise<{ lan
     <>
       <PageHero title={page ? t(page.data.title, lang) : "Project Connect"} intro={page ? t(page.data.intro, lang) : undefined} image={page?.data.image || undefined} />
       <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6">
-        {page && t(page.data.body, lang) && <div className="mb-12 max-w-3xl"><Markdown source={t(page.data.body, lang)} /></div>}
+        <div className="mb-12 grid items-center gap-8 md:grid-cols-[1fr_16rem]">
+          {page && t(page.data.body, lang) ? <div className="max-w-3xl"><Markdown source={t(page.data.body, lang)} /></div> : <div />}
+          <div className="mx-auto w-48 overflow-hidden rounded-3xl bg-[#f7f7f7] shadow-lg ring-1 ring-gold-300 md:w-64">
+            <Image src="/images/project-connect-logo.webp" alt="Project Connect – ملتقى المشاريع" width={497} height={700} className="h-auto w-full" />
+          </div>
+        </div>
         <h2 className="mb-6 text-2xl font-extrabold text-green-900">{d.events.upcoming}</h2>
         {upcoming.length ? <EventCards events={upcoming} locale={lang} /> : <p className="rounded-2xl bg-white p-8 text-center text-ink/70 shadow-sm">{d.events.none}</p>}
         {past.length > 0 && (

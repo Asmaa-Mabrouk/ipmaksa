@@ -6,7 +6,7 @@ import { getSession } from "@/lib/auth";
 import { COLLECTIONS } from "@/lib/content/schema";
 import { logoutAction } from "./actions";
 
-export const metadata: Metadata = { title: "IPMA KSA Admin", robots: { index: false, follow: false } };
+export const metadata: Metadata = { title: "IPMA KSA Admin", robots: { index: false, follow: false }, icons: { icon: [{ url: "/favicon.ico", sizes: "any" }, { url: "/icon.png", type: "image/png" }] } };
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const session = await getSession();

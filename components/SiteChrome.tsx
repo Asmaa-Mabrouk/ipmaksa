@@ -32,7 +32,7 @@ export async function TopBar({ locale }: { locale: Locale }) {
   );
 }
 
-const NAV_LINK = "rounded-lg px-3 py-2 font-semibold text-white/90 transition hover:bg-white/10 hover:text-white";
+const NAV_LINK = "whitespace-nowrap rounded-lg px-2.5 py-2 font-semibold text-white/90 transition hover:bg-white/10 hover:text-white";
 
 function Menu({ label, items, base, locale }: { label: string; items: { id: string; data: { title: { ar: string; en: string } } }[]; base: string; locale: Locale }) {
   return (
@@ -80,7 +80,7 @@ export async function Header({ locale }: { locale: Locale }) {
           <Image src="/images/logo-white.png" alt={d.siteName} width={1378} height={321} priority className="h-8 w-auto min-[400px]:h-10 sm:h-12" />
         </Link>
 
-        <nav aria-label="Main" className="hidden items-center gap-1 text-[0.95rem] xl:flex">
+        <nav aria-label="Main" className="hidden items-center gap-0.5 text-[0.9rem] min-[1260px]:flex">
           <Link href={base} className={link}>{d.nav.home}</Link>
           <Menu label={d.nav.about} items={about} base={base} locale={locale} />
           <Menu label={d.nav.certification} items={cert} base={base} locale={locale} />
@@ -94,8 +94,8 @@ export async function Header({ locale }: { locale: Locale }) {
 
         <div className="flex items-center gap-2">
           <LangSwitch locale={locale} label={d.switchLabel} text={d.switchTo} />
-          <Link href={`${base}/membership#join`} className="btn btn-gold hidden !py-2 sm:inline-flex">{d.joinCta}</Link>
-          <details className="group xl:hidden">
+          <Link href={`${base}/membership#join`} className="btn btn-gold hidden whitespace-nowrap !py-2 sm:inline-flex">{d.joinCta}</Link>
+          <details className="group min-[1260px]:hidden">
             <summary className="flex h-11 w-11 cursor-pointer list-none items-center justify-center rounded-lg text-white hover:bg-white/10 [&::-webkit-details-marker]:hidden" aria-label={d.menu}>
               <Icon name="menu" className="h-7 w-7 group-open:hidden" />
               <Icon name="x" className="hidden h-7 w-7 group-open:block" />
@@ -139,7 +139,7 @@ export async function Footer({ locale }: { locale: Locale }) {
   ];
   const privacy = pages.find((p) => p.id === "privacy-policy");
   return (
-    <footer className="mt-24 bg-green-950 text-white">
+    <footer className="bg-green-950 text-white">
       <div className="najdi" aria-hidden="true" />
       <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-3">
         <div>

@@ -4,7 +4,6 @@ import "../../globals.css";
 import { Footer, Header, TopBar } from "@/components/SiteChrome";
 import { LOCALES, dir, getDict, isLocale } from "@/lib/i18n";
 
-export const dynamicParams = false;
 export const generateStaticParams = () => LOCALES.map((lang) => ({ lang }));
 
 const SITE = process.env.NEXT_PUBLIC_SITE_URL || "https://ipmaksa.world";

@@ -203,6 +203,32 @@ export const COLLECTIONS: CollectionDef[] = [
     ],
   },
   {
+    id: "journey",
+    label: "How certification works (cycle, preparation, FAQ)",
+    description: "The 6-stage application-to-certificate table, the 'How to prepare' text and the frequently asked questions. Shown on the home page and on the How certification works page.",
+    single: "main",
+    fields: [
+      { key: "cycleTitle", label: "Cycle – section title", type: "text", i18n: true },
+      { key: "cycleIntro", label: "Cycle – small line under the title", type: "text", i18n: true },
+      { key: "stages", label: "Stages (the 6 columns, in order)", type: "list", itemLabel: "Stage", fields: [{ key: "title", label: "Stage name", type: "text", i18n: true }] },
+      {
+        key: "roles", label: "Who does what (rows)", type: "list", itemLabel: "Role",
+        fields: [
+          { key: "name", label: "Role", type: "text", i18n: true },
+          { key: "subtitle", label: "Role – short description", type: "text", i18n: true },
+          { key: "steps", label: "What this role does at each stage", type: "list", itemLabel: "Stage", help: "Keep the same order as the stages above. Leave the text empty if this role is not involved at that stage.", fields: [{ key: "text", label: "Action", type: "text", i18n: true }] },
+        ],
+      },
+      { key: "noteStrong", label: "Bold note under the table", type: "text", i18n: true },
+      { key: "noteText", label: "Second note under the table", type: "text", i18n: true },
+      { key: "prepareTitle", label: "How to prepare – title", type: "text", i18n: true },
+      { key: "prepareBody", label: "How to prepare – text", type: "markdown", i18n: true, help: "Use ## for headings, - for bullet points and **bold**." },
+      { key: "faqTitle", label: "FAQ – title", type: "text", i18n: true },
+      { key: "faqIntro", label: "FAQ – small line", type: "text", i18n: true },
+      { key: "faqs", label: "Frequently asked questions", type: "list", itemLabel: "Question", fields: [{ key: "q", label: "Question", type: "text", i18n: true }, { key: "a", label: "Answer", type: "textarea", i18n: true }] },
+    ],
+  },
+  {
     id: "events",
     label: "Project Connect events",
     description: "Webinars and workshops of the Project Connect initiative, announced on the Project Connect page.",

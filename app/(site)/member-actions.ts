@@ -1,6 +1,7 @@
 "use server";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 import { isCountry } from "@/lib/countries";
 import { getStore } from "@/lib/content/store";
 import { checkPassword, createMember, endMemberSession, findMember, getMember, startMemberSession } from "@/lib/members";
@@ -90,5 +91,6 @@ export async function updateProfile(_: AuthState, fd: FormData): Promise<AuthSta
   }
   const next: MemberDoc = { ...m.data, firstName, lastName, country, photo };
   await getStore().put("members", m.id, next as unknown as Record<string, unknown>);
+  revalidatePath("/", "layout");
   return { saved: true };
 }

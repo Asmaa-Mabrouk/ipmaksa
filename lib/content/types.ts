@@ -144,3 +144,17 @@ export type MemberDoc = {
   createdAt: string;
   badges: MemberBadge[];
 };
+
+export type JourneyDoc = {
+  cycleTitle: L;
+  cycleIntro: L;
+  stages: { title: L }[];
+  roles: { name: L; subtitle: L; steps: { text: L }[] }[];
+  noteStrong: L;
+  noteText: L;
+  prepareTitle: L;
+  prepareBody: L;
+  faqTitle: L;
+  faqIntro: L;
+  faqs: { q: L; a: L }[];
+};

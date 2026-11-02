@@ -9,11 +9,11 @@ import { getStore } from "@/lib/content/store";
 const SLUG = /^[a-z0-9][a-z0-9-]{0,80}$/;
 const refresh = () => revalidatePath("/", "layout");
 
-export async function loginAction(_: { error?: string }, fd: FormData) {
+export async function loginAction(_: { error?: string; email?: string }, fd: FormData) {
   const h = await headers();
   const ip = (h.get("x-forwarded-for") || "").split(",")[0].trim() || "local";
   const r = await login(String(fd.get("email") || ""), String(fd.get("password") || ""), ip);
-  if (!r.ok) return { error: r.reason === "throttled" ? "Too many attempts. Try again in 15 minutes." : "Incorrect email or password." };
+  if (!r.ok) return { error: r.reason === "throttled" ? "Too many attempts. Try again in 15 minutes." : "Incorrect email or password.", email: String(fd.get("email") || "") };
   redirect("/admin");
 }
 

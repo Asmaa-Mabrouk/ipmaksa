@@ -26,6 +26,7 @@ const ui = {
       about: "About",
       certification: "Certification",
       examDates: "Exam dates",
+      journey: "How certification works",
       projectConnect: "Project Connect",
       membership: "Membership",
       team: "Team",
@@ -37,6 +38,7 @@ const ui = {
     readMore: "Read more",
     learnMore: "Learn more",
     viewAll: "View all",
+    journeyUi: { fullPage: "See the full journey", allFaq: "All questions", prepare: "How to prepare", stillAsk: "Still have a question?", writeUs: "Email us", role: "Role" },
     sections: {
       exams: "Upcoming exam dates",
       examsIntro: "Plan your certification. Dates are confirmed by the Certification Body.",
@@ -181,6 +183,7 @@ const ui = {
       about: "من نحن",
       certification: "الشهادات",
       examDates: "مواعيد الاختبارات",
+      journey: "كيف تحصل على الشهادة",
       projectConnect: "Project Connect",
       membership: "العضوية",
       team: "الفريق",
@@ -192,6 +195,7 @@ const ui = {
     readMore: "اقرأ المزيد",
     learnMore: "اعرف المزيد",
     viewAll: "عرض الكل",
+    journeyUi: { fullPage: "شاهد الرحلة كاملة", allFaq: "كل الأسئلة", prepare: "كيف أستعد؟", stillAsk: "ما زال لديك سؤال؟", writeUs: "راسلنا", role: "الدور" },
     sections: {
       exams: "مواعيد الاختبارات القادمة",
       examsIntro: "خطّط لشهادتك. تُعتمد المواعيد من جهة منح الشهادات.",

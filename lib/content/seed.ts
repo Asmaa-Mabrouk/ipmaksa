@@ -1,4 +1,5 @@
 import { CERT } from "./seed-certifications";
+import { JOURNEY } from "./seed-journey";
 
 /**
  * Starting content (Arabic + English), built from the IPMA KSA 2026 deck.
@@ -713,6 +714,7 @@ const news = {
 
 export const SEED: Record<string, Record<string, unknown>> = {
   home: { main: home },
+  journey: { main: JOURNEY },
   settings: { site: settings },
   pages,
   team,

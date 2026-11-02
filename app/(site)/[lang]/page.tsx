@@ -2,9 +2,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Icon } from "@/components/Icon";
+import { FaqList, JourneyCycle, PrepareBlock } from "@/components/Journey";
 import { BenefitsGrid, EventCards, ExamCards, NewsCards, JoinBand, SectionTitle, TeamCard } from "@/components/Sections";
 import { telHref } from "@/components/SiteChrome";
-import { getBenefits, getEvents, getExams, getHome, getNews, getSettings, getTeam } from "@/lib/content/api";
+import { getBenefits, getEvents, getExams, getHome, getJourney, getNews, getSettings, getTeam } from "@/lib/content/api";
 import { getDict, isLocale, t } from "@/lib/i18n";
 import { Markdown } from "@/lib/markdown";
 
@@ -21,7 +22,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
   const { lang } = await params;
   if (!isLocale(lang)) notFound();
   const d = getDict(lang);
-  const [h, s, exams, benefits, news, team, events] = await Promise.all([getHome(), getSettings(), getExams(), getBenefits(), getNews(), getTeam(), getEvents()]);
+  const [h, s, exams, benefits, news, team, events, journey] = await Promise.all([getHome(), getSettings(), getExams(), getBenefits(), getNews(), getTeam(), getEvents(), getJourney()]);
   const today = new Date().toLocaleDateString("en-CA", { timeZone: "Asia/Riyadh" });
   const nextEvents = events.filter((e) => e.data.status !== "closed" && (!e.data.date || e.data.date >= today)).slice(0, 2);
   const base = `/${lang}`;
@@ -116,6 +117,9 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
         </div>
       </section>
 
+      {/* HOW CERTIFICATION WORKS */}
+      <JourneyCycle j={journey} locale={lang} showLink />
+
       {/* EXAM DATES */}
       <section id="exams" className="mx-auto max-w-7xl px-4 py-20 sm:px-6">
         <div className="flex flex-wrap items-end justify-between gap-4">
@@ -124,6 +128,10 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
         </div>
         <div className="mt-8"><ExamCards exams={exams} locale={lang} email={s.email} limit={4} /></div>
       </section>
+
+      {/* HOW TO PREPARE + FAQ */}
+      <PrepareBlock j={journey} locale={lang} />
+      <FaqList j={journey} locale={lang} limit={4} showLink email={s.email} />
 
       {/* PROJECT CONNECT */}
       {nextEvents.length > 0 && (

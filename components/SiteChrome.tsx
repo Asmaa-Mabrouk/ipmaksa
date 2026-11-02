@@ -58,7 +58,8 @@ export async function Header({ locale }: { locale: Locale }) {
   const grp = (g: string) => pages.filter((p) => p.data.group === g);
   const base = `/${locale}`;
   const about = grp("about");
-  const cert = grp("certification");
+  const journeyItem = { id: "certification-journey", data: { title: { ar: d.nav.journey, en: d.nav.journey } } } as unknown as (typeof pages)[number];
+  const cert = [...grp("certification"), journeyItem];
   const link = NAV_LINK;
 
   const mobile = [
@@ -82,7 +83,7 @@ export async function Header({ locale }: { locale: Locale }) {
           <Image src="/images/logo-white.png" alt={d.siteName} width={1378} height={321} priority className="h-8 w-auto min-[400px]:h-10 sm:h-12" />
         </Link>
 
-        <nav aria-label="Main" className="hidden items-center gap-0.5 text-[0.9rem] min-[1260px]:flex">
+        <nav aria-label="Main" className="hidden items-center gap-0.5 text-[0.9rem] min-[1320px]:flex">
           <Link href={base} className={link}>{d.nav.home}</Link>
           <Menu label={d.nav.about} items={about} base={base} locale={locale} />
           <Menu label={d.nav.certification} items={cert} base={base} locale={locale} />
@@ -97,8 +98,8 @@ export async function Header({ locale }: { locale: Locale }) {
         <div className="flex items-center gap-2">
           <LangSwitch locale={locale} label={d.switchLabel} text={d.switchTo} />
           <Link href={`${base}/login`} aria-label={d.account.signIn} title={d.account.signIn} className="hidden h-10 w-10 items-center justify-center rounded-full border border-white/25 text-white transition hover:bg-white/10 sm:flex"><Icon name="user" className="h-5 w-5" /></Link>
-          <Link href={`${base}/register`} className="btn btn-gold hidden whitespace-nowrap !py-2 sm:inline-flex">{d.joinCta}</Link>
-          <details className="group min-[1260px]:hidden">
+          <span className="hidden sm:block"><Link href={`${base}/register`} className="btn btn-gold whitespace-nowrap !py-2">{d.joinCta}</Link></span>
+          <details className="group min-[1320px]:hidden">
             <summary className="flex h-11 w-11 cursor-pointer list-none items-center justify-center rounded-lg text-white hover:bg-white/10 [&::-webkit-details-marker]:hidden" aria-label={d.menu}>
               <Icon name="menu" className="h-7 w-7 group-open:hidden" />
               <Icon name="x" className="hidden h-7 w-7 group-open:block" />
@@ -133,6 +134,7 @@ export async function Footer({ locale }: { locale: Locale }) {
   const links = [
     [d.nav.about, `${base}/about-us`],
     [d.nav.certification, `${base}/ipma-standards`],
+    [d.nav.journey, `${base}/certification-journey`],
     [d.nav.examDates, `${base}/exam-dates`],
     [d.nav.projectConnect, `${base}/project-connect`],
     [d.nav.membership, `${base}/membership`],

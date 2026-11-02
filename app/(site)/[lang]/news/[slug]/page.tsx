@@ -7,6 +7,8 @@ import { getNews, getNewsItem } from "@/lib/content/api";
 import { LOCALES, getDict, isLocale, t } from "@/lib/i18n";
 import { Markdown } from "@/lib/markdown";
 
+export const dynamicParams = true;
+
 export async function generateStaticParams() {
   const news = await getNews();
   return LOCALES.flatMap((lang) => news.map((n) => ({ lang, slug: n.id })));

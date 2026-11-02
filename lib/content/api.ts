@@ -1,7 +1,7 @@
 import "server-only";
 import { cache } from "react";
 import { getStore } from "./store";
-import type {
+import type { JourneyDoc,
   BenefitDoc, Doc, ExamDoc, HomeDoc, NewsDoc, PageDoc, ProjectEventDoc, SiteSettings, TeamDoc,
 } from "./types";
 
@@ -10,6 +10,7 @@ async function all<T>(collection: string): Promise<Doc<T>[]> {
   return rows.map((r) => ({ id: r.id, data: r.data as T }));
 }
 
+export const getJourney = cache(async () => (await getStore().get("journey", "main"))?.data as JourneyDoc);
 export const getHome = cache(async () => (await getStore().get("home", "main"))?.data as HomeDoc);
 export const getSettings = cache(async () => (await getStore().get("settings", "site"))?.data as SiteSettings);
 

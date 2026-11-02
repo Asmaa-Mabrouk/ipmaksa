@@ -1,0 +1,182 @@
+import Image from "next/image";
+import Link from "next/link";
+import { Icon } from "./Icon";
+import { LangSwitch } from "./LangSwitch";
+import { getDict, t } from "@/lib/i18n";
+import { getPages, getSettings } from "@/lib/content/api";
+import type { Locale } from "@/lib/content/types";
+
+export const telHref = (p: string) => "tel:" + p.replace(/[^\d+]/g, "");
+
+export async function TopBar({ locale }: { locale: Locale }) {
+  const s = await getSettings();
+  const d = getDict(locale);
+  return (
+    <div className="bg-green-950 text-sm text-white">
+      <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-x-6 gap-y-1 px-4 py-2 sm:px-6">
+        <div className="flex flex-wrap items-center gap-x-5 gap-y-1">
+          <a href={`mailto:${s.email}`} className="inline-flex items-center gap-2 font-semibold hover:text-gold-300">
+            <Icon name="mail" className="h-4 w-4 text-gold-500" />
+            <span dir="ltr">{s.email}</span>
+          </a>
+          {s.phone && (
+            <a href={telHref(s.phone)} className="inline-flex items-center gap-2 font-semibold hover:text-gold-300">
+              <Icon name="phone" className="h-4 w-4 text-gold-500" />
+              <span dir="ltr">{s.phone}</span>
+            </a>
+          )}
+        </div>
+        <span className="hidden text-white/70 md:inline">{d.tagline}</span>
+      </div>
+    </div>
+  );
+}
+
+const NAV_LINK = "rounded-lg px-3 py-2 font-semibold text-white/90 transition hover:bg-white/10 hover:text-white";
+
+function Menu({ label, items, base, locale }: { label: string; items: { id: string; data: { title: { ar: string; en: string } } }[]; base: string; locale: Locale }) {
+  return (
+    <div className="group relative">
+      <button type="button" className={`${NAV_LINK} inline-flex items-center gap-1`} aria-haspopup="true">
+        {label}
+        <Icon name="chevron" className="h-4 w-4" />
+      </button>
+      <div className="invisible absolute start-0 top-full z-50 min-w-72 translate-y-1 rounded-2xl border border-green-100 bg-white p-2 opacity-0 shadow-xl transition group-focus-within:visible group-focus-within:opacity-100 group-hover:visible group-hover:opacity-100">
+        {items.map((p) => (
+          <Link key={p.id} href={`${base}/${p.id}`} className="block rounded-xl px-4 py-2.5 text-sm font-semibold text-green-900 hover:bg-green-50">
+            {t(p.data.title, locale)}
+          </Link>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export async function Header({ locale }: { locale: Locale }) {
+  const d = getDict(locale);
+  const pages = await getPages();
+  const grp = (g: string) => pages.filter((p) => p.data.group === g);
+  const base = `/${locale}`;
+  const about = grp("about");
+  const cert = grp("certification");
+  const link = NAV_LINK;
+
+  const mobile = [
+    { label: d.nav.home, href: base },
+    ...about.map((p) => ({ label: t(p.data.title, locale), href: `${base}/${p.id}` })),
+    ...cert.map((p) => ({ label: t(p.data.title, locale), href: `${base}/${p.id}` })),
+    { label: d.nav.examDates, href: `${base}/exam-dates` },
+    { label: d.nav.membership, href: `${base}/membership` },
+    { label: d.nav.team, href: `${base}/team` },
+    { label: d.nav.news, href: `${base}/news` },
+    { label: d.nav.contact, href: `${base}/contact` },
+  ];
+
+  return (
+    <header className="sticky top-0 z-40 bg-green-900/95 backdrop-blur supports-[backdrop-filter]:bg-green-900/90">
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-2 px-3 py-3 sm:gap-4 sm:px-6">
+        <Link href={base} aria-label={d.siteName} className="shrink-0">
+          <Image src="/images/logo-white.png" alt={d.siteName} width={1378} height={321} priority className="h-8 w-auto min-[400px]:h-10 sm:h-12" />
+        </Link>
+
+        <nav aria-label="Main" className="hidden items-center gap-1 text-[0.95rem] xl:flex">
+          <Link href={base} className={link}>{d.nav.home}</Link>
+          <Menu label={d.nav.about} items={about} base={base} locale={locale} />
+          <Menu label={d.nav.certification} items={cert} base={base} locale={locale} />
+          <Link href={`${base}/exam-dates`} className={link}>{d.nav.examDates}</Link>
+          <Link href={`${base}/membership`} className={link}>{d.nav.membership}</Link>
+          <Link href={`${base}/team`} className={link}>{d.nav.team}</Link>
+          <Link href={`${base}/news`} className={link}>{d.nav.news}</Link>
+          <Link href={`${base}/contact`} className={link}>{d.nav.contact}</Link>
+        </nav>
+
+        <div className="flex items-center gap-2">
+          <LangSwitch locale={locale} label={d.switchLabel} text={d.switchTo} />
+          <Link href={`${base}/membership#join`} className="btn btn-gold hidden !py-2 sm:inline-flex">{d.joinCta}</Link>
+          <details className="group xl:hidden">
+            <summary className="flex h-11 w-11 cursor-pointer list-none items-center justify-center rounded-lg text-white hover:bg-white/10 [&::-webkit-details-marker]:hidden" aria-label={d.menu}>
+              <Icon name="menu" className="h-7 w-7 group-open:hidden" />
+              <Icon name="x" className="hidden h-7 w-7 group-open:block" />
+            </summary>
+            <div className="absolute inset-x-0 top-full max-h-[80vh] overflow-y-auto border-t border-white/10 bg-green-900 px-4 pb-6 pt-2 shadow-xl">
+              <ul className="mx-auto max-w-7xl">
+                {mobile.map((m) => (
+                  <li key={m.href}><Link href={m.href} className="block border-b border-white/10 py-3 font-semibold text-white">{m.label}</Link></li>
+                ))}
+              </ul>
+              <Link href={`${base}/membership#join`} className="btn btn-gold mx-auto mt-4 flex w-full max-w-7xl">{d.joinCta}</Link>
+            </div>
+          </details>
+        </div>
+      </div>
+      <div className="najdi" aria-hidden="true" />
+    </header>
+  );
+}
+
+export async function Footer({ locale }: { locale: Locale }) {
+  const d = getDict(locale);
+  const s = await getSettings();
+  const pages = await getPages();
+  const base = `/${locale}`;
+  const social = [
+    ["linkedin", s.linkedin, "LinkedIn"],
+    ["x", s.x, "X"],
+    ["instagram", s.instagram, "Instagram"],
+    ["youtube", s.youtube, "YouTube"],
+  ].filter((x) => x[1]);
+  const links = [
+    [d.nav.about, `${base}/about-us`],
+    [d.nav.certification, `${base}/ipma-standards`],
+    [d.nav.examDates, `${base}/exam-dates`],
+    [d.nav.membership, `${base}/membership`],
+    [d.nav.team, `${base}/team`],
+    [d.nav.news, `${base}/news`],
+    [d.nav.contact, `${base}/contact`],
+  ];
+  const privacy = pages.find((p) => p.id === "privacy-policy");
+  return (
+    <footer className="mt-24 bg-green-950 text-white">
+      <div className="najdi" aria-hidden="true" />
+      <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-3">
+        <div>
+          <Image src="/images/logo-white.png" alt={d.siteName} width={1378} height={321} className="h-12 w-auto" />
+          <p className="mt-4 max-w-sm text-white/75">{d.tagline}</p>
+          <p className="mt-3 max-w-sm text-sm text-white/60">{d.footer.independence}</p>
+        </div>
+        <div>
+          <h2 className="text-lg font-extrabold text-gold-300">{d.footer.explore}</h2>
+          <ul className="mt-4 grid grid-cols-2 gap-x-6 gap-y-2">
+            {links.map(([label, href]) => (
+              <li key={href}><Link href={href} className="text-white/85 hover:text-gold-300">{label}</Link></li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <h2 className="text-lg font-extrabold text-gold-300">{d.footer.contact}</h2>
+          <ul className="mt-4 grid gap-3 text-white/90">
+            <li><a href={`mailto:${s.email}`} className="inline-flex items-center gap-2 hover:text-gold-300"><Icon name="mail" className="h-5 w-5 text-gold-500" /><span dir="ltr">{s.email}</span></a></li>
+            {s.phone && <li><a href={telHref(s.phone)} className="inline-flex items-center gap-2 hover:text-gold-300"><Icon name="phone" className="h-5 w-5 text-gold-500" /><span dir="ltr">{s.phone}</span></a></li>}
+            {t(s.address, locale) && <li className="inline-flex items-start gap-2"><Icon name="pin" className="mt-0.5 h-5 w-5 shrink-0 text-gold-500" />{t(s.address, locale)}</li>}
+          </ul>
+          {social.length > 0 && (
+            <div className="mt-5">
+              <p className="text-sm font-semibold text-white/70">{d.footer.follow}</p>
+              <div className="mt-2 flex gap-2">
+                {social.map(([n, url, label]) => (
+                  <a key={n} href={url} target="_blank" rel="noopener noreferrer" aria-label={label} className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 hover:bg-gold-500 hover:text-green-950">
+                    <Icon name={n} className="h-5 w-5" />
+                  </a>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+      <div className="border-t border-white/10 py-5 text-center text-sm text-white/60">
+        © {new Date().getFullYear()} {d.siteName}. {d.footer.rights}
+        {privacy && <> · <Link href={`${base}/privacy-policy`} className="underline hover:text-gold-300">{d.footer.privacy}</Link></>}
+      </div>
+    </footer>
+  );
+}

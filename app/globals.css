@@ -1,0 +1,66 @@
+@import "tailwindcss";
+@import "@fontsource-variable/cairo/wght.css";
+
+@theme {
+  --font-sans: "Cairo Variable", ui-sans-serif, system-ui, sans-serif;
+  --color-green-950: #0a2820;
+  --color-green-900: #10332a;
+  --color-green-800: #164537;
+  --color-green-700: #1d5a47;
+  --color-green-600: #2a7259;
+  --color-green-100: #dcebe4;
+  --color-green-50: #eef5f1;
+  --color-gold-600: #a58343;
+  --color-gold-500: #bf9e5f;
+  --color-gold-300: #dcc795;
+  --color-gold-100: #f3ead4;
+  --color-cream: #faf8f4;
+  --color-sand: #f1ece2;
+  --color-ink: #1c2a25;
+  --color-ipma-red: #e30613;
+}
+
+html { scroll-behavior: smooth; }
+body { font-family: var(--font-sans); background: var(--color-cream); color: var(--color-ink); -webkit-font-smoothing: antialiased; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { animation: none !important; transition: none !important; } }
+
+:focus-visible { outline: 3px solid var(--color-gold-500); outline-offset: 2px; border-radius: 4px; }
+
+/* Subtle Najdi-style triangle band, used as a section divider */
+.najdi {
+  height: 14px;
+  background:
+    linear-gradient(135deg, var(--color-gold-500) 25%, transparent 25%) -7px 0,
+    linear-gradient(225deg, var(--color-gold-500) 25%, transparent 25%) -7px 0,
+    linear-gradient(315deg, var(--color-gold-500) 25%, transparent 25%),
+    linear-gradient(45deg, var(--color-gold-500) 25%, transparent 25%);
+  background-size: 14px 14px;
+  opacity: .85;
+}
+.pattern-dots {
+  background-image: radial-gradient(rgba(191,158,95,.25) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+.prose-ipma { line-height: 1.9; font-size: 1.0625rem; color: #26352f; }
+.prose-ipma > * + * { margin-top: 1rem; }
+.prose-ipma h2 { font-size: 1.5rem; font-weight: 800; color: var(--color-green-800); margin-top: 2rem; }
+.prose-ipma h3 { font-size: 1.2rem; font-weight: 700; color: var(--color-green-800); margin-top: 1.5rem; }
+.prose-ipma ul, .prose-ipma ol { padding-inline-start: 1.4rem; }
+.prose-ipma ul { list-style: disc; }
+.prose-ipma ol { list-style: decimal; }
+.prose-ipma li { margin-top: .4rem; }
+.prose-ipma li::marker { color: var(--color-gold-600); }
+.prose-ipma a { color: var(--color-green-700); text-decoration: underline; text-underline-offset: 3px; }
+.prose-ipma a:hover { color: var(--color-gold-600); }
+
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; border-radius: 999px; padding: .7rem 1.4rem; font-weight: 700; transition: background .2s, color .2s, transform .2s; cursor: pointer; }
+.btn-gold { background: var(--color-gold-500); color: var(--color-green-950); }
+.btn-gold:hover { background: var(--color-gold-300); }
+.btn-green { background: var(--color-green-700); color: #fff; }
+.btn-green:hover { background: var(--color-green-800); }
+.btn-outline { border: 2px solid currentColor; }
+.btn-outline:hover { background: rgba(255,255,255,.12); }
+
+.reveal { animation: rise .7s both cubic-bezier(.2,.7,.2,1); }
+@keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }

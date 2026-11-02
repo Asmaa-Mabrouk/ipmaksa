@@ -96,3 +96,10 @@ End-to-end checks with Playwright against PostgreSQL: member register, duplicate
 - `/sitemap.xml` with priorities, change frequency and language alternates.
 - `/llms.txt` and `/llms-full.txt`: plain-text summaries for AI assistants, generated from live content (pages, news, exams, FAQ).
 - Social links (LinkedIn, X, Instagram, WhatsApp channel) are in Settings, the footer and the Organization `sameAs`.
+
+## Member emails and password reset
+
+- Needs SMTP in `.env` (Microsoft 365: `smtp.office365.com`, port 587, sender `care@ipmaksa.world`; Authenticated SMTP must be enabled for that mailbox).
+- Emails (Arabic or English, site-branded): welcome on sign-up, password reset link, "password was changed" notice.
+- Reset flow: `/forgot-password` -> email with one-time link (valid 30 minutes, only its hash is stored in the `resets` collection) -> `/reset-password?token=...`. The answer never reveals whether an email is registered; requests are rate-limited.
+- Code: `lib/mailer.ts`, `lib/member-mail.ts`, `lib/reset.ts`, actions `requestReset` and `resetPassword` in `app/(site)/member-actions.ts`.

@@ -7,7 +7,7 @@ import { getPage, getPages } from "@/lib/content/api";
 import { LOCALES, getDict, isLocale, t } from "@/lib/i18n";
 import { Markdown } from "@/lib/markdown";
 
-const RESERVED = new Set(["team", "membership", "exam-dates", "news", "contact", "project-connect", "register", "login", "profile", "certification-journey"]);
+const RESERVED = new Set(["team", "membership", "exam-dates", "news", "contact", "project-connect", "register", "login", "profile", "certification-journey", "forgot-password", "reset-password"]);
 
 export const dynamicParams = true;
 

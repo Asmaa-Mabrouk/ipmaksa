@@ -338,7 +338,7 @@ export const COLLECTIONS: CollectionDef[] = [
 export const getCollection = (id: string) => COLLECTIONS.find((c) => c.id === id);
 
 /** Collections that are stored but not edited through the generic forms. */
-export const SYSTEM_COLLECTIONS = ["members"];
+export const SYSTEM_COLLECTIONS = ["members", "resets"];
 
 /* ---------- sanitising ---------- */
 

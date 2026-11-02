@@ -1,7 +1,7 @@
 "use client";
 import { useActionState } from "react";
 import Link from "next/link";
-import { loginMember, registerMember, updateProfile, type AuthState } from "@/app/(site)/member-actions";
+import { loginMember, registerMember, requestReset, resetPassword, updateProfile, type AuthState } from "@/app/(site)/member-actions";
 import type { Dict } from "@/lib/i18n";
 import { CountrySelect } from "./CountrySelect";
 import { PhotoPicker } from "./PhotoPicker";
@@ -107,6 +107,7 @@ export function LoginForm({ locale, d }: { locale: "ar" | "en"; d: A }) {
         <PasswordInput name="password" errors={v.errors} show={d.showPassword} hide={d.hidePassword} autoComplete="current-password" />
         <FieldError name="password" errors={v.errors} />
       </div>
+      <p className="-mt-2 text-sm"><Link href={`/${locale}/forgot-password`} className="font-bold text-green-700 underline">{d.forgotLink}</Link></p>
       <button disabled={pending} className="btn btn-green justify-self-start disabled:opacity-60">{d.loginBtn}</button>
       <p role="alert" className="min-h-5 text-sm font-semibold text-red-700">{err(d, s)}</p>
       <p className="text-sm">{d.noAccount} <Link href={`/${locale}/register`} className="font-bold text-green-700 underline">{d.register}</Link></p>
@@ -136,6 +137,62 @@ export function ProfileForm({ d, countries, first, last, country }: { d: A; coun
       </div>
       <button disabled={pending} className="btn btn-green justify-self-start disabled:opacity-60">{d.save}</button>
       <p role="status" className={"min-h-5 text-sm font-semibold " + (s.saved ? "text-green-700" : "text-red-700")}>{s.saved ? d.saved : err(d, s)}</p>
+    </form>
+  );
+}
+
+export function ForgotForm({ locale, d }: { locale: "ar" | "en"; d: A }) {
+  const [s, action, pending] = useActionState<AuthState, FormData>(requestReset, {});
+  const v = useValidation((fd) => {
+    const e: Errors = {};
+    const email = String(fd.get("email") ?? "").trim();
+    if (!email) e.email = d.errors.required; else if (!EMAIL_RE.test(email)) e.email = d.errors.email;
+    return e;
+  });
+  if (s.saved) {
+    return (
+      <div className="grid gap-4">
+        <p role="status" className="rounded-xl bg-green-50 p-4 font-semibold leading-7 text-green-900">{d.sentOk}</p>
+        <Link href={`/${locale}/login`} className="text-sm font-bold text-green-700 underline">{d.backToLogin}</Link>
+      </div>
+    );
+  }
+  return (
+    <form action={action} noValidate onSubmit={v.onSubmit} onInput={v.onInput} className="grid gap-4">
+      <input type="hidden" name="lang" value={locale} /><Honey />
+      <p className="leading-7 text-ink/80">{d.forgotText}</p>
+      <Text name="email" label={d.email} errors={v.errors} type="email" autoComplete="email" defaultValue={s.values?.email} ltr />
+      <button disabled={pending} className="btn btn-green justify-self-start disabled:opacity-60">{d.sendLink}</button>
+      <p role="alert" className="min-h-5 text-sm font-semibold text-red-700">{err(d, s)}</p>
+      <Link href={`/${locale}/login`} className="text-sm font-bold text-green-700 underline">{d.backToLogin}</Link>
+    </form>
+  );
+}
+
+export function ResetForm({ locale, d, token }: { locale: "ar" | "en"; d: A; token: string }) {
+  const [s, action, pending] = useActionState<AuthState, FormData>(resetPassword, {});
+  const v = useValidation((fd) => {
+    const e: Errors = {};
+    const p = String(fd.get("password") ?? ""), p2 = String(fd.get("password2") ?? "");
+    if (!p) e.password = d.errors.required; else if (p.length < 8) e.password = d.errors.short;
+    if (!p2) e.password2 = d.errors.required; else if (p && p !== p2) e.password2 = d.errors.mismatch;
+    return e;
+  });
+  return (
+    <form action={action} noValidate onSubmit={v.onSubmit} onInput={v.onInput} className="grid gap-4">
+      <input type="hidden" name="lang" value={locale} /><input type="hidden" name="token" value={token} />
+      <div className={lbl}>
+        <label htmlFor="field-password">{d.newPassword} *</label>
+        <PasswordInput name="password" errors={v.errors} show={d.showPassword} hide={d.hidePassword} autoComplete="new-password" />
+        <FieldError name="password" errors={v.errors} />
+      </div>
+      <div className={lbl}>
+        <label htmlFor="field-password2">{d.password2} *</label>
+        <PasswordInput name="password2" errors={v.errors} show={d.showPassword} hide={d.hidePassword} autoComplete="new-password" />
+        <FieldError name="password2" errors={v.errors} />
+      </div>
+      <button disabled={pending} className="btn btn-green justify-self-start disabled:opacity-60">{d.resetBtn}</button>
+      <p role="alert" className="min-h-5 text-sm font-semibold text-red-700">{err(d, s)}</p>
     </form>
   );
 }

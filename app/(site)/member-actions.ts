@@ -5,6 +5,9 @@ import { revalidatePath } from "next/cache";
 import { isCountry } from "@/lib/countries";
 import { getStore } from "@/lib/content/store";
 import { checkPassword, createMember, endMemberSession, findMember, getMember, startMemberSession } from "@/lib/members";
+import { sendPasswordChanged, sendReset, sendWelcome } from "@/lib/member-mail";
+import { burnResetToken, createResetToken, readResetToken } from "@/lib/reset";
+import { hashPassword } from "@/lib/auth";
 import type { MemberDoc } from "@/lib/content/types";
 
 export type AuthState = { error?: string; saved?: boolean; values?: Record<string, string> };
@@ -49,6 +52,7 @@ export async function registerMember(_: AuthState, fd: FormData): Promise<AuthSt
     photo: "",
   });
   await startMemberSession(id);
+  sendWelcome(lang, email, firstName).catch(() => {}); // never blocks or fails the sign-up
   redirect(`/${lang}/profile`);
 }
 
@@ -61,6 +65,42 @@ export async function loginMember(_: AuthState, fd: FormData): Promise<AuthState
   const ok = checkPassword(typeof fd.get("password") === "string" ? (fd.get("password") as string) : "", m?.data ?? null);
   if (!m || !ok) return { error: "credentials", values: { email } };
   await startMemberSession(m.id);
+  redirect(`/${lang}/profile`);
+}
+
+/** Step 1: always answers the same way so nobody can find out which emails are registered. */
+export async function requestReset(_: AuthState, fd: FormData): Promise<AuthState> {
+  const lang = loc(fd);
+  const email = txt(fd.get("email"), 320).toLowerCase();
+  if (txt(fd.get("website"), 50)) return { saved: true };
+  if (!EMAIL.test(email)) return { error: "email", values: { email } };
+  if (limited(`forgot:${await ip()}`, 5, 15 * 60_000) || limited(`forgot-mail:${email}`, 3, 60 * 60_000)) return { error: "throttled", values: { email } };
+  const m = await findMember(email);
+  if (m) {
+    const token = await createResetToken(m.id);
+    const ok = await sendReset(m.data.lang === "en" ? "en" : lang, m.data.email, m.data.firstName, token);
+    if (!ok) return { error: "generic", values: { email } };
+  }
+  return { saved: true, values: { email } };
+}
+
+/** Step 2: the one-time link from the email. */
+export async function resetPassword(_: AuthState, fd: FormData): Promise<AuthState> {
+  const lang = loc(fd);
+  const token = txt(fd.get("token"), 80);
+  const password = typeof fd.get("password") === "string" ? (fd.get("password") as string) : "";
+  const password2 = typeof fd.get("password2") === "string" ? (fd.get("password2") as string) : "";
+  if (limited(`reset:${await ip()}`, 10, 15 * 60_000)) return { error: "throttled" };
+  if (password.length < 8 || password.length > 200) return { error: "short" };
+  if (password !== password2) return { error: "mismatch" };
+  const id = await readResetToken(token);
+  const row = id ? await getStore().get("members", id) : null;
+  if (!id || !row) return { error: "token" };
+  const m = row.data as unknown as MemberDoc;
+  await getStore().put("members", id, { ...m, passwordHash: hashPassword(password) } as unknown as Record<string, unknown>);
+  await burnResetToken(token);
+  sendPasswordChanged(m.lang === "en" ? "en" : lang, m.email, m.firstName).catch(() => {});
+  await startMemberSession(id);
   redirect(`/${lang}/profile`);
 }
 

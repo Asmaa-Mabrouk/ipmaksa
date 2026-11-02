@@ -150,9 +150,10 @@ const settings = {
   whatsapp: "966503656644",
   address: l("الظهران، المملكة العربية السعودية", "Dhahran, Saudi Arabia"),
   hours: l("", ""),
-  linkedin: "https://www.linkedin.com/company/ipma-ksa",
+  linkedin: "https://www.linkedin.com/company/ipma-ksa/",
   x: "https://x.com/IPMAKSA",
-  instagram: "https://www.instagram.com/ipmaksa",
+  instagram: "https://www.instagram.com/ipmaksa/",
+  whatsappChannel: "https://whatsapp.com/channel/0029Vb8zjSO2kNFqeS4m4630",
   youtube: "",
 };
 

@@ -8,6 +8,8 @@ import { telHref } from "@/components/SiteChrome";
 import { getBenefits, getEvents, getExams, getHome, getJourney, getNews, getSettings, getTeam } from "@/lib/content/api";
 import { getDict, isLocale, t } from "@/lib/i18n";
 import { Markdown } from "@/lib/markdown";
+import { pageMeta } from "@/lib/seo";
+import type { Metadata } from "next";
 
 const SECTORS = [
   { img: "sector-cities", ar: "المدن", en: "Cities" },
@@ -22,6 +24,19 @@ const LIVE_STYLE: Record<string, { border: string; bar: string; tile: string; pi
   introduced: { border: "border-green-100", bar: "bg-green-300", tile: "bg-green-50 text-green-700", pill: "bg-green-50 text-green-700", icon: "M5 21V4m0 0h11l-2 4 2 4H5" },
   later: { border: "border-ink/10", bar: "bg-ink/20", tile: "bg-sand text-ink/50", pill: "bg-sand text-ink/60", icon: "M8 3v3m8-3v3M4 9h16M5 5h14a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z" },
 };
+
+export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
+  const { lang } = await params;
+  if (!isLocale(lang)) return {};
+  return pageMeta({
+    lang,
+    path: "/",
+    title: lang === "ar" ? "IPMA السعودية | شهادات إدارة المشاريع الدولية في المملكة" : "IPMA KSA | International Project Management Certification in Saudi Arabia",
+    description: lang === "ar"
+      ? "الممثل الرسمي للجمعية الدولية لإدارة المشاريع (IPMA) في السعودية. اعرف كيف تحصل على شهادة IPMA، تاريخ الاختبارات القادمة، وانضم إلى ملتقى المشاريع."
+      : "The official IPMA member in Saudi Arabia. Learn how to get IPMA certified, see upcoming exam dates and join the Project Connect community.",
+  });
+}
 
 export default async function Home({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;

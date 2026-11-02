@@ -130,6 +130,7 @@ export async function Footer({ locale }: { locale: Locale }) {
     ["x", s.x, "X"],
     ["instagram", s.instagram, "Instagram"],
     ["youtube", s.youtube, "YouTube"],
+    ["whatsapp", s.whatsappChannel, locale === "ar" ? "قناة واتساب" : "WhatsApp channel"],
   ].filter((x) => x[1]);
   const links = [
     [d.nav.about, `${base}/about-us`],

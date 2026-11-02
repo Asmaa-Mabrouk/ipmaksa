@@ -1,5 +1,16 @@
 import type { MetadataRoute } from "next";
-const SITE = process.env.NEXT_PUBLIC_SITE_URL || "https://ipmaksa.world";
+import { SITE } from "@/lib/seo";
+
+/** Search and AI crawlers are welcome on public pages. Admin, account and API-like paths stay out. */
+const BLOCK = ["/admin", "/*/profile", "/*/login", "/*/register"];
+const AI_BOTS = ["GPTBot", "OAI-SearchBot", "ChatGPT-User", "ClaudeBot", "Claude-SearchBot", "Claude-User", "PerplexityBot", "Perplexity-User", "Google-Extended", "Applebot-Extended", "CCBot", "Bytespider", "cohere-ai", "Amazonbot", "meta-externalagent"];
 export default function robots(): MetadataRoute.Robots {
-  return { rules: [{ userAgent: "*", allow: "/", disallow: ["/admin"] }], sitemap: `${SITE}/sitemap.xml` };
+  return {
+    rules: [
+      { userAgent: "*", allow: "/", disallow: BLOCK },
+      { userAgent: AI_BOTS, allow: ["/", "/llms.txt", "/llms-full.txt"], disallow: BLOCK },
+    ],
+    sitemap: `${SITE}/sitemap.xml`,
+    host: SITE,
+  };
 }

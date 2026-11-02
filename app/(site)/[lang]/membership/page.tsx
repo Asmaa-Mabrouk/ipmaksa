@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import { notFound } from "next/navigation";
 import { Icon } from "@/components/Icon";
 import { BenefitsGrid, JoinBand, PageHero, SectionTitle } from "@/components/Sections";
@@ -8,7 +9,7 @@ import { getDict, isLocale, t } from "@/lib/i18n";
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const { lang } = await params;
   const p = isLocale(lang) ? await getPage("membership") : null;
-  return p && isLocale(lang) ? { title: t(p.data.title, lang), description: t(p.data.intro, lang) } : {};
+  return p && isLocale(lang) ? pageMeta({ lang, path: "/membership", title: t(p.data.title, lang), description: t(p.data.intro, lang), image: p.data.image || undefined }) : {};
 }
 
 export default async function Membership({ params }: { params: Promise<{ lang: string }> }) {

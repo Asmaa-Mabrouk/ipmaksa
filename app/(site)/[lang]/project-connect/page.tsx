@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { EventCards, JoinBand, PageHero } from "@/components/Sections";
 import { getEvents, getPage } from "@/lib/content/api";
+import { JsonLd } from "@/components/JsonLd";
 import { getDict, isLocale, t } from "@/lib/i18n";
+import { SITE, abs } from "@/lib/seo";
 import { Markdown } from "@/lib/markdown";
 
 export const revalidate = 3600; // re-check "upcoming vs past" every hour
@@ -11,7 +14,7 @@ export const revalidate = 3600; // re-check "upcoming vs past" every hour
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const { lang } = await params;
   const p = isLocale(lang) ? await getPage("project-connect") : null;
-  return p && isLocale(lang) ? { title: t(p.data.title, lang), description: t(p.data.intro, lang) } : {};
+  return p && isLocale(lang) ? pageMeta({ lang, path: "/project-connect", title: t(p.data.title, lang), description: t(p.data.intro, lang), image: p.data.image || undefined }) : {};
 }
 
 export default async function ProjectConnect({ params }: { params: Promise<{ lang: string }> }) {
@@ -23,8 +26,23 @@ export default async function ProjectConnect({ params }: { params: Promise<{ lan
   const isPast = (e: { data: { date: string } }) => !!e.data.date && e.data.date < today;
   const upcoming = events.filter((e) => !isPast(e));
   const past = events.filter(isPast).reverse();
+  const ld = events.filter((e) => e.data.date).map((e) => ({
+    "@context": "https://schema.org",
+    "@type": "Event",
+    name: t(e.data.title, lang),
+    description: t(e.data.description, lang),
+    startDate: e.data.date,
+    eventStatus: "https://schema.org/EventScheduled",
+    eventAttendanceMode: "https://schema.org/OnlineEventAttendanceMode",
+    location: { "@type": "VirtualLocation", url: e.data.link || `${SITE}/${lang}/project-connect` },
+    ...(e.data.image ? { image: abs(e.data.image) } : {}),
+    ...(t(e.data.speaker, lang) ? { performer: { "@type": "Person", name: t(e.data.speaker, lang) } } : {}),
+    organizer: { "@id": `${SITE}/#org` },
+    offers: { "@type": "Offer", price: "0", priceCurrency: "SAR", availability: "https://schema.org/InStock", url: e.data.link || `${SITE}/${lang}/project-connect` },
+  }));
   return (
     <>
+      <JsonLd data={ld} />
       <PageHero title={page ? t(page.data.title, lang) : d.nav.projectConnect} intro={page ? t(page.data.intro, lang) : undefined} image={page?.data.image || undefined} />
       <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6">
         <div className="mb-12 grid items-center gap-8 md:grid-cols-[1fr_16rem]">

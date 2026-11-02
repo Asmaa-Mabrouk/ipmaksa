@@ -1,6 +1,7 @@
 import "server-only";
 import { cache } from "react";
 import { getStore } from "./store";
+import { SEED } from "./seed";
 import { JOURNEY } from "./seed-journey";
 import type { JourneyDoc,
   BenefitDoc, Doc, ExamDoc, HomeDoc, NewsDoc, PageDoc, ProjectEventDoc, SiteSettings, TeamDoc,
@@ -13,7 +14,14 @@ async function all<T>(collection: string): Promise<Doc<T>[]> {
 
 export const getJourney = cache(async () => ({ ...JOURNEY, ...((await getStore().get("journey", "main"))?.data as Partial<JourneyDoc>) }) as JourneyDoc);
 export const getHome = cache(async () => (await getStore().get("home", "main"))?.data as HomeDoc);
-export const getSettings = cache(async () => (await getStore().get("settings", "site"))?.data as SiteSettings);
+/** Stored settings, with the official social links as fallback when a field has never been filled in. */
+export const getSettings = cache(async () => {
+  const seed = SEED.settings.site as unknown as SiteSettings;
+  const stored = ((await getStore().get("settings", "site"))?.data ?? {}) as Partial<SiteSettings>;
+  const out = { ...seed, ...stored } as SiteSettings;
+  for (const k of ["linkedin", "x", "instagram", "whatsappChannel"] as const) if (!out[k]) out[k] = seed[k];
+  return out;
+});
 
 export const getPages = cache(async () => (await all<PageDoc>("pages")).filter((p) => p.data.published));
 export const getPage = cache(async (slug: string) => {

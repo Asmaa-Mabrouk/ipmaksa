@@ -330,6 +330,7 @@ export const COLLECTIONS: CollectionDef[] = [
       { key: "x", label: "X (Twitter) URL", type: "url" },
       { key: "instagram", label: "Instagram URL", type: "url" },
       { key: "youtube", label: "YouTube URL", type: "url" },
+      { key: "whatsappChannel", label: "WhatsApp channel URL", type: "url" },
     ],
   },
 ];

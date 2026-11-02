@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import { notFound } from "next/navigation";
 import { NewsCards, JoinBand, PageHero } from "@/components/Sections";
 import { getNews, getPage } from "@/lib/content/api";
@@ -7,7 +8,7 @@ import { getDict, isLocale, t } from "@/lib/i18n";
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const { lang } = await params;
   const p = isLocale(lang) ? await getPage("news") : null;
-  return p && isLocale(lang) ? { title: t(p.data.title, lang), description: t(p.data.intro, lang) } : {};
+  return p && isLocale(lang) ? pageMeta({ lang, path: "/news", title: t(p.data.title, lang), description: t(p.data.intro, lang), image: p.data.image || undefined }) : {};
 }
 
 export default async function NewsIndex({ params }: { params: Promise<{ lang: string }> }) {

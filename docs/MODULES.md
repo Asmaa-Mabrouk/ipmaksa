@@ -87,3 +87,12 @@ End-to-end checks with Playwright against PostgreSQL: member register, duplicate
 - No email verification or password reset yet (needs an email service).
 - Hosting not chosen yet (the repo is ready for any Node host with PostgreSQL).
 - Replace the placeholder Zoom registration link on Episode 2, add the team LinkedIn links and the final membership benefits.
+
+## SEO and GEO
+
+- Per page: unique title and description, canonical URL, hreflang (ar, en, x-default), Open Graph and Twitter cards (`lib/seo.ts`, `pageMeta`).
+- Structured data (JSON-LD): Organization + WebSite on every page, FAQPage on the FAQ blocks, Event on Project Connect, NewsArticle + BreadcrumbList on news articles.
+- `/robots.txt` allows search and AI crawlers (GPTBot, ClaudeBot, PerplexityBot, Google-Extended, etc.) and blocks admin, login, register and profile.
+- `/sitemap.xml` with priorities, change frequency and language alternates.
+- `/llms.txt` and `/llms-full.txt`: plain-text summaries for AI assistants, generated from live content (pages, news, exams, FAQ).
+- Social links (LinkedIn, X, Instagram, WhatsApp channel) are in Settings, the footer and the Organization `sameAs`.

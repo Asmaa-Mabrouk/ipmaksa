@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { SectionTitle } from "./Sections";
 import { getDict, t } from "@/lib/i18n";
+import { JsonLd } from "@/components/JsonLd";
 import type { JourneyDoc, Locale } from "@/lib/content/types";
 
 const STAGE = ["#3f8fb5", "#6558b8", "#4a78a8", "#b8975a", "#4aa377", "#c8372d"];
@@ -155,8 +156,10 @@ export function PrepareBlock({ j, locale }: { j: JourneyDoc; locale: Locale }) {
 export function FaqList({ j, locale, limit, showLink = false, email }: { j: JourneyDoc; locale: Locale; limit?: number; showLink?: boolean; email?: string }) {
   const d = getDict(locale);
   const items = limit ? j.faqs.slice(0, limit) : j.faqs;
+  const ld = { "@context": "https://schema.org", "@type": "FAQPage", inLanguage: locale, mainEntity: items.map((f) => ({ "@type": "Question", name: t(f.q, locale), acceptedAnswer: { "@type": "Answer", text: t(f.a, locale) } })) };
   return (
     <section id="faq" className="mx-auto max-w-4xl px-4 py-20 sm:px-6">
+      <JsonLd data={ld} />
       <div className="flex flex-wrap items-end justify-between gap-4">
         <SectionTitle title={t(j.faqTitle, locale)} intro={t(j.faqIntro, locale)} />
         {showLink && <Link href={`/${locale}/certification-journey#faq`} className="btn btn-green">{d.journeyUi.allFaq}</Link>}

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { JoinBand, PageHero } from "@/components/Sections";
@@ -19,7 +20,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   const { lang, slug } = await params;
   const p = isLocale(lang) && !RESERVED.has(slug) ? await getPage(slug) : null;
   if (!p || !isLocale(lang)) return {};
-  return { title: t(p.data.title, lang), description: t(p.data.intro, lang), alternates: { canonical: `/${lang}/${slug}`, languages: { ar: `/ar/${slug}`, en: `/en/${slug}` } } };
+  return pageMeta({ lang, path: `/${slug}`, title: t(p.data.title, lang), description: t(p.data.intro, lang), image: p.data.image || undefined });
 }
 
 export default async function ContentPage({ params }: { params: Promise<{ lang: string; slug: string }> }) {

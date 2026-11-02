@@ -13,6 +13,7 @@ export type SiteSettings = {
   x: string;
   instagram: string;
   youtube: string;
+  whatsappChannel: string;
 };
 
 export type Stat = { value: number; suffix: string; label: L };

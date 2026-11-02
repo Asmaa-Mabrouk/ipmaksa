@@ -4,7 +4,7 @@ import { Icon } from "./Icon";
 import { NewsletterForm } from "./NewsletterForm";
 import { telHref } from "./SiteChrome";
 import { getDict, t } from "@/lib/i18n";
-import type { BenefitDoc, Doc, ExamDoc, Locale, NewsDoc, SiteSettings, TeamDoc } from "@/lib/content/types";
+import type { BenefitDoc, Doc, ExamDoc, Locale, NewsDoc, ProjectEventDoc, SiteSettings, TeamDoc } from "@/lib/content/types";
 
 export const fmtDate = (iso: string, locale: Locale, opts: Intl.DateTimeFormatOptions = { day: "numeric", month: "long", year: "numeric" }) =>
   new Intl.DateTimeFormat(getDict(locale).date.locale, { ...opts, timeZone: "UTC" }).format(new Date(iso + "T00:00:00Z"));
@@ -200,5 +200,33 @@ export function ContactCards({ s, locale }: { s: SiteSettings; locale: Locale })
         </div>
       )}
     </div>
+  );
+}
+
+export function EventCards({ events, locale, past = false }: { events: Doc<ProjectEventDoc>[]; locale: Locale; past?: boolean }) {
+  const d = getDict(locale);
+  return (
+    <ul className="grid gap-5 md:grid-cols-2">
+      {events.map(({ id, data: e }) => (
+        <li key={id} className={"flex flex-col overflow-hidden rounded-2xl border border-green-100 bg-white shadow-sm " + (past ? "opacity-85" : "")}>
+          {e.image && <div className="relative aspect-[16/8] bg-green-50"><Image src={e.image} alt="" fill sizes="(min-width:768px) 50vw, 100vw" className="object-cover" /></div>}
+          <div className="flex flex-1 flex-col p-5">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="rounded-full bg-green-800 px-3 py-0.5 text-xs font-bold text-white">{d.events[e.kind]}</span>
+              {e.date && <time dateTime={e.date} className="text-sm font-bold text-gold-600">{fmtDate(e.date, locale)}{e.time && <> · <span dir="ltr">{e.time}</span></>}</time>}
+            </div>
+            <h3 className="mt-2 text-xl font-extrabold leading-snug text-green-900">{t(e.title, locale)}</h3>
+            {t(e.description, locale) && <p className="mt-2 leading-7 text-ink/75">{t(e.description, locale)}</p>}
+            {t(e.speaker, locale) && <p className="mt-2 text-sm"><span className="font-bold text-green-800">{d.events.speaker}:</span> {t(e.speaker, locale)}</p>}
+            {t(e.format, locale) && <p className="mt-1 inline-flex items-center gap-1.5 text-sm text-ink/70"><Icon name="pin" className="h-4 w-4 text-gold-600" />{t(e.format, locale)}</p>}
+            <div className="mt-auto flex flex-wrap gap-3 pt-4">
+              {!past && e.status !== "closed" && e.link && <a href={e.link} target="_blank" rel="noopener noreferrer" className="btn btn-gold !py-2">{d.events.register}</a>}
+              {!past && e.status === "closed" && <span className="text-sm font-bold text-ink/60">{d.events.full}</span>}
+              {past && e.recording && <a href={e.recording} target="_blank" rel="noopener noreferrer" className="btn btn-green !py-2">{d.events.recording}</a>}
+            </div>
+          </div>
+        </li>
+      ))}
+    </ul>
   );
 }

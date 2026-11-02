@@ -66,6 +66,7 @@ export async function Header({ locale }: { locale: Locale }) {
     ...about.map((p) => ({ label: t(p.data.title, locale), href: `${base}/${p.id}` })),
     ...cert.map((p) => ({ label: t(p.data.title, locale), href: `${base}/${p.id}` })),
     { label: d.nav.examDates, href: `${base}/exam-dates` },
+    { label: d.nav.projectConnect, href: `${base}/project-connect` },
     { label: d.nav.membership, href: `${base}/membership` },
     { label: d.nav.team, href: `${base}/team` },
     { label: d.nav.news, href: `${base}/news` },
@@ -84,6 +85,7 @@ export async function Header({ locale }: { locale: Locale }) {
           <Menu label={d.nav.about} items={about} base={base} locale={locale} />
           <Menu label={d.nav.certification} items={cert} base={base} locale={locale} />
           <Link href={`${base}/exam-dates`} className={link}>{d.nav.examDates}</Link>
+          <Link href={`${base}/project-connect`} className={link}>{d.nav.projectConnect}</Link>
           <Link href={`${base}/membership`} className={link}>{d.nav.membership}</Link>
           <Link href={`${base}/team`} className={link}>{d.nav.team}</Link>
           <Link href={`${base}/news`} className={link}>{d.nav.news}</Link>
@@ -129,6 +131,7 @@ export async function Footer({ locale }: { locale: Locale }) {
     [d.nav.about, `${base}/about-us`],
     [d.nav.certification, `${base}/ipma-standards`],
     [d.nav.examDates, `${base}/exam-dates`],
+    [d.nav.projectConnect, `${base}/project-connect`],
     [d.nav.membership, `${base}/membership`],
     [d.nav.team, `${base}/team`],
     [d.nav.news, `${base}/news`],

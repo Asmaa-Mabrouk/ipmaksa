@@ -2,9 +2,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Icon } from "@/components/Icon";
-import { BenefitsGrid, ExamCards, NewsCards, NewsletterBand, SectionTitle, TeamCard } from "@/components/Sections";
+import { BenefitsGrid, EventCards, ExamCards, NewsCards, NewsletterBand, SectionTitle, TeamCard } from "@/components/Sections";
 import { telHref } from "@/components/SiteChrome";
-import { getBenefits, getExams, getHome, getNews, getSettings, getTeam } from "@/lib/content/api";
+import { getBenefits, getEvents, getExams, getHome, getNews, getSettings, getTeam } from "@/lib/content/api";
 import { getDict, isLocale, t } from "@/lib/i18n";
 import { Markdown } from "@/lib/markdown";
 
@@ -21,7 +21,9 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
   const { lang } = await params;
   if (!isLocale(lang)) notFound();
   const d = getDict(lang);
-  const [h, s, exams, benefits, news, team] = await Promise.all([getHome(), getSettings(), getExams(), getBenefits(), getNews(), getTeam()]);
+  const [h, s, exams, benefits, news, team, events] = await Promise.all([getHome(), getSettings(), getExams(), getBenefits(), getNews(), getTeam(), getEvents()]);
+  const today = new Date().toLocaleDateString("en-CA", { timeZone: "Asia/Riyadh" });
+  const nextEvents = events.filter((e) => e.data.status !== "closed" && (!e.data.date || e.data.date >= today)).slice(0, 2);
   const base = `/${lang}`;
   return (
     <>
@@ -122,6 +124,17 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
         </div>
         <div className="mt-8"><ExamCards exams={exams} locale={lang} email={s.email} limit={4} /></div>
       </section>
+
+      {/* PROJECT CONNECT */}
+      {nextEvents.length > 0 && (
+        <section className="mx-auto max-w-7xl px-4 pb-20 sm:px-6">
+          <div className="flex flex-wrap items-end justify-between gap-4">
+            <SectionTitle title={`Project Connect · ${d.events.upcoming}`} />
+            <Link href={`${base}/project-connect`} className="btn btn-green">{d.viewAll}</Link>
+          </div>
+          <div className="mt-8"><EventCards events={nextEvents} locale={lang} /></div>
+        </section>
+      )}
 
       {/* GPMF */}
       <section className="relative isolate overflow-hidden bg-green-950 py-20 text-white">

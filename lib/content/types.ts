@@ -115,3 +115,17 @@ export type MessageDoc = {
 };
 
 export type Doc<T> = { id: string; data: T };
+
+export type ProjectEventDoc = {
+  title: L;
+  kind: "webinar" | "workshop" | "meetup";
+  description: L;
+  date: string; // YYYY-MM-DD
+  time: string; // free text, e.g. "6:00 PM - 7:30 PM (KSA)"
+  format: L; // e.g. Online (Zoom) / Riyadh
+  speaker: L;
+  image: string;
+  link: string; // registration link
+  status: "open" | "soon" | "closed";
+  recording: string; // link to recording once finished
+};

@@ -400,6 +400,19 @@ const pages: Record<string, P> = {
       "The member association and the Certification Body are independent of each other. The association has no role in certification decisions.",
     ),
   }),
+  "project-connect": page({
+    group: "main",
+    image: "/images/gpmf-lobby.webp",
+    title: l("Project Connect", "Project Connect"),
+    intro: l(
+      "مبادرة IPMA السعودية للندوات الإلكترونية وورش العمل التي تربط المهنيين بالمعرفة والخبرات في إدارة المشاريع.",
+      "IPMA KSA's initiative of webinars and workshops connecting professionals with project management knowledge and experience.",
+    ),
+    body: l(
+      "## عن المبادرة\nProject Connect سلسلة من الندوات الإلكترونية وورش العمل التي تقدمها IPMA السعودية لتبادل المعرفة وبناء الكفاءات وتوسيع شبكة المهنيين. تُعلن المواعيد والتسجيل في هذه الصفحة.",
+      "## About the initiative\nProject Connect is a series of webinars and workshops from IPMA KSA to share knowledge, build competence and grow the professional network. Dates and registration are announced on this page.",
+    ),
+  }),
   "exam-dates": page({
     group: "main",
     image: "/images/diriyah-aerial.webp",
@@ -641,6 +654,7 @@ export const SEED: Record<string, Record<string, unknown>> = {
   pages,
   team,
   exams,
+  events: {},
   benefits,
   news,
 };

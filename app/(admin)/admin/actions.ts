@@ -64,18 +64,6 @@ export async function uploadImage(fd: FormData): Promise<{ url?: string; error?:
   }
 }
 
-export async function messageAction(id: string, op: "read" | "delete") {
-  await requireAdmin();
-  if (!/^[0-9]+-[a-f0-9]{6}$/.test(id)) return;
-  const store = getStore();
-  if (op === "delete") await store.remove("messages", id);
-  else {
-    const m = await store.get("messages", id);
-    if (m) await store.put("messages", id, { ...m.data, read: true });
-  }
-  revalidatePath("/admin/messages");
-}
-
 export async function setMemberBadges(id: string, badgeIds: string[], notes: Record<string, string>) {
   await requireAdmin();
   if (!/^[a-f0-9]{24}$/.test(id)) return { ok: false };

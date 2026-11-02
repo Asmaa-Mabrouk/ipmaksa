@@ -38,7 +38,7 @@ export type CollectionDef = {
   canCreate?: boolean;
   canDelete?: boolean;
   fields: Field[];
-  /** Pages/sections that are not editable content (e.g. messages) are handled separately. */
+  /** Pages/sections that are not editable content are handled separately. */
 };
 
 const status = [
@@ -337,7 +337,7 @@ export const COLLECTIONS: CollectionDef[] = [
 export const getCollection = (id: string) => COLLECTIONS.find((c) => c.id === id);
 
 /** Collections that are stored but not edited through the generic forms. */
-export const SYSTEM_COLLECTIONS = ["messages", "members"];
+export const SYSTEM_COLLECTIONS = ["members"];
 
 /* ---------- sanitising ---------- */
 

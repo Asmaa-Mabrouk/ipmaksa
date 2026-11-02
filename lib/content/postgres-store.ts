@@ -6,7 +6,7 @@ import type { RawDoc, Store } from "./store";
 /**
  * PostgreSQL store. Works with any Postgres (local, Docker, Neon, Railway, RDS…).
  * Tables are created automatically on first use (see db/schema.sql for the same SQL).
- *   documents(collection, id, data jsonb)  – all content, members and messages
+ *   documents(collection, id, data jsonb)  – all content, members
  *   media(id, content_type, data bytea)    – uploaded images, served from /media/<id>
  */
 const globalForPg = globalThis as unknown as { __ipmaPool?: Pool; __ipmaReady?: Promise<void> };

@@ -1,9 +1,6 @@
 "use server";
-import crypto from "node:crypto";
 import { headers } from "next/headers";
-import { getStore } from "@/lib/content/store";
 import { getSettings } from "@/lib/content/api";
-import type { MessageDoc } from "@/lib/content/types";
 
 export type FormState = { status: "idle" | "ok" | "already" | "invalid" | "error" };
 
@@ -37,39 +34,32 @@ export async function sendContact(_: FormState, fd: FormData): Promise<FormState
     const name = clean(fd.get("name"), 100);
     const message = clean(fd.get("message"), 4000);
     if (!name || !message || !EMAIL.test(email)) return { status: "invalid" };
-    const doc: MessageDoc = {
-      name,
-      email,
-      subject: clean(fd.get("subject"), 150),
-      message,
-      lang: clean(fd.get("lang"), 2) === "en" ? "en" : "ar",
-      createdAt: new Date().toISOString(),
-      read: false,
-    };
-    await getStore().put("messages", `${Date.now()}-${crypto.randomBytes(3).toString("hex")}`, doc as unknown as Record<string, unknown>);
-
-    // Optional email notification when SMTP is configured. The message is already safely stored.
-    if (process.env.SMTP_HOST) {
-      try {
-        const nodemailer = (await import("nodemailer")).default;
-        const settings = await getSettings();
-        const tx = nodemailer.createTransport({
-          host: process.env.SMTP_HOST,
-          port: Number(process.env.SMTP_PORT || 587),
-          secure: Number(process.env.SMTP_PORT) === 465,
-          auth: process.env.SMTP_USER ? { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS } : undefined,
-        });
-        await tx.sendMail({
-          from: process.env.CONTACT_FROM || settings.email,
-          to: process.env.CONTACT_TO || settings.email,
-          replyTo: `${name.replace(/[<>\r\n"]/g, "")} <${email}>`,
-          subject: `[IPMA KSA website] ${doc.subject || "New message"}`.replace(/[\r\n]/g, " "),
-          text: `From: ${name} <${email}>\n\n${message}`,
-        });
-      } catch (e) {
-        console.error("contact email failed", e);
+    const subject = clean(fd.get("subject"), 150);
+    const settings = await getSettings();
+    const to = process.env.CONTACT_TO || settings.email;
+    if (!process.env.SMTP_HOST) {
+      // No mail server configured: never pretend the message was delivered in production.
+      if (process.env.NODE_ENV === "production") {
+        console.error("contact form: SMTP_HOST is not set, message not delivered");
+        return { status: "error" };
       }
+      console.log(`[contact:dev] to=${to} from=${name} <${email}> subject=${subject}\n${message}`);
+      return { status: "ok" };
     }
+    const nodemailer = (await import("nodemailer")).default;
+    const tx = nodemailer.createTransport({
+      host: process.env.SMTP_HOST,
+      port: Number(process.env.SMTP_PORT || 587),
+      secure: Number(process.env.SMTP_PORT) === 465,
+      auth: process.env.SMTP_USER ? { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS } : undefined,
+    });
+    await tx.sendMail({
+      from: process.env.CONTACT_FROM || settings.email,
+      to,
+      replyTo: `${name.replace(/[<>\r\n"]/g, "")} <${email}>`,
+      subject: `[IPMA KSA website] ${subject || "New message"}`.replace(/[\r\n]/g, " "),
+      text: `From: ${name} <${email}>\n\n${message}`,
+    });
     return { status: "ok" };
   } catch (e) {
     console.error("contact failed", e);

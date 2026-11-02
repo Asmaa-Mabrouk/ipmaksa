@@ -95,16 +95,6 @@ export type NewsDoc = {
   published: boolean;
 };
 
-export type MessageDoc = {
-  name: string;
-  email: string;
-  subject: string;
-  message: string;
-  lang: Locale;
-  createdAt: string;
-  read: boolean;
-};
-
 export type Doc<T> = { id: string; data: T };
 
 export type ProjectEventDoc = {

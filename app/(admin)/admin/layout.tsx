@@ -24,7 +24,6 @@ export default async function AdminLayout({ children }: { children: React.ReactN
                   <Link key={c.id} href={`/admin/c/${c.id}`} className="rounded-lg px-3 py-2 font-semibold hover:bg-white/10">{c.label}</Link>
                 ))}
                 <Link href="/admin/members" className="rounded-lg px-3 py-2 font-semibold hover:bg-white/10">Members &amp; badges</Link>
-                <Link href="/admin/messages" className="rounded-lg px-3 py-2 font-semibold hover:bg-white/10">Messages</Link>
               </nav>
               <div className="mt-6 border-t border-white/15 pt-4 text-sm">
                 <p className="break-all text-white/70">{session}</p>

@@ -15,7 +15,7 @@ Stack: Next.js 16 (App Router), React 19, Tailwind v4, TypeScript, PostgreSQL 16
 | Membership | `/membership` | `benefits` |
 | Team | `/team` | `team` |
 | News and article | `/news`, `/news/[slug]` | `news` |
-| Contact | `/contact` | `settings` + form → `messages` |
+| Contact | `/contact` | `settings` + form → email (SMTP) |
 | Register / Sign in / Profile | `/register`, `/login`, `/profile` | `members` (dynamic pages) |
 
 Every page is statically generated, except profile, login and register which read the member cookie.
@@ -45,7 +45,7 @@ Design tokens live in `app/globals.css` (`@theme`): deep green, gold, cream, a s
 | `file-store.ts`, `supabase-store.ts` | Alternative stores |
 | `api.ts` | Read helpers used by the pages (`getHome`, `getJourney`, `getEvents`, …) |
 
-Collections: `home`, `pages`, `team`, `exams`, `journey`, `events`, `benefits`, `badges`, `news`, `settings`. System collections: `members`, `messages`.
+Collections: `home`, `pages`, `team`, `exams`, `journey`, `events`, `benefits`, `badges`, `news`, `settings`. System collection: `members`.
 Built-in content is copied into the database the first time a collection is edited, so later edits are never overwritten by the seed.
 
 ## 4. Content admin (`app/(admin)/admin/…`)
@@ -55,12 +55,11 @@ Separate layout and host (`admin.<domain>`; in development `admin.localhost:3000
 | Screen | Purpose |
 |---|---|
 | Login | Email + password (scrypt hash in `ADMIN_USERS`), rate limited, signed session cookie |
-| Dashboard | Counts of members and unread messages, and shortcuts |
+| Dashboard | Count of members, and shortcuts |
 | Content lists and editors (`c/[collection]`) | Schema-driven forms: bilingual fields, lists with reorder, image upload, delete |
 | Members & badges | List members, award or remove badges with an optional note, delete an account |
-| Messages | Contact-form inbox: read, mark as read, delete |
 
-Server actions (`actions.ts`): `saveDoc`, `deleteDoc`, `uploadImage`, `setMemberBadges`, `deleteMember`, `messageAction`, `loginAction`, `logoutAction`. Each one re-checks the admin session.
+Server actions (`actions.ts`): `saveDoc`, `deleteDoc`, `uploadImage`, `setMemberBadges`, `deleteMember`, `loginAction`, `logoutAction`. Each one re-checks the admin session.
 
 ## 5. Member accounts (`lib/members.ts`, `app/(site)/member-actions.ts`)
 
@@ -72,7 +71,7 @@ Passwords are hashed with scrypt; the session is an HMAC-signed 14-day cookie; h
 - `proxy.ts`: locale redirect, admin host rewrite, 404 for admin on the public host.
 - `next.config.ts`: security headers, long cache for images and flags.
 - `lib/auth.ts`: admin password check, session signing, throttling. A development-only default login exists when not in production.
-- Environment variables: see `.env.example` (`DATABASE_URL`, `SESSION_SECRET`, `ADMIN_USERS`, `ADMIN_HOST`, `NEXT_PUBLIC_SITE_URL`, optional SMTP and Supabase).
+- Environment variables: see `.env.example` (`DATABASE_URL`, `SESSION_SECRET`, `ADMIN_USERS`, `ADMIN_HOST`, `NEXT_PUBLIC_SITE_URL`, SMTP (required for the contact form) and optional Supabase).
 - `docker-compose.yml` and `db/schema.sql` for local PostgreSQL. `scripts/hash-password.mjs` creates admin password hashes.
 
 ## 7. Assets (`public/`)
@@ -81,7 +80,7 @@ Official logos (colour and white), favicon (the two red arrows), Project Connect
 
 ## 8. Testing performed
 
-End-to-end checks with Playwright against PostgreSQL: member register, duplicate email, sign in/out, wrong password, profile edit; admin sign in, create / edit / delete for every content type, image upload and serving, badge award shown on the profile, contact message in the inbox, CSV export, admin hidden on the public host; page width audit at 320–1440 px in Arabic and English with no horizontal overflow.
+End-to-end checks with Playwright against PostgreSQL: member register, duplicate email, sign in/out, wrong password, profile edit; admin sign in, create / edit / delete for every content type, image upload and serving, badge award shown on the profile, contact form email, admin hidden on the public host; page width audit at 320–1440 px in Arabic and English with no horizontal overflow.
 
 ## 9. Known gaps
 

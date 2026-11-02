@@ -30,12 +30,12 @@ export default async function Profile({ params }: { params: Promise<{ lang: stri
   const name = `${m.data.firstName} ${m.data.lastName}`;
   return (
     <div className="mx-auto max-w-5xl px-4 py-12 sm:px-6">
-      <section className="flex flex-wrap items-center gap-6 rounded-3xl bg-green-900 p-6 text-white shadow-lg sm:p-8">
+      <section className="flex flex-col items-start gap-5 rounded-3xl bg-green-900 p-6 text-white shadow-lg sm:flex-row sm:items-center sm:gap-6 sm:p-8">
         <AvatarUpload photo={m.data.photo} initial={m.data.firstName.charAt(0)} name={name} label={d.changePhoto} errorText={d.errors.photo} />
-        <div className="min-w-0 flex-1">
-          <h1 className="text-3xl font-extrabold">{name}</h1>
+        <div className="w-full min-w-0 sm:flex-1">
+          <h1 className="text-2xl font-extrabold sm:text-3xl">{name}</h1>
           <p className="mt-1 break-all text-white/80" dir="ltr">{m.data.email}</p>
-          <p className="mt-1 text-white/80">{countryName} · {d.memberSince} {fmtDate(m.data.createdAt.slice(0, 10), lang)}</p>
+          <p className="mt-1 text-sm text-white/80 sm:text-base">{countryName} · {d.memberSince} {fmtDate(m.data.createdAt.slice(0, 10), lang)}</p>
         </div>
         <form action={logoutMember.bind(null, lang)}><button className="btn btn-outline text-white">{d.signOut}</button></form>
       </section>

@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Icon } from "./Icon";
 import { LangSwitch } from "./LangSwitch";
+import { MobileMenu, type MobileItem } from "./MobileMenu";
 import { getDict, t } from "@/lib/i18n";
 import { getPages, getSettings } from "@/lib/content/api";
 import type { Locale } from "@/lib/content/types";
@@ -62,10 +63,11 @@ export async function Header({ locale }: { locale: Locale }) {
   const cert = [...grp("certification"), journeyItem];
   const link = NAV_LINK;
 
-  const mobile = [
+  const kids = (list: typeof about) => list.map((p) => ({ label: t(p.data.title, locale), href: `${base}/${p.id}` }));
+  const mobile: MobileItem[] = [
     { label: d.nav.home, href: base },
-    ...about.map((p) => ({ label: t(p.data.title, locale), href: `${base}/${p.id}` })),
-    ...cert.map((p) => ({ label: t(p.data.title, locale), href: `${base}/${p.id}` })),
+    { label: d.nav.about, children: kids(about) },
+    { label: d.nav.certification, children: kids(cert) },
     { label: d.nav.examDates, href: `${base}/exam-dates` },
     { label: d.nav.projectConnect, href: `${base}/project-connect` },
     { label: d.nav.membership, href: `${base}/membership` },
@@ -99,20 +101,7 @@ export async function Header({ locale }: { locale: Locale }) {
           <LangSwitch locale={locale} label={d.switchLabel} text={d.switchTo} />
           <Link href={`${base}/login`} aria-label={d.account.signIn} title={d.account.signIn} className="hidden h-10 w-10 items-center justify-center rounded-full border border-white/25 text-white transition hover:bg-white/10 sm:flex"><Icon name="user" className="h-5 w-5" /></Link>
           <span className="hidden sm:block"><Link href={`${base}/register`} className="btn btn-gold whitespace-nowrap !py-2">{d.joinCta}</Link></span>
-          <details className="group min-[1320px]:hidden">
-            <summary className="flex h-11 w-11 cursor-pointer list-none items-center justify-center rounded-lg text-white hover:bg-white/10 [&::-webkit-details-marker]:hidden" aria-label={d.menu}>
-              <Icon name="menu" className="h-7 w-7 group-open:hidden" />
-              <Icon name="x" className="hidden h-7 w-7 group-open:block" />
-            </summary>
-            <div className="absolute inset-x-0 top-full max-h-[80vh] overflow-y-auto border-t border-white/10 bg-green-900 px-4 pb-6 pt-2 shadow-xl">
-              <ul className="mx-auto max-w-7xl">
-                {mobile.map((m) => (
-                  <li key={m.href}><Link href={m.href} className="block border-b border-white/10 py-3 font-bold text-white">{m.label}</Link></li>
-                ))}
-              </ul>
-              <Link href={`${base}/register`} className="btn btn-gold mx-auto mt-4 flex w-full max-w-7xl">{d.joinCta}</Link>
-            </div>
-          </details>
+          <MobileMenu items={mobile} label={d.menu} cta={d.joinCta} ctaHref={`${base}/register`} />
         </div>
       </div>
       <div className="najdi" aria-hidden="true" />

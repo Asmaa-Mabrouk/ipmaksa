@@ -14,7 +14,7 @@ export function proxy(req: NextRequest) {
 
   // 1) Admin lives on its own host and is rewritten to /admin/*
   if (isAdminHost(host)) {
-    if (pathname.startsWith("/_next") || pathname.startsWith("/uploads") || pathname.startsWith("/images")) return;
+    if (pathname.startsWith("/_next") || pathname.startsWith("/uploads") || pathname.startsWith("/media") || pathname.startsWith("/images")) return;
     const url = req.nextUrl.clone();
     url.pathname = pathname.startsWith("/admin") ? pathname : `/admin${pathname === "/" ? "" : pathname}`;
     const res = NextResponse.rewrite(url);
@@ -41,6 +41,6 @@ export function proxy(req: NextRequest) {
 
 export const config = {
   matcher: [
-    "/((?!_next/static|_next/image|favicon.ico|images/|flags/|uploads/|fonts/|robots.txt|sitemap.xml|.*\\.(?:png|jpg|jpeg|webp|svg|ico|woff2?|txt|xml|mp4|pdf)$).*)",
+    "/((?!_next/static|_next/image|favicon.ico|images/|flags/|uploads/|media/|fonts/|robots.txt|sitemap.xml|.*\\.(?:png|jpg|jpeg|webp|svg|ico|woff2?|txt|xml|mp4|pdf)$).*)",
   ],
 };

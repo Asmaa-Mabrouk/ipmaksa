@@ -3,15 +3,20 @@
 Bilingual (Arabic default, English) website for IPMA KSA with a separate admin portal.
 Next.js 16 · React 19 · Tailwind 4. Static/ISR pages, self-hosted fonts, pre-optimized WebP images.
 
-## Run locally
+## Run locally with PostgreSQL
 ```bash
 npm install
+docker compose up -d              # starts PostgreSQL on localhost:5432 (user/password/db: ipma / ipma / ipmaksa)
+cp .env.example .env.local        # DATABASE_URL is already set for the Docker database
 npm run dev
 ```
 - Site: http://localhost:3000 (redirects to `/ar`; the flag button switches language)
-- Admin (dev): http://localhost:3000/admin or http://admin.localhost:3000
+- Admin: http://localhost:3000/admin (also http://admin.localhost:3000)
   Dev login: `admin@ipmaksa.local` / `ipma-dev-password` (works only outside production)
-- Content is saved to `content-data/*.json` and uploads to `public/uploads` (both git-ignored).
+- Without Docker, use any PostgreSQL you have: create a database and put its address in `DATABASE_URL`.
+- The tables are created automatically on first use (`db/schema.sql` shows them). Content, newsletter
+  subscribers, contact messages and uploaded images are all stored in PostgreSQL.
+- If `DATABASE_URL` is empty the site still runs, saving to local files (`content-data/`, `public/uploads`).
 
 ## Admin portal
 Served on its own host. In production the public host returns 404 for `/admin`; only the host set in
@@ -21,9 +26,10 @@ Contact and settings (email, phone, social). Every text has Arabic and English f
 subscribers (CSV download) and contact messages.
 
 ## Deploying
-1. Create a Supabase project, run `supabase/schema.sql` in its SQL editor.
-2. Set the environment variables from `.env.example` on your host (Netlify/Vercel/etc.):
-   `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `ADMIN_USERS`, `SESSION_SECRET`, `ADMIN_HOST`, `NEXT_PUBLIC_SITE_URL`.
+1. Create a hosted PostgreSQL database (Neon, Railway, Render, AWS RDS, …) and copy its connection string.
+2. Set the environment variables from `.env.example` on your host:
+   `DATABASE_URL`, `ADMIN_USERS`, `SESSION_SECRET`, `ADMIN_HOST`, `NEXT_PUBLIC_SITE_URL`.
+   (Supabase is still supported through `SUPABASE_URL` + `SUPABASE_SERVICE_ROLE_KEY` if `DATABASE_URL` is empty.)
 3. Create admin logins: `npm run admin:hash -- you@example.com 'a strong password'` and paste the output into `ADMIN_USERS`.
 4. Point both `ipmaksa.world` and `admin.ipmaksa.world` at the same deployment.
 

@@ -25,7 +25,7 @@ export default async function ProjectConnect({ params }: { params: Promise<{ lan
   const past = events.filter(isPast).reverse();
   return (
     <>
-      <PageHero title={page ? t(page.data.title, lang) : "Project Connect"} intro={page ? t(page.data.intro, lang) : undefined} image={page?.data.image || undefined} />
+      <PageHero title={page ? t(page.data.title, lang) : d.nav.projectConnect} intro={page ? t(page.data.intro, lang) : undefined} image={page?.data.image || undefined} />
       <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6">
         <div className="mb-12 grid items-center gap-8 md:grid-cols-[1fr_16rem]">
           {page && t(page.data.body, lang) ? <div className="max-w-3xl"><Markdown source={t(page.data.body, lang)} /></div> : <div />}

@@ -406,13 +406,13 @@ const pages: Record<string, P> = {
   "project-connect": page({
     group: "main",
     image: "/images/gpmf-lobby.webp",
-    title: l("Project Connect", "Project Connect"),
+    title: l("ملتقى المشاريع", "Project Connect"),
     intro: l(
       "مبادرة IPMA السعودية للندوات الإلكترونية وورش العمل التي تربط المهنيين بالمعرفة والخبرات في إدارة المشاريع.",
       "IPMA KSA's initiative of webinars and workshops connecting professionals with project management knowledge and experience.",
     ),
     body: l(
-      "## عن المبادرة\nProject Connect سلسلة من الندوات الإلكترونية وورش العمل التي تقدمها IPMA السعودية لتبادل المعرفة وبناء الكفاءات وتوسيع شبكة المهنيين. تُعلن المواعيد والتسجيل في هذه الصفحة.",
+      "## عن المبادرة\nملتقى المشاريع (Project Connect) سلسلة من الندوات الإلكترونية وورش العمل التي تقدمها IPMA السعودية لتبادل المعرفة وبناء الكفاءات وتوسيع شبكة المهنيين. تُعلن المواعيد والتسجيل في هذه الصفحة.",
       "## About the initiative\nProject Connect is a series of webinars and workshops from IPMA KSA to share knowledge, build competence and grow the professional network. Dates and registration are announced on this page.",
     ),
   }),

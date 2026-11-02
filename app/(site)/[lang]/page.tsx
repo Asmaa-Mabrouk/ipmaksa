@@ -137,7 +137,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
       {nextEvents.length > 0 && (
         <section className="mx-auto max-w-7xl px-4 pb-20 sm:px-6">
           <div className="flex flex-wrap items-end justify-between gap-4">
-            <SectionTitle title={`Project Connect · ${d.events.upcoming}`} />
+            <SectionTitle title={`${d.nav.projectConnect} · ${d.events.upcoming}`} />
             <Link href={`${base}/project-connect`} className="btn btn-green">{d.viewAll}</Link>
           </div>
           <div className="mt-8"><EventCards events={nextEvents} locale={lang} /></div>

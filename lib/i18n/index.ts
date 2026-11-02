@@ -184,7 +184,7 @@ const ui = {
       certification: "الشهادات",
       examDates: "مواعيد الاختبارات",
       journey: "كيف تحصل على الشهادة",
-      projectConnect: "Project Connect",
+      projectConnect: "ملتقى المشاريع",
       membership: "العضوية",
       team: "الفريق",
       news: "الأخبار",

@@ -8,8 +8,8 @@ const norm = (s: string) =>
   s.toLowerCase().normalize("NFKD").replace(/[ً-ٟ̀-ͯ]/g, "").replace(/[أإآ]/g, "ا").replace(/ى/g, "ي").replace(/ة/g, "ه");
 
 /** Site-styled, searchable country picker (replaces the browser's own dropdown). */
-export function CountrySelect({ name, countries, defaultValue = "", placeholder, searchPlaceholder, noMatch, required = false }: {
-  name: string; countries: Country[]; defaultValue?: string; placeholder: string; searchPlaceholder: string; noMatch: string; required?: boolean;
+export function CountrySelect({ name, id: btnId, countries, defaultValue = "", placeholder, searchPlaceholder, noMatch, invalid = false }: {
+  name: string; id?: string; countries: Country[]; defaultValue?: string; placeholder: string; searchPlaceholder: string; noMatch: string; invalid?: boolean;
 }) {
   const [value, setValue] = useState(defaultValue);
   const [open, setOpen] = useState(false);
@@ -45,11 +45,10 @@ export function CountrySelect({ name, countries, defaultValue = "", placeholder,
   return (
     <div ref={root} className="relative">
       <input type="hidden" name={name} value={value} />
-      {required && <input tabIndex={-1} aria-hidden="true" required value={value} onChange={() => {}} className="pointer-events-none absolute inset-0 h-full w-full opacity-0" />}
       <button
-        type="button" aria-haspopup="listbox" aria-expanded={open} aria-controls={id}
+        id={btnId} type="button" aria-haspopup="listbox" aria-expanded={open} aria-controls={id}
         onClick={() => (open ? setOpen(false) : openList())}
-        className="flex w-full items-center justify-between gap-3 rounded-xl border border-green-100 bg-white px-4 py-3 text-start text-base outline-none transition focus-visible:ring-2 focus-visible:ring-gold-500"
+        className={"flex w-full items-center justify-between gap-3 rounded-xl border bg-white px-4 py-3 text-start text-base outline-none transition focus-visible:ring-2 focus-visible:ring-gold-500 " + (invalid ? "border-red-600" : "border-green-100")}
       >
         <span className={selected ? "text-ink" : "text-ink/50"}>{selected ? selected.name : placeholder}</span>
         <svg viewBox="0 0 20 20" className={"h-5 w-5 shrink-0 text-green-700 transition " + (open ? "rotate-180" : "")} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m5 8 5 5 5-5" /></svg>

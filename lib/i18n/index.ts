@@ -95,7 +95,11 @@ const ui = {
       save: "Save changes",
       saved: "Your details were saved.",
       photo: "Profile photo",
+      showPassword: "Show password",
+      hidePassword: "Hide password",
       errors: {
+        required: "This field is required.",
+        countryRequired: "Please select your country.",
         invalid: "Please fill in all required fields correctly.",
         email: "Please enter a valid email address.",
         short: "Password must be at least 8 characters.",
@@ -156,6 +160,8 @@ const ui = {
       ok: "Thank you. Your message has been sent and we will reply soon.",
       error: "We could not send your message. Please try again or email us directly.",
       required: "Please fill in your name, a valid email and a message.",
+      fieldRequired: "This field is required.",
+      fieldEmail: "Please enter a valid email address.",
     },
     footer: {
       explore: "Explore",
@@ -254,7 +260,11 @@ const ui = {
       save: "حفظ التغييرات",
       saved: "تم حفظ بياناتك.",
       photo: "الصورة الشخصية",
+      showPassword: "إظهار كلمة المرور",
+      hidePassword: "إخفاء كلمة المرور",
       errors: {
+        required: "هذا الحقل مطلوب.",
+        countryRequired: "يرجى اختيار الدولة.",
         invalid: "يرجى تعبئة جميع الحقول المطلوبة بشكل صحيح.",
         email: "يرجى إدخال بريد إلكتروني صحيح.",
         short: "يجب ألا تقل كلمة المرور عن 8 أحرف.",
@@ -315,6 +325,8 @@ const ui = {
       ok: "شكراً لك. تم إرسال رسالتك وسنرد عليك قريباً.",
       error: "تعذر إرسال رسالتك. يرجى المحاولة مرة أخرى أو مراسلتنا مباشرة.",
       required: "يرجى إدخال الاسم وبريد إلكتروني صحيح ورسالة.",
+      fieldRequired: "هذا الحقل مطلوب.",
+      fieldEmail: "يرجى إدخال بريد إلكتروني صحيح.",
     },
     footer: {
       explore: "استكشف",

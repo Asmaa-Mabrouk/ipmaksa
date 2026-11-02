@@ -96,7 +96,7 @@ export async function Header({ locale }: { locale: Locale }) {
 
         <div className="flex items-center gap-2">
           <LangSwitch locale={locale} label={d.switchLabel} text={d.switchTo} />
-          <Link href={`${base}/login`} aria-label={d.account.signIn} title={d.account.signIn} className="flex h-10 w-10 items-center justify-center rounded-full border border-white/25 text-white transition hover:bg-white/10"><Icon name="user" className="h-5 w-5" /></Link>
+          <Link href={`${base}/login`} aria-label={d.account.signIn} title={d.account.signIn} className="hidden h-10 w-10 items-center justify-center rounded-full border border-white/25 text-white transition hover:bg-white/10 sm:flex"><Icon name="user" className="h-5 w-5" /></Link>
           <Link href={`${base}/membership#join`} className="btn btn-gold hidden whitespace-nowrap !py-2 sm:inline-flex">{d.joinCta}</Link>
           <details className="group min-[1260px]:hidden">
             <summary className="flex h-11 w-11 cursor-pointer list-none items-center justify-center rounded-lg text-white hover:bg-white/10 [&::-webkit-details-marker]:hidden" aria-label={d.menu}>

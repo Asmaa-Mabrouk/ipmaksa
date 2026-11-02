@@ -18,10 +18,10 @@ export function LangSwitch({ locale, label, text }: { locale: "ar" | "en"; label
       onClick={() => {
         try { document.cookie = `lang=${other}; path=/; max-age=31536000; samesite=lax`; } catch {}
       }}
-      className="inline-flex items-center gap-2 rounded-full border border-white/25 px-2.5 py-1.5 text-sm font-semibold text-white transition hover:bg-white/10"
+      className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/25 transition hover:bg-white/10"
     >
       <Image src={other === "ar" ? "/flags/sa.svg" : "/flags/gb.svg"} alt="" width={24} height={18} className="h-[18px] w-6 rounded-[3px] object-cover" unoptimized />
-      <span className="hidden min-[430px]:inline">{text}</span>
+      <span className="sr-only">{text}</span>
     </Link>
   );
 }

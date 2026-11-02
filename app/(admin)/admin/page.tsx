@@ -10,7 +10,7 @@ export const dynamic = "force-dynamic";
 export default async function Dashboard() {
   if (!(await getSession())) redirect("/admin/login");
   const store = getStore();
-  const [subs, msgs] = await Promise.all([store.list("subscribers"), store.list("messages")]);
+  const [subs, msgs, members] = await Promise.all([store.list("subscribers"), store.list("messages"), store.list("members")]);
   const unread = msgs.filter((m) => !(m.data as unknown as MessageDoc).read).length;
   const card = "rounded-2xl border border-green-100 bg-white p-5 shadow-sm transition hover:shadow-md";
   return (
@@ -23,6 +23,7 @@ export default async function Dashboard() {
       )}
       <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <Link href="/admin/subscribers" className={card}><p className="text-4xl font-extrabold text-green-700">{subs.length}</p><p className="font-semibold">Newsletter subscribers</p></Link>
+        <Link href="/admin/members" className={card}><p className="text-4xl font-extrabold text-green-700">{members.length}</p><p className="font-semibold">Registered members</p></Link>
         <Link href="/admin/messages" className={card}><p className="text-4xl font-extrabold text-green-700">{unread}</p><p className="font-semibold">Unread messages</p></Link>
       </div>
       <h2 className="mt-10 text-xl font-extrabold text-green-900">Edit content</h2>

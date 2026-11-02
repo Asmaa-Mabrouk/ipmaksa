@@ -23,7 +23,7 @@ export default async function Membership({ params }: { params: Promise<{ lang: s
         <SectionTitle title={d.sections.benefits} intro={d.sections.benefitsIntro} />
         <div className="mt-8"><BenefitsGrid benefits={benefits} locale={lang} /></div>
         {page && t(page.data.body, lang) && (
-          <p className="mt-10 flex items-start gap-3 rounded-2xl bg-gold-100 p-5 text-lg font-semibold text-green-900">
+          <p className="mt-10 flex items-start gap-3 rounded-2xl bg-green-50 p-5 text-lg font-semibold text-green-900">
             <Icon name="check" className="mt-1 h-6 w-6 shrink-0 text-green-700" />{t(page.data.body, lang)}
           </p>
         )}

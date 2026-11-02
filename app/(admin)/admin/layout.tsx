@@ -23,6 +23,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
                 {COLLECTIONS.map((c) => (
                   <Link key={c.id} href={`/admin/c/${c.id}`} className="rounded-lg px-3 py-2 font-semibold hover:bg-white/10">{c.label}</Link>
                 ))}
+                <Link href="/admin/members" className="rounded-lg px-3 py-2 font-semibold hover:bg-white/10">Members &amp; badges</Link>
                 <Link href="/admin/subscribers" className="rounded-lg px-3 py-2 font-semibold hover:bg-white/10">Newsletter subscribers</Link>
                 <Link href="/admin/messages" className="rounded-lg px-3 py-2 font-semibold hover:bg-white/10">Messages</Link>
               </nav>

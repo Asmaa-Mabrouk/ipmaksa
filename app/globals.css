@@ -10,12 +10,12 @@
   --color-green-600: #2a7259;
   --color-green-100: #dcebe4;
   --color-green-50: #eef5f1;
-  --color-gold-600: #a58343;
+  --color-gold-600: #86692a;
   --color-gold-500: #bf9e5f;
   --color-gold-300: #dcc795;
   --color-gold-100: #f3ead4;
-  --color-cream: #faf8f4;
-  --color-sand: #f1ece2;
+  --color-cream: #f8f9f7;
+  --color-sand: #eef3ef;
   --color-ink: #1c2a25;
   --color-ipma-red: #e30613;
 }
@@ -28,14 +28,14 @@ body { font-family: var(--font-sans); background: var(--color-cream); color: var
 
 /* Subtle Najdi-style triangle band, used as a section divider */
 .najdi {
-  height: 14px;
+  height: 10px;
   background:
-    linear-gradient(135deg, var(--color-gold-500) 25%, transparent 25%) -7px 0,
-    linear-gradient(225deg, var(--color-gold-500) 25%, transparent 25%) -7px 0,
+    linear-gradient(135deg, var(--color-gold-500) 25%, transparent 25%) -5px 0,
+    linear-gradient(225deg, var(--color-gold-500) 25%, transparent 25%) -5px 0,
     linear-gradient(315deg, var(--color-gold-500) 25%, transparent 25%),
     linear-gradient(45deg, var(--color-gold-500) 25%, transparent 25%);
-  background-size: 14px 14px;
-  opacity: .85;
+  background-size: 10px 10px;
+  opacity: .5;
 }
 .pattern-dots {
   background-image: radial-gradient(rgba(191,158,95,.25) 1px, transparent 1px);
@@ -65,3 +65,9 @@ body { font-family: var(--font-sans); background: var(--color-cream); color: var
 
 .reveal { animation: rise .7s both cubic-bezier(.2,.7,.2,1); }
 @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+
+.prose-ipma table { width: 100%; border-collapse: collapse; font-size: .98rem; }
+.prose-ipma th { background: var(--color-green-800); color: #fff; font-weight: 700; padding: .65rem .9rem; text-align: start; }
+.prose-ipma td { padding: .6rem .9rem; border-bottom: 1px solid var(--color-green-100); background: #fff; }
+.prose-ipma tr:nth-child(even) td { background: var(--color-green-50); }
+.prose-ipma th:first-child { border-start-start-radius: .75rem; } .prose-ipma th:last-child { border-start-end-radius: .75rem; }

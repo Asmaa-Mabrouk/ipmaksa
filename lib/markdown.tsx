@@ -52,9 +52,33 @@ export function Markdown({ source, className = "" }: { source: string; className
     }
   };
 
+  let table: string[][] | null = null;
+  const flushTable = () => {
+    if (!table) return;
+    const [head, ...body] = table;
+    nodes.push(
+      <div key={k++} className="overflow-x-auto">
+        <table>
+          <thead><tr>{head.map((c, i) => <th key={i}>{inline(c, `th${k}-${i}`)}</th>)}</tr></thead>
+          <tbody>{body.map((r, ri) => <tr key={ri}>{r.map((c, i) => <td key={i}>{inline(c, `td${k}-${ri}-${i}`)}</td>)}</tr>)}</tbody>
+        </table>
+      </div>,
+    );
+    table = null;
+  };
+
   for (const raw of lines) {
     const line = raw.trimEnd();
     let m: RegExpMatchArray | null;
+    if (line.trim().startsWith("|")) {
+      flushPara();
+      flushList();
+      const cells = line.trim().replace(/^\||\|$/g, "").split("|").map((c) => c.trim());
+      if (cells.every((c) => /^:?-{2,}:?$/.test(c))) continue; // separator row
+      (table ??= []).push(cells);
+      continue;
+    }
+    flushTable();
     if (!line.trim()) {
       flushPara();
       flushList();
@@ -77,5 +101,6 @@ export function Markdown({ source, className = "" }: { source: string; className
   }
   flushPara();
   flushList();
+  flushTable();
   return <div className={`prose-ipma ${className}`}>{nodes}</div>;
 }

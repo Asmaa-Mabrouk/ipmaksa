@@ -27,7 +27,7 @@ export function hashPassword(password: string, salt = crypto.randomBytes(16).toS
   return `${salt}:${crypto.scryptSync(password, salt, 64).toString("hex")}`;
 }
 
-function verifyPassword(password: string, stored: string) {
+export function verifyPassword(password: string, stored: string) {
   const [salt, hash] = stored.split(":");
   if (!salt || !hash) return false;
   const candidate = crypto.scryptSync(password, salt, 64);
@@ -41,7 +41,7 @@ const secret = () => {
   if (process.env.NODE_ENV !== "production") return "dev-only-session-secret-change-me";
   throw new Error("SESSION_SECRET must be set (16+ characters) in production");
 };
-const sign = (v: string) => crypto.createHmac("sha256", secret()).update(v).digest("base64url");
+export const sign = (v: string) => crypto.createHmac("sha256", secret()).update(v).digest("base64url");
 
 /* in-memory login throttling (per server instance) */
 const attempts = new Map<string, { n: number; t: number }>();

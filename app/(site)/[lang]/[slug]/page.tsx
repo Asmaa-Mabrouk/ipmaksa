@@ -6,7 +6,7 @@ import { getPage, getPages } from "@/lib/content/api";
 import { LOCALES, getDict, isLocale, t } from "@/lib/i18n";
 import { Markdown } from "@/lib/markdown";
 
-const RESERVED = new Set(["team", "membership", "exam-dates", "news", "contact", "newsletter", "project-connect"]);
+const RESERVED = new Set(["team", "membership", "exam-dates", "news", "contact", "newsletter", "project-connect", "register", "login", "profile"]);
 
 export async function generateStaticParams() {
   const pages = (await getPages()).filter((p) => !RESERVED.has(p.id));

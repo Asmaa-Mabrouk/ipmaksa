@@ -238,6 +238,21 @@ export const COLLECTIONS: CollectionDef[] = [
     ],
   },
   {
+    id: "badges",
+    label: "Badges",
+    description: "Badge types you can award to registered members (for example the Membership badge). Award them from the Members screen.",
+    titleKey: "title",
+    canCreate: true,
+    canDelete: true,
+    fields: [
+      { key: "title", label: "Badge name", type: "text", i18n: true },
+      { key: "description", label: "What it means", type: "textarea", i18n: true },
+      { key: "image", label: "Badge artwork (optional)", type: "image", help: "Square image, ideally transparent PNG. If empty, the icon below is used." },
+      { key: "icon", label: "Icon (used when there is no artwork)", type: "select", options: ICON_OPTIONS },
+      { key: "order", label: "Order", type: "number" },
+    ],
+  },
+  {
     id: "news",
     label: "News",
     description: "News and updates shown on the home page and the News page.",
@@ -275,7 +290,7 @@ export const COLLECTIONS: CollectionDef[] = [
 export const getCollection = (id: string) => COLLECTIONS.find((c) => c.id === id);
 
 /** Collections that are stored but not edited through the generic forms. */
-export const SYSTEM_COLLECTIONS = ["subscribers", "messages"];
+export const SYSTEM_COLLECTIONS = ["subscribers", "messages", "members"];
 
 /* ---------- sanitising ---------- */
 

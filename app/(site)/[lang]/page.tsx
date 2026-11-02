@@ -48,7 +48,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
 
       {/* STATS */}
       <section aria-label="IPMA KSA in numbers" className="relative z-10 mx-auto -mt-10 max-w-6xl px-4 sm:px-6">
-        <ul className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl bg-gold-300 shadow-xl lg:grid-cols-4">
+        <ul className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl bg-green-100 shadow-xl lg:grid-cols-4">
           {h.stats.map((st, i) => (
             <li key={i} className="bg-white p-5 text-center sm:p-7">
               <p className="text-4xl font-extrabold text-green-700 sm:text-5xl"><span dir="ltr">{st.value}{st.suffix}</span></p>
@@ -73,9 +73,9 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
       </section>
 
       {/* SAUDI AMBITION */}
-      <section className="bg-green-900 py-20 text-white">
+      <section className="bg-green-50 py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
-          <SectionTitle light title={t(h.ambitionTitle, lang)} intro={t(h.ambitionText, lang)} />
+          <SectionTitle title={t(h.ambitionTitle, lang)} intro={t(h.ambitionText, lang)} />
           <ul className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
             {SECTORS.map((x) => (
               <li key={x.img} className="relative aspect-[3/4] overflow-hidden rounded-2xl">
@@ -101,7 +101,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
       </section>
 
       {/* WHAT'S LIVE */}
-      <section className="bg-sand py-20">
+      <section className="bg-white py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <SectionTitle title={t(h.liveTitle, lang)} intro={t(h.liveText, lang)} />
           <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -156,14 +156,14 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
       </section>
 
       {/* TEAM */}
-      <section className="bg-sand py-20">
+      <section className="bg-white py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <SectionTitle title={d.sections.team} />
             <Link href={`${base}/team`} className="btn btn-green">{d.viewAll}</Link>
           </div>
-          <ul className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {team.slice(0, 4).map((p) => <TeamCard key={p.id} person={p} locale={lang} />)}
+          <ul className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+            {team.slice(0, 5).map((p) => <TeamCard key={p.id} person={p} locale={lang} />)}
           </ul>
         </div>
       </section>

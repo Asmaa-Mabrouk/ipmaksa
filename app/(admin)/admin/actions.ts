@@ -82,3 +82,29 @@ export async function messageAction(id: string, op: "read" | "delete") {
   }
   revalidatePath("/admin/messages");
 }
+
+export async function setMemberBadges(id: string, badgeIds: string[], notes: Record<string, string>) {
+  await requireAdmin();
+  if (!/^[a-f0-9]{24}$/.test(id)) return { ok: false };
+  const store = getStore();
+  const m = await store.get("members", id);
+  if (!m) return { ok: false };
+  const valid = new Set((await store.list("badges")).map((b) => b.id));
+  const prev = ((m.data.badges as { id: string; awardedAt: string; note: string }[]) ?? []);
+  const badges = badgeIds
+    .filter((b) => valid.has(b))
+    .map((b) => {
+      const old = prev.find((p) => p.id === b);
+      return { id: b, awardedAt: old?.awardedAt ?? new Date().toISOString(), note: String(notes[b] ?? "").slice(0, 200) };
+    });
+  await store.put("members", id, { ...m.data, badges });
+  revalidatePath("/admin/members");
+  return { ok: true };
+}
+
+export async function deleteMember(id: string) {
+  await requireAdmin();
+  if (!/^[a-f0-9]{24}$/.test(id)) return;
+  await getStore().remove("members", id);
+  redirect("/admin/members");
+}

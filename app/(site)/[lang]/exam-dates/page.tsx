@@ -23,7 +23,7 @@ export default async function ExamDates({ params }: { params: Promise<{ lang: st
       <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6">
         <ExamCards exams={upcoming} locale={lang} email={s.email} />
         {page && t(page.data.body, lang) && (
-          <p className="mt-8 rounded-2xl bg-gold-100 p-5 font-semibold text-green-900">
+          <p className="mt-8 rounded-2xl bg-green-50 p-5 font-semibold text-green-900">
             {t(page.data.body, lang)} <a className="underline" href={`mailto:${s.email}`} dir="ltr">{s.email}</a>
             {s.phone && <> · <a className="underline" href={`tel:${s.phone.replace(/[^\d+]/g, "")}`} dir="ltr">{s.phone}</a></>}
           </p>

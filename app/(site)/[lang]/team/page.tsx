@@ -36,7 +36,7 @@ export default async function TeamPage({ params }: { params: Promise<{ lang: str
             </section>
           );
         })}
-        {page && t(page.data.body, lang) && <p className="rounded-2xl bg-gold-100 p-5 font-semibold text-green-900">{t(page.data.body, lang)}</p>}
+        {page && t(page.data.body, lang) && <p className="rounded-2xl bg-green-50 p-5 font-semibold text-green-900">{t(page.data.body, lang)}</p>}
       </div>
       <NewsletterBand locale={lang} source="team" />
     </>

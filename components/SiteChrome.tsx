@@ -32,7 +32,7 @@ export async function TopBar({ locale }: { locale: Locale }) {
   );
 }
 
-const NAV_LINK = "whitespace-nowrap rounded-lg px-2.5 py-2 font-semibold text-white/90 transition hover:bg-white/10 hover:text-white";
+const NAV_LINK = "whitespace-nowrap rounded-lg px-2.5 py-2 font-bold text-white transition hover:bg-white/10 hover:text-gold-300";
 
 function Menu({ label, items, base, locale }: { label: string; items: { id: string; data: { title: { ar: string; en: string } } }[]; base: string; locale: Locale }) {
   return (
@@ -71,6 +71,8 @@ export async function Header({ locale }: { locale: Locale }) {
     { label: d.nav.team, href: `${base}/team` },
     { label: d.nav.news, href: `${base}/news` },
     { label: d.nav.contact, href: `${base}/contact` },
+    { label: d.account.signIn, href: `${base}/login` },
+    { label: d.account.register, href: `${base}/register` },
   ];
 
   return (
@@ -94,6 +96,7 @@ export async function Header({ locale }: { locale: Locale }) {
 
         <div className="flex items-center gap-2">
           <LangSwitch locale={locale} label={d.switchLabel} text={d.switchTo} />
+          <Link href={`${base}/login`} aria-label={d.account.signIn} title={d.account.signIn} className="flex h-10 w-10 items-center justify-center rounded-full border border-white/25 text-white transition hover:bg-white/10"><Icon name="user" className="h-5 w-5" /></Link>
           <Link href={`${base}/membership#join`} className="btn btn-gold hidden whitespace-nowrap !py-2 sm:inline-flex">{d.joinCta}</Link>
           <details className="group min-[1260px]:hidden">
             <summary className="flex h-11 w-11 cursor-pointer list-none items-center justify-center rounded-lg text-white hover:bg-white/10 [&::-webkit-details-marker]:hidden" aria-label={d.menu}>
@@ -103,7 +106,7 @@ export async function Header({ locale }: { locale: Locale }) {
             <div className="absolute inset-x-0 top-full max-h-[80vh] overflow-y-auto border-t border-white/10 bg-green-900 px-4 pb-6 pt-2 shadow-xl">
               <ul className="mx-auto max-w-7xl">
                 {mobile.map((m) => (
-                  <li key={m.href}><Link href={m.href} className="block border-b border-white/10 py-3 font-semibold text-white">{m.label}</Link></li>
+                  <li key={m.href}><Link href={m.href} className="block border-b border-white/10 py-3 font-bold text-white">{m.label}</Link></li>
                 ))}
               </ul>
               <Link href={`${base}/membership#join`} className="btn btn-gold mx-auto mt-4 flex w-full max-w-7xl">{d.joinCta}</Link>

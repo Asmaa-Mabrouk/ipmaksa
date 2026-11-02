@@ -1,3 +1,5 @@
+import { CERT } from "./seed-certifications";
+
 /**
  * Starting content (Arabic + English), built from the IPMA KSA 2026 deck.
  * Served until an editor changes a collection in the admin portal.
@@ -445,6 +447,34 @@ const pages: Record<string, P> = {
   }),
 };
 
+// Certification content supplied by IPMA KSA (levels A-D, recertification and fees)
+for (const [slug, body] of Object.entries(CERT)) pages[slug].body = body;
+Object.assign(pages["ipma-level-a"], {
+  title: l("المستوى A: مدير مشاريع/برامج/محافظ معتمد", "Level A: Certified Project/Program/Portfolio Director"),
+  intro: l("لمن قادوا ووجّهوا بيئات مشاريع شديدة التعقيد ذات أثر استراتيجي. 6,000 ريال للأعضاء · 7,500 لغير الأعضاء.", "For leaders of highly complex project environments with strategic impact. SAR 6,000 members · SAR 7,500 non-members."),
+  needsReview: false,
+});
+Object.assign(pages["ipma-level-b"], {
+  title: l("المستوى B: مدير مشاريع/برامج/محافظ أول معتمد", "Level B: Certified Senior Project/Program/Portfolio Manager"),
+  intro: l("لمديري المشاريع في بيئات معقدة. 5,155 ريال للأعضاء · 6,444 لغير الأعضاء.", "For project managers in complex environments. SAR 5,155 members · SAR 6,444 non-members."),
+  needsReview: false,
+});
+Object.assign(pages["ipma-level-c"], {
+  title: l("المستوى C: مدير مشاريع معتمد", "Level C: Certified Project Manager"),
+  intro: l("لمديري المشاريع متوسطة التعقيد. 2,851 ريال للأعضاء · 3,564 لغير الأعضاء.", "For managers of moderately complex projects. SAR 2,851 members · SAR 3,564 non-members."),
+  needsReview: false,
+});
+Object.assign(pages["ipma-level-d"], {
+  title: l("المستوى D: مساعد إدارة مشاريع معتمد", "Level D: Certified Project Management Associate"),
+  intro: l("نقطة انطلاق للشباب والعاملين في فرق المشاريع. من 720 ريالاً للطلاب.", "A starting point for young people and project team members. From SAR 720 for students."),
+  needsReview: false,
+});
+Object.assign(pages["recertification"], {
+  title: l("إعادة الاعتماد والرسوم", "Recertification and fees"),
+  intro: l("التجديد السنوي ورسوم الترقية والرسوم الإدارية.", "Annual renewal, upgrade fees and administrative fees."),
+  needsReview: false,
+});
+
 const team = {
   "badr-burshaid": {
     name: l("م. بدر برشيد", "Eng. Badr Burshaid"),
@@ -518,16 +548,49 @@ const team = {
 };
 
 const exams = {
-  "4lc-next-round": {
-    title: l("الجولة القادمة من اختبارات IPMA 4-L-C", "Next IPMA 4-L-C exam round"),
+  "4lc-2026-12-25": {
+    title: l("اختبارات IPMA 4-L-C: ديسمبر 2026", "IPMA 4-L-C exams: December 2026"),
     programme: "IPMA 4-L-C",
-    date: "",
-    dateText: l("سيُعلن عن الموعد قريباً", "Date to be announced"),
+    date: "2026-12-25",
+    dateText: l("", ""),
     location: l("المملكة العربية السعودية", "Saudi Arabia"),
-    status: "tba",
+    status: "open",
     link: "",
-    note: l("تواصلوا معنا للاستفسار عن التسجيل.", "Contact us to ask about registration."),
+    note: l("للتقديم راجع صفحات المستويات A وB وC وD أو راسلنا.", "To apply, see the Level A, B, C and D pages or write to us."),
     order: 1,
+  },
+  "4lc-2026-11-25": {
+    title: l("اختبارات IPMA 4-L-C: نوفمبر 2026", "IPMA 4-L-C exams: November 2026"),
+    programme: "IPMA 4-L-C",
+    date: "2026-11-25",
+    dateText: l("", ""),
+    location: l("المملكة العربية السعودية", "Saudi Arabia"),
+    status: "open",
+    link: "",
+    note: l("للتقديم راجع صفحات المستويات A وB وC وD أو راسلنا.", "To apply, see the Level A, B, C and D pages or write to us."),
+    order: 2,
+  },
+  "4lc-2026-10-25": {
+    title: l("اختبارات IPMA 4-L-C: أكتوبر 2026", "IPMA 4-L-C exams: October 2026"),
+    programme: "IPMA 4-L-C",
+    date: "2026-10-25",
+    dateText: l("", ""),
+    location: l("المملكة العربية السعودية", "Saudi Arabia"),
+    status: "closed",
+    link: "",
+    note: l("", ""),
+    order: 3,
+  },
+  "4lc-2026-09-25": {
+    title: l("اختبارات IPMA 4-L-C: سبتمبر 2026", "IPMA 4-L-C exams: September 2026"),
+    programme: "IPMA 4-L-C",
+    date: "2026-09-25",
+    dateText: l("", ""),
+    location: l("المملكة العربية السعودية", "Saudi Arabia"),
+    status: "closed",
+    link: "",
+    note: l("", ""),
+    order: 4,
   },
   "pm-fundamentals-pilot": {
     title: l("الدفعة التجريبية لأساسيات إدارة المشاريع", "PM Fundamentals pilot cohort"),
@@ -654,7 +717,55 @@ export const SEED: Record<string, Record<string, unknown>> = {
   pages,
   team,
   exams,
-  events: {},
+  events: {
+    "project-connect-ep1-what-makes-projects-succeed": {
+      title: l("الحلقة الأولى من ملتقى المشاريع: ما الذي يصنع نجاح المشاريع فعلاً؟", "Project Connect Episode 1: What Makes Projects Succeed?"),
+      kind: "webinar",
+      description: l(
+        "ليست الأدوات وحدها ولا الخطط وحدها، بل الكفاءات التي تقف خلف كل تسليم ناجح. في أولى جلسات ملتقى المشاريع من IPMA السعودية استضفنا نخبة من الخبراء ليتحدثوا عن الكفاءات التي تصنع الفرق بين مشروع يتعثر ومشروع يحقق أثره.",
+        "Not tools alone and not plans alone, but the competences behind every successful delivery. In the first Project Connect session from IPMA KSA, experts discussed the competences that separate a project that struggles from one that delivers its impact.",
+      ),
+      date: "2026-10-27",
+      time: "7:00 – 8:00 PM (KSA)",
+      format: l("عبر Zoom", "On Zoom"),
+      speaker: l(
+        "يدير الحوار: سامح مكي · المتحدثون: جيم جيسور (IPMA Level A, PMP, RMP, P.E.) وتورغوت يلدز",
+        "Moderator: Sameh Makky · Speakers: Cem Cesur (IPMA Level A, PMP, RMP, P.E.) and Turgut Yildiz",
+      ),
+      image: "/images/pc-episode-1.webp",
+      link: "",
+      status: "closed",
+      recording: "",
+    },
+    "project-connect-ep2-people-competences": {
+      title: l("الحلقة الثانية من ملتقى المشاريع: كفاءات الأشخاص، مفتاح نجاح مديري المشاريع", "Project Connect Episode 2: People Competences for Successful Project Managers"),
+      kind: "webinar",
+      description: l(
+        "خلف كل مشروع ناجح فريق، وخلف كل فريق قائد يُحسن التعامل مع الناس. في هذه الحلقة نتناول كفاءات الأشخاص (People Competences) في الإطار الدولي ICB5 الصادر عن IPMA، ونرى كيف تصنع القيادة والتواصل والعمل الجماعي وإدارة النزاعات فرقاً حقيقياً في نتائج المشاريع. يحصل الحضور على ساعة CPD في MyIPMA.",
+        "Behind every successful project is a team, and behind every team is a leader who knows how to work with people. This episode explores the People Competences in IPMA's ICB5 framework and how leadership, communication, teamwork and conflict management make a real difference to project results. Attendees earn one CPD hour in MyIPMA.",
+      ),
+      date: "2026-11-03",
+      time: "7:00 – 8:00 PM (KSA)",
+      format: l("مباشر عبر Zoom", "Live on Zoom"),
+      speaker: l(
+        "تيودورا بوجيفا (رئيسة الخدمات المهنية، Businessmap) · تدير الحوار: سلبي كيشيشيان (المؤسسة والرئيسة التنفيذية، SCALE Advisory)",
+        "Teodora Bozheva (Head of Professional Services, Businessmap) · Moderator: Salpie Kechichian (Founder & CEO, SCALE Advisory)",
+      ),
+      image: "/images/pc-episode-2.webp",
+      link: "https://zoom.us/webinar/register",
+      status: "open",
+      recording: "",
+    },
+  },
+  badges: {
+    membership: {
+      title: l("عضو IPMA السعودية", "IPMA KSA Member"),
+      description: l("عضوية معتمدة في IPMA السعودية.", "Verified membership of IPMA KSA."),
+      image: "",
+      icon: "card",
+      order: 1,
+    },
+  },
   benefits,
   news,
 };

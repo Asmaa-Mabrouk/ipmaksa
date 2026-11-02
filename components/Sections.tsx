@@ -173,7 +173,7 @@ export function NewsletterBand({ locale, image, title, text, source }: { locale:
 
 export function ContactCards({ s, locale }: { s: SiteSettings; locale: Locale }) {
   const d = getDict(locale).contact;
-  const card = "flex items-center gap-4 rounded-2xl border border-gold-300 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md";
+  const card = "flex items-center gap-4 rounded-2xl border border-green-100 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md";
   const ic = "flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-green-800 text-gold-300";
   return (
     <div className="grid gap-4 sm:grid-cols-2">
@@ -208,8 +208,8 @@ export function EventCards({ events, locale, past = false }: { events: Doc<Proje
   return (
     <ul className="grid gap-5 md:grid-cols-2">
       {events.map(({ id, data: e }) => (
-        <li key={id} className={"flex flex-col overflow-hidden rounded-2xl border border-green-100 bg-white shadow-sm " + (past ? "opacity-85" : "")}>
-          {e.image && <div className="relative aspect-[16/8] bg-green-50"><Image src={e.image} alt="" fill sizes="(min-width:768px) 50vw, 100vw" className="object-cover" /></div>}
+        <li key={id} className={"flex flex-col overflow-hidden rounded-2xl border border-green-100 bg-white shadow-sm md:col-span-2 md:flex-row " + (past ? "opacity-85" : "")}>
+          {e.image && <div className="relative aspect-[4/5] w-full shrink-0 bg-green-50 md:w-72"><Image src={e.image} alt={t(e.title, locale)} fill sizes="(min-width:768px) 288px, 100vw" className="object-cover" /></div>}
           <div className="flex flex-1 flex-col p-5">
             <div className="flex flex-wrap items-center gap-2">
               <span className="rounded-full bg-green-800 px-3 py-0.5 text-xs font-bold text-white">{d.events[e.kind]}</span>

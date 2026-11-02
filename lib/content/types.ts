@@ -129,3 +129,18 @@ export type ProjectEventDoc = {
   status: "open" | "soon" | "closed";
   recording: string; // link to recording once finished
 };
+
+export type BadgeDoc = { title: L; description: L; image: string; icon: string; order: number };
+export type MemberBadge = { id: string; awardedAt: string; note: string };
+export type MemberDoc = {
+  email: string;
+  firstName: string;
+  lastName: string;
+  country: string; // ISO 3166-1 alpha-2
+  dob: string;
+  photo: string;
+  passwordHash: string;
+  lang: Locale;
+  createdAt: string;
+  badges: MemberBadge[];
+};

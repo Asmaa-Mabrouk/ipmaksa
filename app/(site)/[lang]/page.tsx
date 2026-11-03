@@ -52,6 +52,11 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
       <section className="relative isolate overflow-hidden bg-green-950 text-white">
         <Image src={h.heroImage} alt="" fill priority sizes="100vw" className="-z-10 object-cover" />
         <div className="absolute inset-0 -z-10 bg-gradient-to-t from-green-950 via-green-950/60 to-green-900/30 sm:bg-gradient-to-e" />
+        {/* the logo's double chevron, enlarged: forward movement, flips with reading direction */}
+        <svg viewBox="0 0 120 160" className="chevrons pointer-events-none absolute end-[3%] top-1/2 -z-10 hidden h-[22rem] -translate-y-1/2 opacity-70 rtl:-scale-x-100 lg:block xl:end-[6%]" fill="none" stroke="var(--color-ipma-red)" strokeWidth="11" strokeLinecap="butt" strokeLinejoin="miter" aria-hidden="true">
+          <path d="M12 10 L72 80 L12 150" opacity=".95" />
+          <path d="M52 10 L112 80 L52 150" opacity=".4" />
+        </svg>
         <div className="mx-auto max-w-7xl px-4 pb-20 pt-24 sm:px-6 sm:pb-28 sm:pt-36">
           <p className="reveal inline-block rounded-full bg-gold-500/20 px-4 py-1 text-sm font-bold text-gold-300 ring-1 ring-gold-500/40">{t(h.heroEyebrow, lang)}</p>
           <h1 className="reveal mt-5 max-w-3xl text-4xl font-extrabold leading-tight sm:text-6xl">{t(h.heroTitle, lang)}</h1>

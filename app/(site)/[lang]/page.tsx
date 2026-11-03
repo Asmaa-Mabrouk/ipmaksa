@@ -109,8 +109,8 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
             {SECTORS.map((x) => (
               <li key={x.img} className="relative aspect-[3/4] overflow-hidden rounded-xl">
                 <Image src={`/images/${x.img}.webp`} alt="" fill sizes="(min-width:1024px) 20vw, 45vw" className="object-cover" />
-                <div className="absolute inset-0 bg-gradient-to-t from-green-950/90 to-transparent" />
-                <span className="absolute inset-x-0 bottom-0 p-4 text-lg font-extrabold">{lang === "ar" ? x.ar : x.en}</span>
+                <div className="absolute inset-0 bg-gradient-to-t from-green-950/85 via-green-950/10 to-transparent" />
+                <span className="absolute inset-x-0 bottom-0 flex flex-col items-start gap-2 p-4 text-xl font-extrabold text-white"><span className="h-1 w-8 rounded bg-gold-500" aria-hidden="true" />{lang === "ar" ? x.ar : x.en}</span>
               </li>
             ))}
           </ul>

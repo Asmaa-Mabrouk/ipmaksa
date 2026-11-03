@@ -41,7 +41,7 @@ const statusDot: Record<string, string> = {
   closed: "bg-ink/30",
 };
 
-export function ExamCards({ exams, locale, email, whatsapp = "", limit }: { exams: Doc<ExamDoc>[]; locale: Locale; email: string; whatsapp?: string; limit?: number }) {
+export function ExamCards({ exams, locale, email, certEmail, whatsapp = "", limit }: { exams: Doc<ExamDoc>[]; locale: Locale; email: string; certEmail?: string; whatsapp?: string; limit?: number }) {
   const d = getDict(locale);
   const wa = whatsapp.replace(/\D/g, "");
   const list = (limit ? exams.filter((e) => e.data.status !== "closed").slice(0, limit) : exams);
@@ -85,7 +85,7 @@ export function ExamCards({ exams, locale, email, whatsapp = "", limit }: { exam
                 <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-3">
                   {/* primary action: carry the sitting into the application, whichever route is approved */}
                   <a
-                    href={e.link || `mailto:${email}?subject=${encodeURIComponent(d.exams.startApplication + ": " + t(e.title, locale))}&body=${encodeURIComponent(d.exams.applyBody.replace("{title}", t(e.title, locale)).replace("{date}", dated ? fmtDate(e.date, locale) : t(e.dateText, locale)).replace("{programme}", e.programme))}`}
+                    href={e.link || `mailto:${certEmail || "ca@ipmaksa.world"}?subject=${encodeURIComponent(d.exams.startApplication + ": " + t(e.title, locale))}&body=${encodeURIComponent(d.exams.applyBody.replace("{title}", t(e.title, locale)).replace("{date}", dated ? fmtDate(e.date, locale) : t(e.dateText, locale)).replace("{programme}", e.programme))}`}
                     {...(e.link ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                     className="btn btn-green !px-4 !py-2 text-sm"
                   >{d.exams.startApplication}</a>
@@ -94,7 +94,7 @@ export function ExamCards({ exams, locale, email, whatsapp = "", limit }: { exam
                       <Icon name="whatsapp" className="h-5 w-5 text-[#1f8f4e]" />{d.exams.askWhatsapp}
                     </a>
                   )}
-                  <a href={`mailto:${email}?subject=${encodeURIComponent(t(e.title, locale))}`} className={"inline-flex items-center gap-1.5 text-sm " + link}>
+                  <a href={`mailto:${certEmail || "ca@ipmaksa.world"}?subject=${encodeURIComponent(t(e.title, locale))}`} className={"inline-flex items-center gap-1.5 text-sm " + link}>
                     <Icon name="mail" className="h-5 w-5" />{d.exams.askEmail}
                   </a>
                 </div>

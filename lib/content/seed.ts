@@ -146,6 +146,7 @@ const home = {
 
 const settings = {
   email: "care@ipmaksa.world",
+  certEmail: "ca@ipmaksa.world",
   phone: "+966 50 365 6644",
   whatsapp: "966503656644",
   address: l("الظهران، المملكة العربية السعودية", "Dhahran, Saudi Arabia"),
@@ -244,12 +245,12 @@ const pages: Record<string, P> = {
     image: "/images/milestones.webp",
     title: l("رئيس جهة منح الشهادات", "Head of the Certification Body"),
     intro: l(
-      "معالي المهندس بدر بن عبدالله الدولامي، رئيس جهة منح الشهادات الوطنية.",
-      "H.E. Eng. Badr Bin Abdullah Al-Dulami, Head of the national Certification Body.",
+      "معالي الدكتور بدر بن عبدالله الدلامي، رئيس جهة منح الشهادات الوطنية.",
+      "H.E. Dr. Badr Bin Abdullah Al-Dulami, Head of the national Certification Body.",
     ),
     body: l(
-      "وكيل وزارة النقل والخدمات اللوجستية لشؤون الطرق (الدور الحكومي وفق خطاب التعيين).\n\n## مسؤوليات قيادة الجهة\n- **المساءلة المؤسسية:** قائد معيّن لجهة الشهادات ومسؤولياتها في الحوكمة.\n- **الاستقلال المهني:** يبقى التقييم ومنح الشهادات قائمين على الأدلة وتحت سيطرة الجهة.\n- **الجودة والحياد:** كفاءة المقيّمين، وفحص تضارب المصالح، وقرارات موثقة.",
-      "Deputy Minister of Transport and Logistics Services for Roads Affairs (government role cited in the appointment brief).\n\n## Leadership responsibilities\n- **Institutional accountability:** a designated leader for the Certification Body and its governance responsibilities.\n- **Professional independence:** assessment and certification remain evidence-based and controlled within the Certification Body.\n- **Quality and impartiality:** assessor competence, conflict checks and documented decisions.",
+      "نائب وزير (الدور الحكومي وفق البروتوكول).\n\n## مسؤوليات قيادة الجهة\n- **المساءلة المؤسسية:** قائد معيّن لجهة الشهادات ومسؤولياتها في الحوكمة.\n- **الاستقلال المهني:** يبقى التقييم ومنح الشهادات قائمين على الأدلة وتحت سيطرة الجهة.\n- **الجودة والحياد:** كفاءة المقيّمين، وفحص تضارب المصالح، وقرارات موثقة.",
+      "Deputy Minister (government role per protocol).\n\n## Leadership responsibilities\n- **Institutional accountability:** a designated leader for the Certification Body and its governance responsibilities.\n- **Professional independence:** assessment and certification remain evidence-based and controlled within the Certification Body.\n- **Quality and impartiality:** assessor competence, conflict checks and documented decisions.",
     ),
   }),
   "ipma-standards": page({
@@ -334,8 +335,8 @@ const pages: Record<string, P> = {
       "Record your learning and professional activities to support your recertification.",
     ),
     body: l(
-      "## ما الذي يُحتسب؟\n- التدريب والدورات والورش.\n- حضور المؤتمرات والفعاليات مثل المنتدى العالمي لإدارة المشاريع.\n- التأليف والتدريس والإرشاد المهني.\n- الممارسة المهنية والتعلم من المشاريع.\n\nسيتوفر هنا دليل التطوير المهني المستمر بصيغة PDF.",
-      "## What counts?\n- Training, courses and workshops.\n- Attending conferences and events such as the Global Project Management Forum.\n- Writing, teaching and professional mentoring.\n- Professional practice and learning from projects.\n\nThe CPD guide (PDF) will be available here.",
+      "## ما الذي يُحتسب؟\n- التدريب والدورات والورش.\n- حضور المؤتمرات والفعاليات مثل المنتدى العالمي لإدارة المشاريع.\n- التأليف والتدريس والإرشاد المهني.\n- الممارسة المهنية والتعلم من المشاريع.\n\nيلزم 35 ساعة على الأقل من التطوير المهني المستمر عن كل سنة منذ شهادتك السابقة. اطّلع على [دليل إعادة الاعتماد ونقاط التطوير المهني المستمر (PDF)](https://ipmaksa.world/wp-content/uploads/2026/04/IPMAKSA_Recertification-and-Continuing-Professional-Development-CPD-Points-Guide.pdf).",
+      "## What counts?\n- Training, courses and workshops.\n- Attending conferences and events such as the Global Project Management Forum.\n- Writing, teaching and professional mentoring.\n- Professional practice and learning from projects.\n\nYou need at least 35 CPD hours for each year since your previous certification. Read the [recertification and CPD points guide (PDF)](https://ipmaksa.world/wp-content/uploads/2026/04/IPMAKSA_Recertification-and-Continuing-Professional-Development-CPD-Points-Guide.pdf).",
     ),
   }),
   "ipma-croatia-collaboration": page({
@@ -387,8 +388,8 @@ const pages: Record<string, P> = {
       "Join the community of professionals and organizations building the future of project management in the Kingdom.",
     ),
     body: l(
-      "العضوية مفتوحة للمهنيين في جميع مراحل مسيرتهم وللمؤسسات. ابدأ بإنشاء حساب مجاني وسيتواصل معك فريقنا بالتفاصيل.",
-      "Membership is open to professionals at every career stage and to organizations. Start by creating a free account and our team will follow up with the details.",
+      "العضوية مفتوحة للمهنيين في جميع مراحل مسيرتهم وللمؤسسات. ابدأ بإنشاء حساب مجاني وسيتواصل معك فريقنا لإتمام التسجيل والدفع.\n\n## عضوية الأفراد (سنوياً)\n- **عضوية فردية:** 200 ريال\n- **عضوية الشباب (أقل من 35 سنة):** 100 ريال\n- **عضوية الطلاب:** 80 ريال\n\n## عضوية المؤسسات (سنوياً)\n- **صغيرة، حتى 10 أعضاء:** 1,800 ريال\n- **متوسطة، حتى 50 عضواً:** 8,000 ريال\n- **كبيرة، حتى 250 عضواً:** 25,000 ريال\n- **استراتيجية، حتى 500 عضو:** 40,000 ريال\n\n## الشروط\n- أسعار إطلاق سارية حتى 31 ديسمبر 2026، وغير شاملة ضريبة القيمة المضافة. وسيُراجع التسعير لعام 2027.\n- مدة العضوية 12 شهراً من تاريخ التفعيل، ويجب السداد كاملاً قبل التفعيل. والرسوم غير قابلة للاسترداد بعد التفعيل.\n- عضوية الأفراد غير قابلة للنقل. وعضوية الشباب تتطلب أن يقل العمر عن 35 سنة عند التسجيل، وعضوية الطلاب تتطلب التحقق من الصفة الطلابية.\n- عضوية المؤسسات تُفعّل عند استلام الدفع واعتماد قائمة الأعضاء، ويجب تقديم القائمة بالأسماء وتحديثها. ولا تُسترد المقاعد غير المستخدمة.\n\nالعضوية منفصلة عن الشهادة ولا تُشترط للحصول عليها، ويستفيد الأعضاء من رسوم الشهادات الأقل.",
+      "Membership is open to professionals at every career stage and to organizations. Start by creating a free account and our team will follow up to complete registration and payment.\n\n## Individual membership (per year)\n- **Individual:** SAR 200\n- **Young Crew (under 35):** SAR 100\n- **Student:** SAR 80\n\n## Corporate membership (per year)\n- **Small, up to 10 members:** SAR 1,800\n- **Medium, up to 50 members:** SAR 8,000\n- **Enterprise, up to 250 members:** SAR 25,000\n- **Strategic, up to 500 members:** SAR 40,000\n\n## Terms\n- Launch prices valid until 31 December 2026, excluding VAT. Pricing will be reviewed for 2027.\n- Membership lasts 12 months from activation. Full payment is due before activation, and fees are non-refundable once activated.\n- Individual memberships are non-transferable. Young Crew requires age under 35 at registration; Student requires verified student status.\n- Corporate membership activates on receipt of payment and an approved member list. Named member lists must be submitted and kept current. Unused slots are non-refundable.\n\nMembership is separate from certification and is not required to certify. Members pay lower certification fees.",
     ),
   }),
   team: page({
@@ -491,12 +492,12 @@ const team = {
     order: 1,
   },
   "badr-aldulami": {
-    name: l("معالي م. بدر بن عبدالله الدولامي", "H.E. Eng. Badr Bin Abdullah Al-Dulami"),
+    name: l("معالي د. بدر بن عبدالله الدلامي", "H.E. Dr. Badr Bin Abdullah Al-Dulami"),
     role: l("رئيس جهة منح الشهادات", "Head of Certification Body"),
     group: "cb",
     bio: l(
-      "وكيل وزارة النقل والخدمات اللوجستية لشؤون الطرق.",
-      "Deputy Minister of Transport and Logistics Services for Roads Affairs.",
+      "نائب وزير.",
+      "Deputy Minister.",
     ),
     photo: "/images/team/badr-aldulami.webp",
     linkedin: "",

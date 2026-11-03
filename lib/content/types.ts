@@ -5,6 +5,7 @@ export type Locale = "ar" | "en";
 
 export type SiteSettings = {
   email: string;
+  certEmail?: string;
   phone: string;
   whatsapp: string;
   address: L;

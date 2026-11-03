@@ -322,7 +322,8 @@ export const COLLECTIONS: CollectionDef[] = [
     description: "Email, phone, address and social links used across the site.",
     single: "site",
     fields: [
-      { key: "email", label: "Public email", type: "email" },
+      { key: "email", label: "Public email (support)", type: "email" },
+      { key: "certEmail", label: "Certification applications email", type: "email", help: "Where applications and certification enquiries go. Defaults to ca@ipmaksa.world." },
       { key: "phone", label: "Phone number (shown prominently)", type: "text", help: "e.g. +966 5X XXX XXXX" },
       { key: "whatsapp", label: "WhatsApp number (digits only, with country code)", type: "text" },
       { key: "address", label: "Address", type: "text", i18n: true },

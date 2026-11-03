@@ -217,7 +217,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
           <SectionTitle title={d.sections.exams} intro={d.sections.examsIntro} />
           <Link href={`${base}/exam-dates`} className="btn btn-green">{d.viewAll}</Link>
         </div>
-        <div className="mt-8"><ExamCards exams={exams} locale={lang} email={s.email} whatsapp={s.whatsapp} limit={4} /></div>
+        <div className="mt-8"><ExamCards exams={exams} locale={lang} email={s.email} certEmail={s.certEmail} whatsapp={s.whatsapp} limit={4} /></div>
       </section>
 
       {/* QUICK GUIDE: the full journey and preparation live on their own page */}

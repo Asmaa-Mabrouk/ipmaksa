@@ -45,13 +45,13 @@ export const JOURNEY: JourneyDoc = {
         { text: l("", "") },
         { text: l("", "") },
         { text: l("يقدّمون المشورة عند عدم وضوح التعقيد أو الدور", "Advise when complexity or role is unclear") },
-        { text: l("يصحّحون التقرير والاختبار، ومقيّمان اثنان في كل مقابلة", "Mark report and exam. Two at every interview") },
+        { text: l("يصحّحون ما يخص مستواك (التقرير والاختبار)، ومقيّمان اثنان في كل مقابلة", "Mark what your level requires (report, exam). Two at every interview") },
         { text: l("التقييم النهائي للأدلة", "Final evaluation of the evidence") },
         { text: l("", "") },
       ],
     },
   ],
-  noteStrong: l("الخطوة الأخيرة هي المقابلة، دائماً مع مقيّمين اثنين.", "Final step is the interview, always with two assessors."),
+  noteStrong: l("تنتهي المسارات A وB وC بمقابلة، دائماً مع مقيّمين اثنين. أما المستوى D فلا مقابلة فيه.", "Levels A, B and C end with an interview, always with two assessors. Level D has no interview."),
   noteText: l("18 شهراً كحد أقصى من التقديم حتى منح الشهادة.", "18 months maximum from application to certificate award."),
   prepareTitle: l("كيف أستعد؟", "How to prepare"),
   prepareIntro: l(
@@ -140,8 +140,8 @@ export const JOURNEY: JourneyDoc = {
     {
       q: l("من يقيّمني وكيف تجري المقابلة؟", "Who assesses me, and how does the interview work?"),
       a: l(
-        "يقيّم المقيّمون التقرير والاختبار، والخطوة الأخيرة هي المقابلة وتكون دائماً مع مقيّمين اثنين. ويتخذ مدير الشهادات قرار منح الشهادة.",
-        "Assessors mark the report and the exam. The final step is the interview, always with two assessors. The Certification Manager takes the certification decision.",
+        "يقيّم المقيّمون ما يخص مستواك: A مقابلة موسّعة فقط، B تقرير واختبار ومقابلة، C اختبار كتابي ومقابلة، D اختبار كتابي فقط. وتكون المقابلة دائماً مع مقيّمين اثنين. ويتخذ مدير الشهادات قرار منح الشهادة.",
+        "Assessors assess what your level requires: A is an extended interview only, B is report, exam and interview, C is a written exam and interview, D is a written exam only. Interviews are always with two assessors. The Certification Manager takes the certification decision.",
       ),
     },
     {

@@ -179,14 +179,21 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
                 {rest.length > 0 && (
                   <div>
                     <LiveHeading label={lang === "ar" ? "على الطريق" : "On the horizon"} n={rest.length} />
-                    <ul className="grid gap-x-10 gap-y-4 md:grid-cols-2">
+                    <ul className="grid gap-5 md:grid-cols-2">
                       {rest.map((x, i) => (
-                        <li key={i} className="border-t border-green-900/15 pt-4">
-                          <p className="flex flex-wrap items-baseline gap-x-3">
-                            <span className="text-lg font-extrabold text-green-900" dir="auto">{t(x.title, lang)}</span>
-                            <span className="text-sm font-bold text-gold-600">{d.live[x.status]}</span>
-                          </p>
-                          <p className="mt-1 leading-7 text-ink/75">{t(x.text, lang)}</p>
+                        <li key={i} className="flex gap-4 rounded-xl border-2 border-dashed border-green-900/20 bg-green-50/60 p-5">
+                          <span className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white text-green-700 ring-1 ring-green-900/15">
+                            <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                              <path d={x.status === "introduced" ? "M5 21V4m0 0h11l-2 4 2 4H5" : "M8 3v3m8-3v3M4 9h16M5 5h14a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z"} />
+                            </svg>
+                          </span>
+                          <div>
+                            <h4 className="flex flex-wrap items-center gap-x-3 gap-y-1 text-lg font-extrabold leading-snug text-green-900" dir="auto">
+                              {t(x.title, lang)}
+                              <span className="rounded-full bg-white px-2.5 py-0.5 text-xs font-bold text-green-800 ring-1 ring-green-900/20">{d.live[x.status]}</span>
+                            </h4>
+                            <p className="mt-1 leading-7 text-ink/75">{t(x.text, lang)}</p>
+                          </div>
                         </li>
                       ))}
                     </ul>

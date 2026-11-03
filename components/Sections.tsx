@@ -32,33 +32,35 @@ export function PageHero({ title, intro, image }: { title: string; intro?: strin
   );
 }
 
-const statusStyle: Record<string, string> = {
-  open: "bg-green-100 text-green-800",
-  soon: "bg-gold-100 text-gold-600",
-  tba: "bg-sand text-ink/70",
-  closed: "bg-ink/10 text-ink/60",
+const statusDot: Record<string, string> = {
+  open: "bg-green-600",
+  soon: "bg-gold-500",
+  tba: "bg-ink/40",
+  closed: "bg-ink/30",
 };
 
 export function ExamCards({ exams, locale, email, whatsapp = "", limit }: { exams: Doc<ExamDoc>[]; locale: Locale; email: string; whatsapp?: string; limit?: number }) {
   const d = getDict(locale);
   const wa = whatsapp.replace(/\D/g, "");
   const list = (limit ? exams.filter((e) => e.data.status !== "closed").slice(0, limit) : exams);
-  if (!list.length) return <p className="rounded-2xl bg-white p-8 text-center text-ink/70 shadow-sm">{d.exams.none}</p>;
+  if (!list.length) return <p className="border border-green-900/15 bg-white p-8 text-center text-ink/70">{d.exams.none}</p>;
+  const link = "font-bold text-green-800 underline decoration-gold-500 decoration-2 underline-offset-4 hover:text-green-950";
   return (
-    <ul className="grid gap-5 md:grid-cols-2">
+    <ul className="grid gap-6 md:grid-cols-2">
       {list.map(({ id, data: e }) => {
         const dated = !!e.date;
         const [day, month, year] = dated
           ? [fmtDate(e.date, locale, { day: "numeric" }), fmtDate(e.date, locale, { month: "short" }), fmtDate(e.date, locale, { year: "numeric" })]
           : ["", "", ""];
         return (
-          <li key={id} className={"flex gap-5 rounded-2xl border border-green-100 bg-white p-5 shadow-sm " + (e.status === "closed" ? "opacity-70" : "")}>
-            <div className="flex w-24 shrink-0 flex-col items-center justify-center rounded-xl bg-green-800 p-3 text-center text-white">
+          <li key={id} className={"grid grid-cols-[6rem_1fr] overflow-hidden rounded-sm border border-green-900/20 bg-white " + (e.status === "closed" ? "opacity-70" : "")}>
+            {/* ticket stub: the date is the thing people scan for */}
+            <div className="flex flex-col items-center justify-center border-e-2 border-dashed border-gold-500 bg-green-900 px-2 py-5 text-center text-white">
               {dated ? (
                 <>
-                  <span className="text-4xl font-extrabold leading-none text-gold-300">{day}</span>
-                  <span className="mt-1 text-sm font-bold">{month}</span>
-                  <span className="text-xs text-white/70">{year}</span>
+                  <span className="text-5xl font-extrabold leading-none text-gold-300">{day}</span>
+                  <span className="mt-1.5 text-base font-bold">{month}</span>
+                  <span className="text-xs text-white/65">{year}</span>
                 </>
               ) : (
                 <>
@@ -67,27 +69,27 @@ export function ExamCards({ exams, locale, email, whatsapp = "", limit }: { exam
                 </>
               )}
             </div>
-            <div className="min-w-0 flex-1">
-              <div className="flex flex-wrap items-center gap-2">
-                <span className="rounded-full bg-green-50 px-3 py-0.5 text-xs font-bold text-green-700" dir="ltr">{e.programme}</span>
-                <span className={"rounded-full px-3 py-0.5 text-xs font-bold " + statusStyle[e.status]}>{d.status[e.status]}</span>
-              </div>
+            <div className="min-w-0 p-5">
+              <p className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm font-bold">
+                <span className="text-green-700" dir="ltr">{e.programme}</span>
+                <span className="inline-flex items-center gap-2 text-ink/75">
+                  <span className={"h-2.5 w-2.5 rotate-45 " + statusDot[e.status]} aria-hidden="true" />{d.status[e.status]}
+                </span>
+              </p>
               <h3 className="mt-2 text-lg font-extrabold leading-snug text-green-900">{t(e.title, locale)}</h3>
               {t(e.location, locale) && <p className="mt-1 inline-flex items-center gap-1.5 text-sm text-ink/70"><Icon name="pin" className="h-4 w-4 text-gold-600" />{t(e.location, locale)}</p>}
               {t(e.note, locale) && <p className="mt-1 text-sm text-ink/70">{t(e.note, locale)}</p>}
               {e.status !== "closed" && (
-                <div className="mt-4 flex flex-wrap items-center gap-2">
+                <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-3">
                   {e.link && (
-                    <a href={e.link} target="_blank" rel="noopener noreferrer" className="btn btn-green !px-4 !py-2 text-sm">{d.exams.registerNow}</a>
+                    <a href={e.link} target="_blank" rel="noopener noreferrer" className="btn btn-green !rounded-sm !px-4 !py-2 text-sm">{d.exams.registerNow}</a>
                   )}
                   {wa && (
-                    <a href={`https://wa.me/${wa}?text=${encodeURIComponent(d.exams.waMessage + t(e.title, locale))}`} target="_blank" rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 rounded-full bg-[#1f8f4e] px-4 py-2 text-sm font-bold text-white transition hover:bg-[#177a41]">
-                      <Icon name="whatsapp" className="h-5 w-5" />{d.exams.askWhatsapp}
+                    <a href={`https://wa.me/${wa}?text=${encodeURIComponent(d.exams.waMessage + t(e.title, locale))}`} target="_blank" rel="noopener noreferrer" className={"inline-flex items-center gap-1.5 text-sm " + link}>
+                      <Icon name="whatsapp" className="h-5 w-5 text-[#1f8f4e]" />{d.exams.askWhatsapp}
                     </a>
                   )}
-                  <a href={`mailto:${email}?subject=${encodeURIComponent(t(e.title, locale))}`}
-                    className="inline-flex items-center gap-2 rounded-full border border-green-700 px-4 py-2 text-sm font-bold text-green-800 transition hover:bg-green-50">
+                  <a href={`mailto:${email}?subject=${encodeURIComponent(t(e.title, locale))}`} className={"inline-flex items-center gap-1.5 text-sm " + link}>
                     <Icon name="mail" className="h-5 w-5" />{d.exams.askEmail}
                   </a>
                 </div>
@@ -102,11 +104,11 @@ export function ExamCards({ exams, locale, email, whatsapp = "", limit }: { exam
 
 export function BenefitsGrid({ benefits, locale }: { benefits: Doc<BenefitDoc>[]; locale: Locale }) {
   return (
-    <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+    <ul className="grid gap-x-10 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
       {benefits.map(({ id, data: b }) => (
-        <li key={id} className="rounded-2xl border border-green-100 bg-white p-6 shadow-sm">
-          <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-green-50 text-green-700"><Icon name={b.icon} className="h-7 w-7" /></span>
-          <h3 className="mt-4 text-lg font-extrabold text-green-900">{t(b.title, locale)}</h3>
+        <li key={id} className="border-t-2 border-green-900 pt-6">
+          <span className="ms-2 flex h-11 w-11 rotate-45 items-center justify-center bg-green-900 text-gold-300"><Icon name={b.icon} className="h-6 w-6 -rotate-45" /></span>
+          <h3 className="mt-6 text-lg font-extrabold text-green-900">{t(b.title, locale)}</h3>
           <p className="mt-2 leading-7 text-ink/75">{t(b.text, locale)}</p>
         </li>
       ))}
@@ -118,20 +120,23 @@ export function TeamCard({ person, locale }: { person: Doc<TeamDoc>; locale: Loc
   const d = getDict(locale);
   const p = person.data;
   return (
-    <li className="flex flex-col overflow-hidden rounded-2xl border border-green-100 bg-white shadow-sm">
-      <div className="relative aspect-[4/5] bg-green-50">
-        {p.photo ? (
-          <Image src={p.photo} alt={t(p.name, locale)} fill sizes="(min-width:1024px) 25vw, (min-width:640px) 45vw, 90vw" className="object-cover object-top" />
-        ) : (
-          <div className="flex h-full items-center justify-center text-5xl font-extrabold text-green-700/40">{t(p.name, locale).trim().charAt(0)}</div>
-        )}
+    <li className="flex flex-col">
+      {/* arch frame: the mashrabiya / doorway shape, not a rounded rectangle */}
+      <div className="rounded-t-[999px] border border-gold-500 p-1.5">
+        <div className="relative aspect-[4/5] overflow-hidden rounded-t-[999px] bg-green-50">
+          {p.photo ? (
+            <Image src={p.photo} alt={t(p.name, locale)} fill sizes="(min-width:1024px) 25vw, (min-width:640px) 45vw, 90vw" className="object-cover object-top" />
+          ) : (
+            <div className="flex h-full items-center justify-center bg-green-900 text-6xl font-extrabold text-gold-300">{t(p.name, locale).trim().charAt(0)}</div>
+          )}
+        </div>
       </div>
-      <div className="flex flex-1 flex-col p-5">
+      <div className="flex flex-1 flex-col pt-4">
         <h3 className="text-lg font-extrabold leading-snug text-green-900">{t(p.name, locale)}</h3>
-        <p className="mt-1 font-semibold text-gold-600">{t(p.role, locale)}</p>
+        <p className="mt-0.5 font-semibold text-gold-600">{t(p.role, locale)}</p>
         {t(p.bio, locale) && <p className="mt-2 text-sm leading-6 text-ink/75">{t(p.bio, locale)}</p>}
         {p.linkedin && (
-          <a href={p.linkedin} target="_blank" rel="noopener noreferrer" className="mt-auto inline-flex items-center gap-2 pt-4 text-sm font-bold text-green-700 hover:text-gold-600" aria-label={`${t(p.name, locale)} – ${d.team.linkedin}`}>
+          <a href={p.linkedin} target="_blank" rel="noopener noreferrer" className="mt-auto inline-flex items-center gap-2 pt-3 text-sm font-bold text-green-700 hover:text-green-950" aria-label={`${t(p.name, locale)} – ${d.team.linkedin}`}>
             <Icon name="linkedin" className="h-5 w-5" /> LinkedIn
           </a>
         )}
@@ -143,19 +148,17 @@ export function TeamCard({ person, locale }: { person: Doc<TeamDoc>; locale: Loc
 export function NewsCards({ items, locale }: { items: Doc<NewsDoc>[]; locale: Locale }) {
   const d = getDict(locale);
   return (
-    <ul className="grid gap-6 md:grid-cols-3">
+    <ul className="grid gap-x-8 gap-y-10 md:grid-cols-3">
       {items.map(({ id, data: n }) => (
-        <li key={id} className="group overflow-hidden rounded-2xl border border-green-100 bg-white shadow-sm">
+        <li key={id} className="group">
           <Link href={`/${locale}/news/${id}`} className="block">
-            <div className="relative aspect-[16/10] bg-green-50">
-              {n.image && <Image src={n.image} alt="" fill sizes="(min-width:768px) 33vw, 100vw" className="object-cover transition duration-500 group-hover:scale-105" />}
+            <div className="relative aspect-[4/3] overflow-hidden bg-green-900">
+              {n.image && <Image src={n.image} alt="" fill sizes="(min-width:768px) 33vw, 100vw" className="object-cover" />}
+              {n.date && <time className="absolute bottom-0 start-0 bg-gold-500 px-3 py-1 text-sm font-extrabold text-green-950" dateTime={n.date}>{fmtDate(n.date, locale)}</time>}
             </div>
-            <div className="p-5">
-              {n.date && <time className="text-sm font-semibold text-gold-600" dateTime={n.date}>{fmtDate(n.date, locale)}</time>}
-              <h3 className="mt-1 text-lg font-extrabold leading-snug text-green-900">{t(n.title, locale)}</h3>
-              <p className="mt-2 line-clamp-3 text-ink/75">{t(n.excerpt, locale)}</p>
-              <span className="mt-3 inline-flex items-center gap-1.5 text-sm font-bold text-green-700">{d.readMore} <Icon name="arrow" className="h-4 w-4 rtl:rotate-180" /></span>
-            </div>
+            <h3 className="mt-4 text-xl font-extrabold leading-snug text-green-900 decoration-gold-500 decoration-2 underline-offset-4 group-hover:underline">{t(n.title, locale)}</h3>
+            <p className="mt-2 line-clamp-3 leading-7 text-ink/75">{t(n.excerpt, locale)}</p>
+            <span className="mt-3 inline-block border-b-2 border-gold-500 pb-0.5 text-sm font-bold text-green-800">{d.readMore}</span>
           </Link>
         </li>
       ))}
@@ -184,8 +187,8 @@ export function JoinBand({ locale, image, title, text }: { locale: Locale; image
 
 export function ContactCards({ s, locale }: { s: SiteSettings; locale: Locale }) {
   const d = getDict(locale).contact;
-  const card = "flex items-center gap-4 rounded-2xl border border-green-100 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md";
-  const ic = "flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-green-800 text-gold-300";
+  const card = "flex items-center gap-4 rounded-sm border border-green-900/20 border-s-4 border-s-gold-500 bg-white p-5";
+  const ic = "flex h-12 w-12 shrink-0 ms-1 items-center justify-center rotate-45 bg-green-900 text-gold-300 [&>svg]:-rotate-45";
   return (
     <div className="grid gap-4 sm:grid-cols-2">
       <a href={`mailto:${s.email}`} className={card}>
@@ -217,23 +220,23 @@ export function ContactCards({ s, locale }: { s: SiteSettings; locale: Locale })
 export function EventCards({ events, locale, past = false }: { events: Doc<ProjectEventDoc>[]; locale: Locale; past?: boolean }) {
   const d = getDict(locale);
   return (
-    <ul className="grid gap-5 md:grid-cols-2">
+    <ul className="grid gap-6">
       {events.map(({ id, data: e }) => (
-        <li key={id} className={"flex flex-col overflow-hidden rounded-2xl border border-green-100 bg-white shadow-sm md:col-span-2 md:flex-row " + (past ? "opacity-85" : "")}>
-          {e.image && <div className="relative aspect-[4/5] w-full shrink-0 bg-green-50 md:w-72"><Image src={e.image} alt={t(e.title, locale)} fill sizes="(min-width:768px) 288px, 100vw" className="object-cover" /></div>}
-          <div className="flex flex-1 flex-col p-5">
-            <div className="flex flex-wrap items-center gap-2">
-              <span className="rounded-full bg-green-800 px-3 py-0.5 text-xs font-bold text-white">{d.events[e.kind]}</span>
-              {e.date && <time dateTime={e.date} className="text-sm font-bold text-gold-600">{fmtDate(e.date, locale)}{e.time && <> · <span dir="ltr">{e.time}</span></>}</time>}
-            </div>
+        <li key={id} className={"flex flex-col overflow-hidden rounded-sm border border-green-900/20 border-s-[6px] border-s-gold-500 bg-white md:flex-row " + (past ? "opacity-85" : "")}>
+          {e.image && <div className="relative aspect-[4/5] w-full shrink-0 bg-green-900 md:w-72"><Image src={e.image} alt={t(e.title, locale)} fill sizes="(min-width:768px) 288px, 100vw" className="object-cover" /></div>}
+          <div className="flex flex-1 flex-col p-6">
+            <p className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm font-bold">
+              <span className="inline-flex items-center gap-2 text-green-800"><span className="h-2.5 w-2.5 rotate-45 bg-gold-500" aria-hidden="true" />{d.events[e.kind]}</span>
+              {e.date && <time dateTime={e.date} className="text-gold-600">{fmtDate(e.date, locale)}{e.time && <>, <span dir="ltr">{e.time}</span></>}</time>}
+            </p>
             <h3 className="mt-2 text-xl font-extrabold leading-snug text-green-900">{t(e.title, locale)}</h3>
             {t(e.description, locale) && <p className="mt-2 leading-7 text-ink/75">{t(e.description, locale)}</p>}
             {t(e.speaker, locale) && <p className="mt-2 text-sm"><span className="font-bold text-green-800">{d.events.speaker}:</span> {t(e.speaker, locale)}</p>}
             {t(e.format, locale) && <p className="mt-1 inline-flex items-center gap-1.5 text-sm text-ink/70"><Icon name="pin" className="h-4 w-4 text-gold-600" />{t(e.format, locale)}</p>}
             <div className="mt-auto flex flex-wrap gap-3 pt-4">
-              {!past && e.status !== "closed" && e.link && <a href={e.link} target="_blank" rel="noopener noreferrer" className="btn btn-gold !py-2">{d.events.register}</a>}
+              {!past && e.status !== "closed" && e.link && <a href={e.link} target="_blank" rel="noopener noreferrer" className="btn btn-gold !rounded-sm !py-2">{d.events.register}</a>}
               {!past && e.status === "closed" && <span className="text-sm font-bold text-ink/60">{d.events.full}</span>}
-              {past && e.recording && <a href={e.recording} target="_blank" rel="noopener noreferrer" className="btn btn-green !py-2">{d.events.recording}</a>}
+              {past && e.recording && <a href={e.recording} target="_blank" rel="noopener noreferrer" className="btn btn-green !rounded-sm !py-2">{d.events.recording}</a>}
             </div>
           </div>
         </li>

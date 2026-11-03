@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "admin:hash": "node scripts/hash-password.mjs",
-    "smoke": "node scripts/smoke.mjs"
+    "smoke": "node scripts/smoke.mjs",
+    "content:sync": "tsx scripts/sync-seed.ts"
   },
   "dependencies": {
     "@fontsource-variable/cairo": "^5.3.0",
@@ -29,6 +30,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.4.4",
     "tailwindcss": "^4",
+    "tsx": "^4.23.15",
     "typescript": "^5"
   }
 }

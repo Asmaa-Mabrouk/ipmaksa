@@ -2,10 +2,14 @@ import { NextResponse, type NextRequest } from "next/server";
 
 const LOCALES = ["ar", "en"];
 const DEFAULT = "ar";
-const ADMIN_HOST = (process.env.ADMIN_HOST || "").toLowerCase();
+// Accepts "admin.example.com", "https://admin.example.com/" or a comma-separated list.
+const ADMIN_HOSTS = (process.env.ADMIN_HOST || "")
+  .split(",")
+  .map((h) => h.trim().toLowerCase().replace(/^https?:\/\//, "").replace(/[/:].*$/, ""))
+  .filter(Boolean);
 
 const isAdminHost = (host: string) =>
-  (ADMIN_HOST && host === ADMIN_HOST) || host.startsWith("admin.");
+  ADMIN_HOSTS.includes(host) || host.startsWith("admin.");
 
 export function proxy(req: NextRequest) {
   const host = (req.headers.get("host") || "").split(":")[0].toLowerCase();

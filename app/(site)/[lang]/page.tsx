@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Icon } from "@/components/Icon";
 import { FaqList, JourneyCycle, PrepareBlock } from "@/components/Journey";
-import { BenefitsGrid, EventCards, ExamCards, NewsCards, JoinBand, SectionTitle, TeamCard } from "@/components/Sections";
+import { BenefitsGrid, EventCards, ExamCards, NewsSlider, JoinBand, SectionTitle, TeamSlider } from "@/components/Sections";
 import { telHref } from "@/components/SiteChrome";
 import { getBenefits, getEvents, getExams, getHome, getJourney, getNews, getSettings, getTeam } from "@/lib/content/api";
 import { getDict, isLocale, t } from "@/lib/i18n";
@@ -199,9 +199,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
             <SectionTitle title={d.sections.team} />
             <Link href={`${base}/team`} className="btn btn-green">{d.viewAll}</Link>
           </div>
-          <ul className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
-            {team.slice(0, 5).map((p) => <TeamCard key={p.id} person={p} locale={lang} />)}
-          </ul>
+          <div className="mt-8"><TeamSlider people={team.slice(0, 8)} locale={lang} /></div>
         </div>
       </section>
 
@@ -212,7 +210,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
             <SectionTitle title={d.sections.news} />
             <Link href={`${base}/news`} className="btn btn-green">{d.viewAll}</Link>
           </div>
-          <div className="mt-8"><NewsCards items={news.slice(0, 3)} locale={lang} /></div>
+          <div className="mt-8"><NewsSlider items={news.slice(0, 8)} locale={lang} /></div>
         </section>
       )}
 

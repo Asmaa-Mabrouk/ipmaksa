@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Icon } from "./Icon";
+import { Carousel } from "./Carousel";
 import { telHref } from "./SiteChrome";
 import { getDict, t } from "@/lib/i18n";
 import type { BenefitDoc, Doc, ExamDoc, Locale, NewsDoc, ProjectEventDoc, SiteSettings, TeamDoc } from "@/lib/content/types";
@@ -116,11 +117,11 @@ export function BenefitsGrid({ benefits, locale }: { benefits: Doc<BenefitDoc>[]
   );
 }
 
-export function TeamCard({ person, locale }: { person: Doc<TeamDoc>; locale: Locale }) {
+export function TeamCard({ person, locale, as: Tag = "li" }: { person: Doc<TeamDoc>; locale: Locale; as?: "li" | "div" }) {
   const d = getDict(locale);
   const p = person.data;
   return (
-    <li className="flex flex-col">
+    <Tag className="flex flex-col">
       {/* arch frame: the mashrabiya / doorway shape, not a rounded rectangle */}
       <div className="rounded-t-[999px] border border-gold-500 p-1.5">
         <div className="relative aspect-[4/5] overflow-hidden rounded-t-[999px] bg-green-50">
@@ -141,29 +142,43 @@ export function TeamCard({ person, locale }: { person: Doc<TeamDoc>; locale: Loc
           </a>
         )}
       </div>
-    </li>
+    </Tag>
+  );
+}
+
+export function NewsCard({ id, n, locale, as: Tag = "li" }: { id: string; n: NewsDoc; locale: Locale; as?: "li" | "div" }) {
+  const d = getDict(locale);
+  return (
+    <Tag className="group h-full">
+      <Link href={`/${locale}/news/${id}`} className="block">
+        <div className="relative aspect-[4/3] overflow-hidden bg-green-900">
+          {n.image && <Image src={n.image} alt="" fill sizes="(min-width:768px) 33vw, 100vw" className="object-cover" />}
+          {n.date && <time className="absolute bottom-0 start-0 bg-gold-500 px-3 py-1 text-sm font-extrabold text-green-950" dateTime={n.date}>{fmtDate(n.date, locale)}</time>}
+        </div>
+        <h3 className="mt-4 text-xl font-extrabold leading-snug text-green-900 decoration-gold-500 decoration-2 underline-offset-4 group-hover:underline">{t(n.title, locale)}</h3>
+        <p className="mt-2 line-clamp-3 leading-7 text-ink/75">{t(n.excerpt, locale)}</p>
+        <span className="mt-3 inline-block border-b-2 border-gold-500 pb-0.5 text-sm font-bold text-green-800">{d.readMore}</span>
+      </Link>
+    </Tag>
   );
 }
 
 export function NewsCards({ items, locale }: { items: Doc<NewsDoc>[]; locale: Locale }) {
-  const d = getDict(locale);
   return (
     <ul className="grid gap-x-8 gap-y-10 md:grid-cols-3">
-      {items.map(({ id, data: n }) => (
-        <li key={id} className="group">
-          <Link href={`/${locale}/news/${id}`} className="block">
-            <div className="relative aspect-[4/3] overflow-hidden bg-green-900">
-              {n.image && <Image src={n.image} alt="" fill sizes="(min-width:768px) 33vw, 100vw" className="object-cover" />}
-              {n.date && <time className="absolute bottom-0 start-0 bg-gold-500 px-3 py-1 text-sm font-extrabold text-green-950" dateTime={n.date}>{fmtDate(n.date, locale)}</time>}
-            </div>
-            <h3 className="mt-4 text-xl font-extrabold leading-snug text-green-900 decoration-gold-500 decoration-2 underline-offset-4 group-hover:underline">{t(n.title, locale)}</h3>
-            <p className="mt-2 line-clamp-3 leading-7 text-ink/75">{t(n.excerpt, locale)}</p>
-            <span className="mt-3 inline-block border-b-2 border-gold-500 pb-0.5 text-sm font-bold text-green-800">{d.readMore}</span>
-          </Link>
-        </li>
-      ))}
+      {items.map(({ id, data: n }) => <NewsCard key={id} id={id} n={n} locale={locale} />)}
     </ul>
   );
+}
+
+export function NewsSlider({ items, locale }: { items: Doc<NewsDoc>[]; locale: Locale }) {
+  const d = getDict(locale);
+  return <Carousel label={d.sections.news} prev={d.slider.prev} next={d.slider.next} slides={items.map(({ id, data: n }) => <NewsCard key={id} id={id} n={n} locale={locale} as="div" />)} />;
+}
+
+export function TeamSlider({ people, locale }: { people: Doc<TeamDoc>[]; locale: Locale }) {
+  const d = getDict(locale);
+  return <Carousel label={d.sections.team} prev={d.slider.prev} next={d.slider.next} slideClass="w-[64%] sm:w-64" slides={people.map((p) => <TeamCard key={p.id} person={p} locale={locale} as="div" />)} />;
 }
 
 export function JoinBand({ locale, image, title, text }: { locale: Locale; image?: string; title?: string; text?: string; source?: string }) {

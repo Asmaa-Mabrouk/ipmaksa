@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Icon } from "@/components/Icon";
-import { FaqList, JourneyCycle, PrepareBlock } from "@/components/Journey";
+import { FaqList } from "@/components/Journey";
 import { BenefitsGrid, EventCards, ExamCards, NewsSlider, JoinBand, SectionTitle, TeamCard } from "@/components/Sections";
 import { telHref } from "@/components/SiteChrome";
 import { getBenefits, getEvents, getExams, getHome, getJourney, getNews, getSettings, getTeam } from "@/lib/content/api";
@@ -211,9 +211,6 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
         </div>
       </section>
 
-      {/* HOW CERTIFICATION WORKS */}
-      <JourneyCycle j={journey} locale={lang} showLink />
-
       {/* EXAM DATES */}
       <section id="exams" className="mx-auto max-w-7xl px-4 py-20 sm:px-6">
         <div className="flex flex-wrap items-end justify-between gap-4">
@@ -223,8 +220,19 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
         <div className="mt-8"><ExamCards exams={exams} locale={lang} email={s.email} whatsapp={s.whatsapp} limit={4} /></div>
       </section>
 
-      {/* HOW TO PREPARE + FAQ */}
-      <PrepareBlock j={journey} locale={lang} />
+      {/* QUICK GUIDE: the full journey and preparation live on their own page */}
+      <section aria-label={d.guide.title} className="bg-green-50 py-12">
+        <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-x-10 gap-y-5 px-4 sm:px-6">
+          <div>
+            <h2 className="text-2xl font-extrabold text-green-900">{d.guide.title}</h2>
+            <p className="mt-1 text-ink/75">{d.guide.text}</p>
+          </div>
+          <div className="flex flex-wrap gap-3">
+            <Link href={`${base}/certification-journey#how-it-works`} className="btn btn-outline !border-green-800 !text-green-900 hover:!bg-green-900 hover:!text-white">{d.guide.journey}</Link>
+            <Link href={`${base}/certification-journey#prepare`} className="btn btn-outline !border-green-800 !text-green-900 hover:!bg-green-900 hover:!text-white">{d.journeyUi.prepare}</Link>
+          </div>
+        </div>
+      </section>
       <FaqList j={journey} locale={lang} limit={4} showLink email={s.email} />
 
       {/* PROJECT CONNECT */}

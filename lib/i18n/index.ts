@@ -40,6 +40,7 @@ const ui = {
     slider: { prev: "Previous", next: "Next" },
     learnMore: "Learn more",
     viewAll: "View all",
+    guide: { title: "Planning to get certified?", text: "See the six stages from application to certificate, and how to prepare.", journey: "Your journey, step by step" },
     journeyUi: { fullPage: "See the full journey", allFaq: "All questions", prepare: "How to prepare", stillAsk: "Still have a question?", writeUs: "Email us", role: "Role" },
     sections: {
       exams: "Upcoming exam dates",
@@ -208,6 +209,7 @@ const ui = {
     slider: { prev: "السابق", next: "التالي" },
     learnMore: "اعرف المزيد",
     viewAll: "عرض الكل",
+    guide: { title: "تفكر في الحصول على شهادة؟", text: "تعرّف على مراحل الحصول على الشهادة الست من التقديم حتى الاستلام، وكيف تستعد.", journey: "رحلتك خطوة بخطوة" },
     journeyUi: { fullPage: "شاهد الرحلة كاملة", allFaq: "كل الأسئلة", prepare: "كيف أستعد؟", stillAsk: "ما زال لديك سؤال؟", writeUs: "راسلنا", role: "الدور" },
     sections: {
       exams: "مواعيد الاختبارات القادمة",

@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS media (
 export function getPool(url: string): Pool {
   if (!globalForPg.__ipmaPool) {
     const ssl = /sslmode=require|ssl=true/.test(url) ? { rejectUnauthorized: false } : undefined;
-    globalForPg.__ipmaPool = new Pool({ connectionString: url, max: 5, ssl });
+    globalForPg.__ipmaPool = new Pool({ connectionString: url, max: process.env.VERCEL ? 2 : 5, ssl });
   }
   return globalForPg.__ipmaPool;
 }

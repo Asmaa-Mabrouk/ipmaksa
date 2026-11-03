@@ -1,10 +1,11 @@
 import type { MetadataRoute } from "next";
 import { getNews, getPages } from "@/lib/content/api";
 import { LOCALES } from "@/lib/i18n";
-import { SITE } from "@/lib/seo";
+import { NOINDEX, SITE } from "@/lib/seo";
 
 const PRIORITY: Record<string, number> = { "": 1, "/certification-journey": 0.9, "/exam-dates": 0.9, "/project-connect": 0.8, "/membership": 0.7, "/news": 0.6, "/team": 0.5, "/contact": 0.5 };
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  if (NOINDEX) return [];
   const [pages, news] = await Promise.all([getPages(), getNews()]);
   const base = ["", "/team", "/membership", "/exam-dates", "/project-connect", "/certification-journey", "/news", "/contact", ...pages.map((p) => `/${p.id}`)];
   const items = [

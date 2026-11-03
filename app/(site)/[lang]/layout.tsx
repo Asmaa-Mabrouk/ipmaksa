@@ -5,7 +5,7 @@ import { Footer, Header, TopBar } from "@/components/SiteChrome";
 import { JsonLd } from "@/components/JsonLd";
 import { getSettings } from "@/lib/content/api";
 import { LOCALES, dir, getDict, isLocale } from "@/lib/i18n";
-import { orgJsonLd } from "@/lib/seo";
+import { NOINDEX, orgJsonLd } from "@/lib/seo";
 
 export const generateStaticParams = () => LOCALES.map((lang) => ({ lang }));
 
@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
     keywords: lang === "ar"
       ? ["IPMA السعودية", "شهادة IPMA", "إدارة المشاريع", "شهادة إدارة المشاريع في السعودية", "ICB4", "ملتقى المشاريع"]
       : ["IPMA KSA", "IPMA certification Saudi Arabia", "project management certification", "ICB4", "IPMA Level D", "Project Connect"],
-    robots: { index: true, follow: true, googleBot: { index: true, follow: true, "max-snippet": -1, "max-image-preview": "large", "max-video-preview": -1 } },
+    robots: NOINDEX ? { index: false, follow: false } : { index: true, follow: true, googleBot: { index: true, follow: true, "max-snippet": -1, "max-image-preview": "large", "max-video-preview": -1 } },
     alternates: { canonical: `/${lang}`, languages: { ar: "/ar", en: "/en", "x-default": "/ar" } },
     openGraph: { siteName: d.siteName, locale: lang === "ar" ? "ar_SA" : "en_US", type: "website", images: [{ url: "/images/hero-village.webp", alt: d.siteName }] },
     twitter: { card: "summary_large_image", images: ["/images/hero-village.webp"] },

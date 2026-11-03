@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import type { Locale, SiteSettings } from "@/lib/content/types";
 
 export const SITE = (process.env.NEXT_PUBLIC_SITE_URL || "https://ipmaksa.world").replace(/\/$/, "");
+/** Staging/preview copies must never be indexed. Set SITE_ENV=staging there. */
+export const NOINDEX = process.env.SITE_ENV === "staging";
 export const DEFAULT_OG = "/images/hero-village.webp";
 
 /** Per-page metadata: unique title/description, canonical, hreflang (+x-default), Open Graph and Twitter card. */

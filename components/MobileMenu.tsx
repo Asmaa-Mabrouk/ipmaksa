@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { Icon } from "./Icon";
 
-export type MobileItem = { label: string; href?: string; children?: { label: string; href: string }[] };
+export type MobileItem = { label: string; href?: string; featured?: boolean; children?: { label: string; href: string }[] };
 
 /** Phone menu: main items only; groups open on tap; closes on outside tap, Escape or navigation. */
 export function MobileMenu({ items, label, cta, ctaHref }: { items: MobileItem[]; label: string; cta: string; ctaHref: string }) {
@@ -53,7 +53,7 @@ export function MobileMenu({ items, label, cta, ctaHref }: { items: MobileItem[]
                     )}
                   </>
                 ) : (
-                  <Link href={m.href!} className="block py-3 font-bold text-white">{m.label}</Link>
+                  <Link href={m.href!} className={"block py-3 font-bold " + (m.featured ? "text-gold-300" : "text-white")}>{m.featured ? <span className="rounded-full border border-gold-500/70 bg-gold-500/15 px-3 py-1">{m.label}</span> : m.label}</Link>
                 )}
               </li>
             ))}

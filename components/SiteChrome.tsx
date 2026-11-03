@@ -33,6 +33,7 @@ export async function TopBar({ locale }: { locale: Locale }) {
   );
 }
 
+const NAV_FEATURED = "whitespace-nowrap rounded-full border border-gold-500/70 bg-gold-500/15 px-3 py-1.5 font-bold text-gold-300 transition hover:bg-gold-500 hover:text-green-950";
 const NAV_LINK = "whitespace-nowrap rounded-lg px-2.5 py-2 font-bold text-white transition hover:bg-white/10 hover:text-gold-300";
 
 function Menu({ label, items, base, locale }: { label: string; items: { id: string; data: { title: { ar: string; en: string } } }[]; base: string; locale: Locale }) {
@@ -69,7 +70,7 @@ export async function Header({ locale }: { locale: Locale }) {
     { label: d.nav.about, children: kids(about) },
     { label: d.nav.certification, children: kids(cert) },
     { label: d.nav.examDates, href: `${base}/exam-dates` },
-    { label: d.nav.projectConnect, href: `${base}/project-connect` },
+    { label: d.nav.projectConnect, href: `${base}/project-connect`, featured: true },
     { label: d.nav.membership, href: `${base}/membership` },
     { label: d.nav.team, href: `${base}/team` },
     { label: d.nav.news, href: `${base}/news` },
@@ -90,7 +91,7 @@ export async function Header({ locale }: { locale: Locale }) {
           <Menu label={d.nav.about} items={about} base={base} locale={locale} />
           <Menu label={d.nav.certification} items={cert} base={base} locale={locale} />
           <Link href={`${base}/exam-dates`} className={link}>{d.nav.examDates}</Link>
-          <Link href={`${base}/project-connect`} className={link}>{d.nav.projectConnect}</Link>
+          <Link href={`${base}/project-connect`} className={NAV_FEATURED}>{d.nav.projectConnect}</Link>
           <Link href={`${base}/membership`} className={link}>{d.nav.membership}</Link>
           <Link href={`${base}/team`} className={link}>{d.nav.team}</Link>
           <Link href={`${base}/news`} className={link}>{d.nav.news}</Link>

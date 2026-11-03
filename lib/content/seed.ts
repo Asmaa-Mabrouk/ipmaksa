@@ -741,7 +741,7 @@ export const SEED: Record<string, Record<string, unknown>> = {
       date: "2026-11-03",
       time: "7:00 – 8:00 PM (KSA)",
       endTime: "20:00",
-      format: l("مباشر عبر Zoom", "Live on Zoom"),
+      format: l("عبر Zoom", "On Zoom"),
       speaker: l(
         "تيودورا بوجيفا (رئيسة الخدمات المهنية، Businessmap) · تدير الحوار: سلبي كيشيشيان (المؤسسة والرئيسة التنفيذية، SCALE Advisory)",
         "Teodora Bozheva (Head of Professional Services, Businessmap) · Moderator: Salpie Kechichian (Founder & CEO, SCALE Advisory)",

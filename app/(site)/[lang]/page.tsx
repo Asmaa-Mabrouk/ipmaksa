@@ -18,12 +18,15 @@ const SECTORS = [
   { img: "sector-mobility", ar: "النقل", en: "Mobility" },
   { img: "sector-industry", ar: "الصناعة", en: "Industry" },
 ];
-const LIVE_STYLE: Record<string, { border: string; bar: string; tile: string; pill: string; icon: string }> = {
-  live: { border: "border-green-100", bar: "bg-green-600", tile: "bg-green-900 text-gold-300", pill: "bg-green-100 text-green-800", icon: "M5 12.5l4.5 4.5L19 7.5" },
-  "setting-up": { border: "border-gold-500/40", bar: "bg-gold-500", tile: "bg-gold-100 text-gold-600", pill: "bg-gold-100 text-gold-600", icon: "M12 7v5l3 2M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z" },
-  introduced: { border: "border-green-100", bar: "bg-green-300", tile: "bg-green-50 text-green-700", pill: "bg-green-50 text-green-700", icon: "M5 21V4m0 0h11l-2 4 2 4H5" },
-  later: { border: "border-ink/10", bar: "bg-ink/20", tile: "bg-sand text-ink/50", pill: "bg-sand text-ink/60", icon: "M8 3v3m8-3v3M4 9h16M5 5h14a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z" },
-};
+function LiveHeading({ label, n }: { label: string; n: number }) {
+  return (
+    <div className="mb-5 flex items-center gap-3">
+      <h3 className="text-xl font-extrabold text-green-900">{label}</h3>
+      <span className="flex h-7 min-w-7 items-center justify-center rounded-full bg-gold-100 px-2 text-sm font-extrabold text-gold-600">{n}</span>
+      <span className="h-px flex-1 bg-green-900/15" aria-hidden="true" />
+    </div>
+  );
+}
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const { lang } = await params;
@@ -133,24 +136,65 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
       <section className="bg-white py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <SectionTitle title={t(h.liveTitle, lang)} intro={t(h.liveText, lang)} />
-          <ul className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {h.live.map((x, i) => {
-              const st = LIVE_STYLE[x.status] ?? LIVE_STYLE.later;
-              return (
-                <li key={i} className={"relative flex flex-col overflow-hidden rounded-xl border bg-white p-6 pt-8 " + st.border}>
-                  <span className={"absolute inset-x-0 top-0 h-2 " + st.bar} aria-hidden="true" />
-                  <div className="flex items-start justify-between gap-3">
-                    <span className={"flex h-12 w-12 shrink-0 items-center justify-center rounded-xl " + st.tile}>
-                      <svg viewBox="0 0 24 24" className="h-7 w-7" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={st.icon} /></svg>
-                    </span>
-                    <span className="text-sm font-extrabold text-green-800">{d.live[x.status]}</span>
+          {(() => {
+            const by = (...s: string[]) => h.live.filter((x) => s.includes(x.status));
+            const live = by("live"), setting = by("setting-up"), rest = by("introduced", "later");
+            return (
+              <div className="mt-10 space-y-12">
+                {live.length > 0 && (
+                  <div>
+                    <LiveHeading label={d.live.live} n={live.length} />
+                    <ul className="grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
+                      {live.map((x, i) => (
+                        <li key={i} className="relative isolate flex flex-col overflow-hidden rounded-xl bg-green-900 p-6 text-white">
+                          <span className="absolute end-0 top-0 h-8 w-8 bg-gold-500 [clip-path:polygon(0_0,100%_0,100%_100%)] rtl:-scale-x-100" aria-hidden="true" />
+                          <span className="flex h-11 w-11 items-center justify-center rounded-full border-2 border-gold-500 text-gold-300">
+                            <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg>
+                          </span>
+                          <h4 className="mt-5 text-xl font-extrabold leading-snug text-gold-300" dir="auto">{t(x.title, lang)}</h4>
+                          <p className="mt-2 leading-7 text-white/85">{t(x.text, lang)}</p>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
-                  <h3 className="mt-4 text-xl font-extrabold leading-snug text-green-900" dir="auto">{t(x.title, lang)}</h3>
-                  <p className="mt-2 leading-8 text-ink/75">{t(x.text, lang)}</p>
-                </li>
-              );
-            })}
-          </ul>
+                )}
+                {setting.length > 0 && (
+                  <div>
+                    <LiveHeading label={d.live["setting-up"]} n={setting.length} />
+                    <ul className="grid gap-5 md:grid-cols-3">
+                      {setting.map((x, i) => (
+                        <li key={i} className="flex gap-4 rounded-xl border border-green-900/15 border-s-[6px] border-s-gold-500 bg-white p-5">
+                          <span className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gold-100 text-gold-600">
+                            <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M12 7v5l3 2M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z" /></svg>
+                          </span>
+                          <div>
+                            <h4 className="text-lg font-extrabold leading-snug text-green-900" dir="auto">{t(x.title, lang)}</h4>
+                            <p className="mt-1 leading-7 text-ink/75">{t(x.text, lang)}</p>
+                          </div>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                {rest.length > 0 && (
+                  <div>
+                    <LiveHeading label={lang === "ar" ? "على الطريق" : "On the horizon"} n={rest.length} />
+                    <ul className="grid gap-x-10 gap-y-4 md:grid-cols-2">
+                      {rest.map((x, i) => (
+                        <li key={i} className="border-t border-green-900/15 pt-4">
+                          <p className="flex flex-wrap items-baseline gap-x-3">
+                            <span className="text-lg font-extrabold text-green-900" dir="auto">{t(x.title, lang)}</span>
+                            <span className="text-sm font-bold text-gold-600">{d.live[x.status]}</span>
+                          </p>
+                          <p className="mt-1 leading-7 text-ink/75">{t(x.text, lang)}</p>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            );
+          })()}
         </div>
       </section>
 

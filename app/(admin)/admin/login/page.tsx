@@ -1,5 +1,6 @@
 "use client";
 import { useActionState } from "react";
+import { PasswordInput } from "@/components/formKit";
 import { loginAction } from "../actions";
 
 export default function Login() {
@@ -12,9 +13,10 @@ export default function Login() {
         <label className="mt-6 block text-sm font-semibold">Email
           <input name="email" type="email" required autoComplete="username" defaultValue={state.email} className="mt-1 w-full rounded-xl border border-green-100 px-4 py-3" />
         </label>
-        <label className="mt-4 block text-sm font-semibold">Password
-          <input name="password" type="password" required autoComplete="current-password" className="mt-1 w-full rounded-xl border border-green-100 px-4 py-3" />
-        </label>
+        <div className="mt-4 text-sm font-semibold">
+          <label htmlFor="field-password">Password</label>
+          <div className="mt-1"><PasswordInput name="password" errors={{}} show="Show password" hide="Hide password" autoComplete="current-password" /></div>
+        </div>
         {state.error && <p role="alert" className="mt-4 text-sm font-semibold text-red-700">{state.error}</p>}
         <button disabled={pending} className="btn btn-green mt-6 w-full disabled:opacity-60">{pending ? "Signing in…" : "Sign in"}</button>
       </form>

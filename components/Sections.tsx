@@ -176,11 +176,6 @@ export function NewsSlider({ items, locale }: { items: Doc<NewsDoc>[]; locale: L
   return <Carousel label={d.sections.news} prev={d.slider.prev} next={d.slider.next} slides={items.map(({ id, data: n }) => <NewsCard key={id} id={id} n={n} locale={locale} as="div" />)} />;
 }
 
-export function TeamSlider({ people, locale }: { people: Doc<TeamDoc>[]; locale: Locale }) {
-  const d = getDict(locale);
-  return <Carousel label={d.sections.team} prev={d.slider.prev} next={d.slider.next} slideClass="w-[64%] sm:w-64" slides={people.map((p) => <TeamCard key={p.id} person={p} locale={locale} as="div" />)} />;
-}
-
 export function JoinBand({ locale, image, title, text }: { locale: Locale; image?: string; title?: string; text?: string; source?: string }) {
   const d = getDict(locale);
   return (

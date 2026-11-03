@@ -132,8 +132,8 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
                 <li key={i} className={"relative flex flex-col overflow-hidden rounded-sm border bg-white p-6 pt-8 " + st.border}>
                   <span className={"absolute inset-x-0 top-0 h-2 " + st.bar} aria-hidden="true" />
                   <div className="flex items-start justify-between gap-3">
-                    <span className={"flex h-11 w-11 shrink-0 rotate-45 items-center justify-center " + st.tile}>
-                      <svg viewBox="0 0 24 24" className="h-6 w-6 -rotate-45" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={st.icon} /></svg>
+                    <span className={"flex h-12 w-12 shrink-0 items-center justify-center rounded-sm " + st.tile}>
+                      <svg viewBox="0 0 24 24" className="h-7 w-7" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={st.icon} /></svg>
                     </span>
                     <span className="text-sm font-extrabold text-green-800">{d.live[x.status]}</span>
                   </div>

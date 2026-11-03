@@ -107,7 +107,7 @@ export function BenefitsGrid({ benefits, locale }: { benefits: Doc<BenefitDoc>[]
     <ul className="grid gap-x-10 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
       {benefits.map(({ id, data: b }) => (
         <li key={id} className="border-t-2 border-green-900 pt-6">
-          <span className="ms-2 flex h-11 w-11 rotate-45 items-center justify-center bg-green-900 text-gold-300"><Icon name={b.icon} className="h-6 w-6 -rotate-45" /></span>
+          <span className="flex h-12 w-12 items-center justify-center rounded-sm bg-green-900 text-gold-300"><Icon name={b.icon} className="h-7 w-7" /></span>
           <h3 className="mt-6 text-lg font-extrabold text-green-900">{t(b.title, locale)}</h3>
           <p className="mt-2 leading-7 text-ink/75">{t(b.text, locale)}</p>
         </li>
@@ -188,7 +188,7 @@ export function JoinBand({ locale, image, title, text }: { locale: Locale; image
 export function ContactCards({ s, locale }: { s: SiteSettings; locale: Locale }) {
   const d = getDict(locale).contact;
   const card = "flex items-center gap-4 rounded-sm border border-green-900/20 border-s-4 border-s-gold-500 bg-white p-5";
-  const ic = "flex h-12 w-12 shrink-0 ms-1 items-center justify-center rotate-45 bg-green-900 text-gold-300 [&>svg]:-rotate-45";
+  const ic = "flex h-12 w-12 shrink-0 items-center justify-center rounded-sm bg-green-900 text-gold-300";
   return (
     <div className="grid gap-4 sm:grid-cols-2">
       <a href={`mailto:${s.email}`} className={card}>

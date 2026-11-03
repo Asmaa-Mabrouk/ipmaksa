@@ -79,7 +79,7 @@ export async function Header({ locale }: { locale: Locale }) {
   ];
 
   return (
-    <header className="sticky top-0 z-40 bg-green-900/95 backdrop-blur supports-[backdrop-filter]:bg-green-900/90">
+    <header className="sticky top-0 z-40 bg-green-900 shadow-sm">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-2 px-3 py-3 sm:gap-4 sm:px-6">
         <Link href={base} aria-label={d.siteName} className="shrink-0">
           <Image src="/images/logo-white.png" alt={d.siteName} width={1378} height={321} priority className="h-8 w-auto min-[400px]:h-10 sm:h-12" />

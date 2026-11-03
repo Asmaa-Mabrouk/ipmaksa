@@ -105,12 +105,15 @@ export function ExamCards({ exams, locale, email, whatsapp = "", limit }: { exam
 
 export function BenefitsGrid({ benefits, locale }: { benefits: Doc<BenefitDoc>[]; locale: Locale }) {
   return (
-    <ul className="grid gap-x-10 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+    <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
       {benefits.map(({ id, data: b }) => (
-        <li key={id} className="border-t-2 border-green-900 pt-6">
-          <span className="flex h-12 w-12 items-center justify-center rounded-sm bg-green-900 text-gold-300"><Icon name={b.icon} className="h-7 w-7" /></span>
-          <h3 className="mt-6 text-lg font-extrabold text-green-900">{t(b.title, locale)}</h3>
-          <p className="mt-2 leading-7 text-ink/75">{t(b.text, locale)}</p>
+        <li key={id} className="relative isolate flex flex-col overflow-hidden rounded-sm bg-green-900 p-7 text-white">
+          {/* gold corner + oversized watermark icon: the benefit is the loudest thing on the page */}
+          <span className="absolute end-0 top-0 h-9 w-9 bg-gold-500 [clip-path:polygon(0_0,100%_0,100%_100%)] rtl:-scale-x-100" aria-hidden="true" />
+          <Icon name={b.icon} className="pointer-events-none absolute -bottom-6 -end-6 -z-10 h-36 w-36 text-white/[0.045] rtl:-scale-x-100" />
+          <span className="flex h-16 w-16 items-center justify-center rounded-full border-2 border-gold-500 bg-green-800 text-gold-300"><Icon name={b.icon} className="h-8 w-8" /></span>
+          <h3 className="mt-6 text-xl font-extrabold leading-snug text-gold-300">{t(b.title, locale)}</h3>
+          <p className="mt-2 leading-7 text-white/85">{t(b.text, locale)}</p>
         </li>
       ))}
     </ul>

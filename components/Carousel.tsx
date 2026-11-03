@@ -31,7 +31,7 @@ export function Carousel({ slides, label, prev, next, slideClass = "w-[78%] sm:w
     el?.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
   };
 
-  const arrow = "flex h-11 w-11 items-center justify-center rounded-sm border border-green-900/30 bg-white text-green-900 transition hover:bg-green-900 hover:text-gold-300 disabled:opacity-35 disabled:hover:bg-white disabled:hover:text-green-900";
+  const arrow = "flex h-11 w-11 items-center justify-center rounded-xl border border-green-900/30 bg-white text-green-900 transition hover:bg-green-900 hover:text-gold-300 disabled:opacity-35 disabled:hover:bg-white disabled:hover:text-green-900";
 
   return (
     <div role="region" aria-roledescription="carousel" aria-label={label}>

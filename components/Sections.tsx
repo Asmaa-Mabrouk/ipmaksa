@@ -54,7 +54,7 @@ export function ExamCards({ exams, locale, email, whatsapp = "", limit }: { exam
           ? [fmtDate(e.date, locale, { day: "numeric" }), fmtDate(e.date, locale, { month: "short" }), fmtDate(e.date, locale, { year: "numeric" })]
           : ["", "", ""];
         return (
-          <li key={id} className={"grid grid-cols-[6rem_1fr] overflow-hidden rounded-sm border border-green-900/20 bg-white " + (e.status === "closed" ? "opacity-70" : "")}>
+          <li key={id} className={"grid grid-cols-[6rem_1fr] overflow-hidden rounded-xl border border-green-900/20 bg-white " + (e.status === "closed" ? "opacity-70" : "")}>
             {/* ticket stub: the date is the thing people scan for */}
             <div className="flex flex-col items-center justify-center border-e-2 border-dashed border-gold-500 bg-green-900 px-2 py-5 text-center text-white">
               {dated ? (
@@ -83,7 +83,7 @@ export function ExamCards({ exams, locale, email, whatsapp = "", limit }: { exam
               {e.status !== "closed" && (
                 <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-3">
                   {e.link && (
-                    <a href={e.link} target="_blank" rel="noopener noreferrer" className="btn btn-green !rounded-sm !px-4 !py-2 text-sm">{d.exams.registerNow}</a>
+                    <a href={e.link} target="_blank" rel="noopener noreferrer" className="btn btn-green !px-4 !py-2 text-sm">{d.exams.registerNow}</a>
                   )}
                   {wa && (
                     <a href={`https://wa.me/${wa}?text=${encodeURIComponent(d.exams.waMessage + t(e.title, locale))}`} target="_blank" rel="noopener noreferrer" className={"inline-flex items-center gap-1.5 text-sm " + link}>
@@ -107,7 +107,7 @@ export function BenefitsGrid({ benefits, locale }: { benefits: Doc<BenefitDoc>[]
   return (
     <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
       {benefits.map(({ id, data: b }) => (
-        <li key={id} className="relative isolate flex flex-col overflow-hidden rounded-sm bg-green-900 p-7 text-white">
+        <li key={id} className="relative isolate flex flex-col overflow-hidden rounded-xl bg-green-900 p-7 text-white">
           {/* gold corner + oversized watermark icon: the benefit is the loudest thing on the page */}
           <span className="absolute end-0 top-0 h-9 w-9 bg-gold-500 [clip-path:polygon(0_0,100%_0,100%_100%)] rtl:-scale-x-100" aria-hidden="true" />
           <Icon name={b.icon} className="pointer-events-none absolute -bottom-6 -end-6 -z-10 h-36 w-36 text-white/[0.045] rtl:-scale-x-100" />
@@ -200,8 +200,8 @@ export function JoinBand({ locale, image, title, text }: { locale: Locale; image
 
 export function ContactCards({ s, locale }: { s: SiteSettings; locale: Locale }) {
   const d = getDict(locale).contact;
-  const card = "flex items-center gap-4 rounded-sm border border-green-900/20 border-s-4 border-s-gold-500 bg-white p-5";
-  const ic = "flex h-12 w-12 shrink-0 items-center justify-center rounded-sm bg-green-900 text-gold-300";
+  const card = "flex items-center gap-4 rounded-xl border border-green-900/20 border-s-4 border-s-gold-500 bg-white p-5";
+  const ic = "flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-green-900 text-gold-300";
   return (
     <div className="grid gap-4 sm:grid-cols-2">
       <a href={`mailto:${s.email}`} className={card}>
@@ -235,7 +235,7 @@ export function EventCards({ events, locale, past = false }: { events: Doc<Proje
   return (
     <ul className="grid gap-6">
       {events.map(({ id, data: e }) => (
-        <li key={id} className={"flex flex-col overflow-hidden rounded-sm border border-green-900/20 border-s-[6px] border-s-gold-500 bg-white md:flex-row " + (past ? "opacity-85" : "")}>
+        <li key={id} className={"flex flex-col overflow-hidden rounded-xl border border-green-900/20 border-s-[6px] border-s-gold-500 bg-white md:flex-row " + (past ? "opacity-85" : "")}>
           {e.image && <div className="relative aspect-[4/5] w-full shrink-0 bg-green-900 md:w-72"><Image src={e.image} alt={t(e.title, locale)} fill sizes="(min-width:768px) 288px, 100vw" className="object-cover" /></div>}
           <div className="flex flex-1 flex-col p-6">
             <p className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm font-bold">
@@ -247,9 +247,9 @@ export function EventCards({ events, locale, past = false }: { events: Doc<Proje
             {t(e.speaker, locale) && <p className="mt-2 text-sm"><span className="font-bold text-green-800">{d.events.speaker}:</span> {t(e.speaker, locale)}</p>}
             {t(e.format, locale) && <p className="mt-1 inline-flex items-center gap-1.5 text-sm text-ink/70"><Icon name="pin" className="h-4 w-4 text-gold-600" />{t(e.format, locale)}</p>}
             <div className="mt-auto flex flex-wrap gap-3 pt-4">
-              {!past && e.status !== "closed" && e.link && <a href={e.link} target="_blank" rel="noopener noreferrer" className="btn btn-gold !rounded-sm !py-2">{d.events.register}</a>}
+              {!past && e.status !== "closed" && e.link && <a href={e.link} target="_blank" rel="noopener noreferrer" className="btn btn-gold !py-2">{d.events.register}</a>}
               {!past && e.status === "closed" && <span className="text-sm font-bold text-ink/60">{d.events.full}</span>}
-              {past && e.recording && <a href={e.recording} target="_blank" rel="noopener noreferrer" className="btn btn-green !rounded-sm !py-2">{d.events.recording}</a>}
+              {past && e.recording && <a href={e.recording} target="_blank" rel="noopener noreferrer" className="btn btn-green !py-2">{d.events.recording}</a>}
             </div>
           </div>
         </li>

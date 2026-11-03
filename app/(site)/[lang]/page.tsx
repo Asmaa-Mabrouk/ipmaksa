@@ -69,7 +69,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
 
       {/* STATS */}
       <section aria-label="IPMA KSA in numbers" className="relative z-10 mx-auto -mt-10 max-w-6xl px-4 sm:px-6">
-        <ul className="grid grid-cols-2 gap-px overflow-hidden rounded-sm bg-green-100 lg:grid-cols-4">
+        <ul className="grid grid-cols-2 gap-px overflow-hidden rounded-xl bg-green-100 lg:grid-cols-4">
           {h.stats.map((st, i) => (
             <li key={i} className="bg-white p-5 text-center sm:p-7">
               <p className="text-4xl font-extrabold text-green-700 sm:text-5xl"><span dir="ltr">{st.value}{st.suffix}</span></p>
@@ -84,8 +84,8 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
         <SectionTitle title={t(h.pillarsTitle, lang)} center />
         <ul className="mt-10 grid gap-6 md:grid-cols-3">
           {h.pillars.map((p, i) => (
-            <li key={i} className="rounded-sm border border-green-100 bg-white p-7">
-              <span className="flex h-14 w-14 items-center justify-center rounded-sm bg-green-800 text-gold-300"><Icon name={p.icon} className="h-8 w-8" /></span>
+            <li key={i} className="rounded-xl border border-green-100 bg-white p-7">
+              <span className="flex h-14 w-14 items-center justify-center rounded-xl bg-green-800 text-gold-300"><Icon name={p.icon} className="h-8 w-8" /></span>
               <h3 className="mt-5 text-xl font-extrabold text-green-900">{t(p.title, lang)}</h3>
               <p className="mt-2 leading-7 text-ink/75">{t(p.text, lang)}</p>
             </li>
@@ -99,7 +99,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
           <SectionTitle title={t(h.ambitionTitle, lang)} intro={t(h.ambitionText, lang)} />
           <ul className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
             {SECTORS.map((x) => (
-              <li key={x.img} className="relative aspect-[3/4] overflow-hidden rounded-sm">
+              <li key={x.img} className="relative aspect-[3/4] overflow-hidden rounded-xl">
                 <Image src={`/images/${x.img}.webp`} alt="" fill sizes="(min-width:1024px) 20vw, 45vw" className="object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-green-950/90 to-transparent" />
                 <span className="absolute inset-x-0 bottom-0 p-4 text-lg font-extrabold">{lang === "ar" ? x.ar : x.en}</span>
@@ -116,7 +116,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
           <Markdown source={t(h.aboutText, lang)} className="mt-5" />
           <Link href={`${base}/about-us`} className="btn btn-green mt-6">{d.learnMore}</Link>
         </div>
-        <div className="relative aspect-[4/3] overflow-hidden rounded-sm">
+        <div className="relative aspect-[4/3] overflow-hidden rounded-xl">
           <Image src={h.aboutImage} alt="" fill sizes="(min-width:1024px) 50vw, 100vw" className="object-cover" />
         </div>
       </section>
@@ -129,10 +129,10 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
             {h.live.map((x, i) => {
               const st = LIVE_STYLE[x.status] ?? LIVE_STYLE.later;
               return (
-                <li key={i} className={"relative flex flex-col overflow-hidden rounded-sm border bg-white p-6 pt-8 " + st.border}>
+                <li key={i} className={"relative flex flex-col overflow-hidden rounded-xl border bg-white p-6 pt-8 " + st.border}>
                   <span className={"absolute inset-x-0 top-0 h-2 " + st.bar} aria-hidden="true" />
                   <div className="flex items-start justify-between gap-3">
-                    <span className={"flex h-12 w-12 shrink-0 items-center justify-center rounded-sm " + st.tile}>
+                    <span className={"flex h-12 w-12 shrink-0 items-center justify-center rounded-xl " + st.tile}>
                       <svg viewBox="0 0 24 24" className="h-7 w-7" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={st.icon} /></svg>
                     </span>
                     <span className="text-sm font-extrabold text-green-800">{d.live[x.status]}</span>

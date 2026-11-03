@@ -34,7 +34,7 @@ export function JourneyCycle({ j, locale, showLink = false }: { j: JourneyDoc; l
       {/* phones and tablets: one card per stage */}
       <ol className="mt-8 grid gap-4 sm:grid-cols-2 lg:hidden">
         {stages.map((s, i) => (
-          <li key={i} className="overflow-hidden rounded-sm border border-green-100 bg-white">
+          <li key={i} className="overflow-hidden rounded-xl border border-green-100 bg-white">
             <div className="px-4 py-3 font-extrabold text-white" style={{ background: STAGE[i % STAGE.length] }}>{s}</div>
             <ul className="grid gap-3 p-4">
               {j.roles.map((r, ri) => {
@@ -52,7 +52,7 @@ export function JourneyCycle({ j, locale, showLink = false }: { j: JourneyDoc; l
         ))}
       </ol>
 
-      <p className="mt-8 rounded-sm bg-green-50 p-5 text-lg leading-8 text-green-900">
+      <p className="mt-8 rounded-xl bg-green-50 p-5 text-lg leading-8 text-green-900">
         <strong>{t(j.noteStrong, locale)}</strong> <span className="text-ink/80">{t(j.noteText, locale)}</span>
       </p>
     </section>
@@ -88,10 +88,10 @@ export function PrepareBlock({ j, locale }: { j: JourneyDoc; locale: Locale }) {
         <SectionTitle title={t(j.prepareTitle, locale)} />
 
         {/* ICB4 hero */}
-        <div className="relative mt-10 grid overflow-hidden rounded-sm bg-green-900 text-white lg:grid-cols-[1.4fr_1fr]">
+        <div className="relative mt-10 grid overflow-hidden rounded-xl bg-green-900 text-white lg:grid-cols-[1.4fr_1fr]">
           <div className="najdi absolute inset-x-0 top-0" aria-hidden="true" />
           <div className="flex flex-col gap-5 p-7 pt-9 sm:flex-row sm:items-center sm:p-10 sm:pt-12">
-            <div className="flex h-24 w-24 shrink-0 items-center justify-center rounded-sm bg-gold-500 text-3xl font-black tracking-tight text-green-950">ICB4</div>
+            <div className="flex h-24 w-24 shrink-0 items-center justify-center rounded-xl bg-gold-500 text-3xl font-black tracking-tight text-green-950">ICB4</div>
             <p className="text-lg leading-8 text-white/95 sm:text-xl sm:leading-9">{t(j.prepareIntro, locale)}</p>
           </div>
           <div className="flex flex-col justify-center gap-3 border-t border-white/10 bg-green-950/40 p-7 pt-8 sm:p-10 lg:border-s lg:border-t-0">
@@ -107,7 +107,7 @@ export function PrepareBlock({ j, locale }: { j: JourneyDoc; locale: Locale }) {
         </div>
 
         {/* structure */}
-        <div className="mt-10 rounded-sm border border-green-100 bg-white p-7 sm:p-10">
+        <div className="mt-10 rounded-xl border border-green-100 bg-white p-7 sm:p-10">
           <h3 className="text-2xl font-extrabold text-green-900">{t(j.structureTitle, locale)}</h3>
           <p className="mt-2 max-w-3xl text-lg leading-8 text-ink/80">{t(j.structureText, locale)}</p>
           <div className="mt-6 grid gap-6 md:grid-cols-2">
@@ -126,9 +126,9 @@ export function PrepareBlock({ j, locale }: { j: JourneyDoc; locale: Locale }) {
         <h3 className="mt-12 text-2xl font-extrabold text-green-900">{t(j.levelsTitle, locale)}</h3>
         <ul className="mt-5 grid gap-5 md:grid-cols-3">
           {j.levels.map((lv, i) => (
-            <li key={i} className="flex flex-col rounded-sm border border-green-100 bg-white p-6">
+            <li key={i} className="flex flex-col rounded-xl border border-green-100 bg-white p-6">
               <div className="flex items-center gap-4">
-                <span className="flex h-16 min-w-16 items-center justify-center rounded-sm bg-green-900 px-3 text-2xl font-black text-gold-300" dir="ltr">{lv.badge}</span>
+                <span className="flex h-16 min-w-16 items-center justify-center rounded-xl bg-green-900 px-3 text-2xl font-black text-gold-300" dir="ltr">{lv.badge}</span>
                 <p className="text-xl font-extrabold text-green-900">{t(lv.label, locale)}</p>
               </div>
               <p className="mt-4 leading-8 text-ink/80">{t(lv.text, locale)}</p>
@@ -138,11 +138,11 @@ export function PrepareBlock({ j, locale }: { j: JourneyDoc; locale: Locale }) {
 
         {/* notes */}
         <div className="mt-8 grid gap-5 md:grid-cols-2">
-          <div className="flex gap-4 rounded-sm border border-green-100 bg-white p-5">
+          <div className="flex gap-4 rounded-xl border border-green-100 bg-white p-5">
             <svg viewBox="0 0 24 24" className="mt-1 h-7 w-7 shrink-0 text-green-700" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M9 11l3 3 8-8" /><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9" /></svg>
             <p className="leading-8 text-ink/85">{t(j.guideNote, locale)}</p>
           </div>
-          <div className="flex gap-4 rounded-sm border-2 border-gold-500 bg-gold-100/60 p-5">
+          <div className="flex gap-4 rounded-xl border-2 border-gold-500 bg-gold-100/60 p-5">
             <svg viewBox="0 0 24 24" className="mt-1 h-7 w-7 shrink-0 text-gold-600" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="m8.5 12 2.5 2.5L16 9.5" /></svg>
             <p className="font-extrabold leading-8 text-green-900">{t(j.freeNote, locale)}</p>
           </div>
@@ -166,7 +166,7 @@ export function FaqList({ j, locale, limit, showLink = false, email }: { j: Jour
       </div>
       <div className="mt-8 grid gap-3">
         {items.map((f, i) => (
-          <details key={i} className="group rounded-sm border border-green-100 bg-white open:border-gold-500">
+          <details key={i} className="group rounded-xl border border-green-100 bg-white open:border-gold-500">
             <summary className="flex cursor-pointer list-none items-center justify-between gap-4 p-5 text-lg font-extrabold text-green-900 [&::-webkit-details-marker]:hidden">
               <span>{t(f.q, locale)}</span>
               <span aria-hidden="true" className="text-2xl text-gold-600 transition group-open:rotate-45">+</span>

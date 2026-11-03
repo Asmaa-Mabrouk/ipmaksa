@@ -52,7 +52,7 @@ export default async function ProjectConnect({ params }: { params: Promise<{ lan
           </div>
         </div>
         <h2 className="mb-6 text-2xl font-extrabold text-green-900">{d.events.upcoming}</h2>
-        {upcoming.length ? <EventCards events={upcoming} locale={lang} /> : <p className="rounded-sm border border-green-900/15 bg-white p-8 text-center text-ink/70">{d.events.none}</p>}
+        {upcoming.length ? <EventCards events={upcoming} locale={lang} /> : <p className="rounded-xl border border-green-900/15 bg-white p-8 text-center text-ink/70">{d.events.none}</p>}
         {past.length > 0 && (
           <section className="mt-14">
             <h2 className="mb-6 text-2xl font-extrabold text-green-900">{d.events.past}</h2>

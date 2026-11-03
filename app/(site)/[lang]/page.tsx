@@ -61,7 +61,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
             {t(h.heroTitle, lang).replace(/\s*\S+$/, "")}{" "}
             {/* the logo's double chevron, small, riding the end of the headline; points the way you read.
                 Kept in a no-wrap span with the last word so it never drops onto its own line */}
-            <span className="whitespace-nowrap">{t(h.heroTitle, lang).match(/\S+$/)?.[0]}<svg viewBox="0 0 40 52" className="chevrons ms-3 inline-block h-[0.62em] w-auto align-baseline rtl:-scale-x-100" fill="none" stroke="var(--color-ipma-red)" strokeWidth="9" aria-hidden="true">
+            <span className="whitespace-nowrap">{t(h.heroTitle, lang).match(/\S+$/)?.[0]}<svg viewBox="-6 -6 56 64" className="chevrons ms-3 inline-block h-[0.72em] w-auto overflow-visible align-baseline rtl:-scale-x-100" fill="none" stroke="var(--color-ipma-red)" strokeWidth="9" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <path d="M5 4 L24 26 L5 48" />
               <path d="M21 4 L40 26 L21 48" opacity=".55" />
             </svg></span>

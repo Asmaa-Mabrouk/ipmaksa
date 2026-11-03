@@ -6,6 +6,7 @@ import { FaqList, JourneyCycle, PrepareBlock } from "@/components/Journey";
 import { BenefitsGrid, EventCards, ExamCards, NewsSlider, JoinBand, SectionTitle, TeamCard } from "@/components/Sections";
 import { telHref } from "@/components/SiteChrome";
 import { getBenefits, getEvents, getExams, getHome, getJourney, getNews, getSettings, getTeam } from "@/lib/content/api";
+import { eventEnded } from "@/lib/events";
 import { getDict, isLocale, t } from "@/lib/i18n";
 import { Markdown } from "@/lib/markdown";
 import { pageMeta } from "@/lib/seo";
@@ -46,8 +47,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
   if (!isLocale(lang)) notFound();
   const d = getDict(lang);
   const [h, s, exams, benefits, news, team, events, journey] = await Promise.all([getHome(), getSettings(), getExams(), getBenefits(), getNews(), getTeam(), getEvents(), getJourney()]);
-  const today = new Date().toLocaleDateString("en-CA", { timeZone: "Asia/Riyadh" });
-  const nextEvents = events.filter((e) => e.data.status !== "closed" && (!e.data.date || e.data.date >= today)).slice(0, 2);
+  const nextEvents = events.filter((e) => e.data.status !== "closed" && !eventEnded(e.data)).slice(0, 2);
   const base = `/${lang}`;
   return (
     <>
@@ -69,8 +69,14 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
           <p className="reveal mt-5 max-w-2xl text-lg leading-8 text-white/90 sm:text-xl">{t(h.heroText, lang)}</p>
           <div className="reveal mt-8 flex flex-wrap gap-3">
             <Link href={`${base}/register`} className="btn btn-gold">{d.joinCta}</Link>
-            <Link href={`${base}/exam-dates`} className="btn btn-outline text-white">{d.nav.examDates}</Link>
+            <Link href={`${base}/certification-journey`} className="btn btn-outline text-white">{d.certCta}</Link>
           </div>
+          {benefits[0] && (
+            <p className="reveal mt-6 flex max-w-2xl items-start gap-2 text-white/90">
+              <Icon name={benefits[0].data.icon} className="mt-1 h-5 w-5 shrink-0 text-gold-300" />
+              <span><strong className="font-extrabold text-gold-300">{t(benefits[0].data.title, lang)}.</strong> {t(benefits[0].data.text, lang)}</span>
+            </p>
+          )}
           <div className="reveal mt-10 flex flex-wrap gap-3 text-sm">
             <a href={`mailto:${s.email}`} className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 font-semibold ring-1 ring-white/20 hover:bg-white/20"><Icon name="mail" className="h-4 w-4 text-gold-300" /><span dir="ltr">{s.email}</span></a>
             {s.phone && <a href={telHref(s.phone)} className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 font-semibold ring-1 ring-white/20 hover:bg-white/20"><Icon name="phone" className="h-4 w-4 text-gold-300" /><span dir="ltr">{s.phone}</span></a>}

@@ -4,8 +4,9 @@ import { getDict, t } from "@/lib/i18n";
 import { JsonLd } from "@/components/JsonLd";
 import type { JourneyDoc, Locale } from "@/lib/content/types";
 
-const STAGE = ["#3f8fb5", "#6558b8", "#4a78a8", "#b8975a", "#4aa377", "#c8372d"];
-const ROLE = ["#3f8fb5", "#6558b8", "#b8975a"];
+// white text on every fill reaches WCAG AA (4.5:1)
+const STAGE = ["#2f7399", "#6558b8", "#4a78a8", "#8a6d2f", "#2c7e5a", "#c8372d"];
+const ROLE = ["#2f7399", "#6558b8", "#8a6d2f"];
 
 /** The 6-stage table: who does what from application to certificate. */
 export function JourneyCycle({ j, locale, showLink = false }: { j: JourneyDoc; locale: Locale; showLink?: boolean }) {

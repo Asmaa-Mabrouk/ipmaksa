@@ -34,7 +34,8 @@ const ui = {
       contact: "Contact",
     },
     topbar: { email: "Email", phone: "Call", writeUs: "Write to us" },
-    joinCta: "Join us",
+    joinCta: "Create free account",
+    certCta: "Choose your certification",
     readMore: "Read more",
     slider: { prev: "Previous", next: "Next" },
     learnMore: "Learn more",
@@ -53,6 +54,8 @@ const ui = {
     exams: {
       register: "Register or ask",
       registerNow: "Register now",
+      startApplication: "Start application",
+      applyBody: "Exam sitting: {title} ({date})\nProgramme: {programme}\nLevel (A, B, C or D): \nFull name: \nPhone: ",
       askWhatsapp: "Ask on WhatsApp",
       askEmail: "Email us",
       waMessage: "Hello, I would like to register or ask about: ",
@@ -142,6 +145,7 @@ const ui = {
       meetup: "Meetup",
       speaker: "Speaker",
       full: "Registration closed",
+      linkSoon: "The registration link will be published soon.",
     },
     contact: {
       title: "Get in touch",
@@ -198,7 +202,8 @@ const ui = {
       contact: "تواصل معنا",
     },
     topbar: { email: "البريد الإلكتروني", phone: "اتصل بنا", writeUs: "راسلنا" },
-    joinCta: "انضم إلينا",
+    joinCta: "أنشئ حساباً مجانياً",
+    certCta: "اختر الشهادة المناسبة لك",
     readMore: "اقرأ المزيد",
     slider: { prev: "السابق", next: "التالي" },
     learnMore: "اعرف المزيد",
@@ -217,6 +222,8 @@ const ui = {
     exams: {
       register: "سجّل أو استفسر",
       registerNow: "سجّل الآن",
+      startApplication: "ابدأ طلب الشهادة",
+      applyBody: "موعد الاختبار: {title} ({date})\nالبرنامج: {programme}\nالمستوى (A أو B أو C أو D): \nالاسم الكامل: \nالهاتف: ",
       askWhatsapp: "اسأل عبر واتساب",
       askEmail: "راسلنا بالبريد",
       waMessage: "السلام عليكم، أود التسجيل أو الاستفسار عن: ",
@@ -306,6 +313,7 @@ const ui = {
       meetup: "لقاء",
       speaker: "المتحدث",
       full: "أُغلق التسجيل",
+      linkSoon: "سيتم نشر رابط التسجيل قريباً.",
     },
     contact: {
       title: "تواصل معنا",

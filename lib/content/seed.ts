@@ -719,6 +719,7 @@ export const SEED: Record<string, Record<string, unknown>> = {
       ),
       date: "2026-10-27",
       time: "7:00 – 8:00 PM (KSA)",
+      endTime: "20:00",
       format: l("عبر Zoom", "On Zoom"),
       speaker: l(
         "يدير الحوار: سامح مكي · المتحدثون: جيم جيسور (IPMA Level A, PMP, RMP, P.E.) وتورغوت يلدز",
@@ -738,6 +739,7 @@ export const SEED: Record<string, Record<string, unknown>> = {
       ),
       date: "2026-11-03",
       time: "7:00 – 8:00 PM (KSA)",
+      endTime: "20:00",
       format: l("مباشر عبر Zoom", "Live on Zoom"),
       speaker: l(
         "تيودورا بوجيفا (رئيسة الخدمات المهنية، Businessmap) · تدير الحوار: سلبي كيشيشيان (المؤسسة والرئيسة التنفيذية، SCALE Advisory)",

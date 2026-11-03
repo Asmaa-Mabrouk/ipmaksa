@@ -39,7 +39,7 @@ export function Carousel({ slides, label, prev, next, slideClass = "w-[78%] sm:w
         className="-mx-4 flex snap-x snap-mandatory gap-5 overflow-x-auto px-[11%] pb-4 pt-2 [scrollbar-width:none] sm:-mx-6 sm:px-[calc(50%-11rem)] [&::-webkit-scrollbar]:hidden">
         {slides.map((s, i) => (
           <li key={i} aria-roledescription="slide" aria-label={`${i + 1} / ${slides.length}`}
-            className={"shrink-0 snap-center transition duration-300 motion-reduce:transition-none " + slideClass + (i === active ? "" : " scale-[0.94] opacity-55")}>
+            className={"shrink-0 snap-center transition duration-300 motion-reduce:transition-none " + slideClass + (i === active ? "" : " scale-[0.94] opacity-80")}>
             {s}
           </li>
         ))}

@@ -6,10 +6,12 @@ import { EventCards, JoinBand, PageHero } from "@/components/Sections";
 import { getEvents, getPage } from "@/lib/content/api";
 import { JsonLd } from "@/components/JsonLd";
 import { getDict, isLocale, t } from "@/lib/i18n";
+import type { ProjectEventDoc } from "@/lib/content/types";
 import { SITE, abs } from "@/lib/seo";
 import { Markdown } from "@/lib/markdown";
+import { eventEnded, validRegistrationLink } from "@/lib/events";
 
-export const revalidate = 3600; // re-check "upcoming vs past" every hour
+export const revalidate = 300; // re-check "upcoming vs past" every 5 minutes
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const { lang } = await params;
@@ -22,8 +24,7 @@ export default async function ProjectConnect({ params }: { params: Promise<{ lan
   if (!isLocale(lang)) notFound();
   const d = getDict(lang);
   const [page, events] = await Promise.all([getPage("project-connect"), getEvents()]);
-  const today = new Date().toLocaleDateString("en-CA", { timeZone: "Asia/Riyadh" });
-  const isPast = (e: { data: { date: string } }) => !!e.data.date && e.data.date < today;
+  const isPast = (e: { data: ProjectEventDoc }) => eventEnded(e.data);
   const upcoming = events.filter((e) => !isPast(e));
   const past = events.filter(isPast).reverse();
   const ld = events.filter((e) => e.data.date).map((e) => ({
@@ -34,11 +35,11 @@ export default async function ProjectConnect({ params }: { params: Promise<{ lan
     startDate: e.data.date,
     eventStatus: "https://schema.org/EventScheduled",
     eventAttendanceMode: "https://schema.org/OnlineEventAttendanceMode",
-    location: { "@type": "VirtualLocation", url: e.data.link || `${SITE}/${lang}/project-connect` },
+    location: { "@type": "VirtualLocation", url: validRegistrationLink(e.data.link) ? e.data.link : `${SITE}/${lang}/project-connect` },
     ...(e.data.image ? { image: abs(e.data.image) } : {}),
     ...(t(e.data.speaker, lang) ? { performer: { "@type": "Person", name: t(e.data.speaker, lang) } } : {}),
     organizer: { "@id": `${SITE}/#org` },
-    offers: { "@type": "Offer", price: "0", priceCurrency: "SAR", availability: "https://schema.org/InStock", url: e.data.link || `${SITE}/${lang}/project-connect` },
+    offers: { "@type": "Offer", price: "0", priceCurrency: "SAR", availability: "https://schema.org/InStock", url: validRegistrationLink(e.data.link) ? e.data.link : `${SITE}/${lang}/project-connect` },
   }));
   return (
     <>

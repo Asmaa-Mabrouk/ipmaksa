@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Icon } from "./Icon";
 import { Carousel } from "./Carousel";
+import { eventEnded, validRegistrationLink } from "@/lib/events";
 import { telHref } from "./SiteChrome";
 import { getDict, t } from "@/lib/i18n";
 import type { BenefitDoc, Doc, ExamDoc, Locale, NewsDoc, ProjectEventDoc, SiteSettings, TeamDoc } from "@/lib/content/types";
@@ -82,9 +83,12 @@ export function ExamCards({ exams, locale, email, whatsapp = "", limit }: { exam
               {t(e.note, locale) && <p className="mt-1 text-sm text-ink/70">{t(e.note, locale)}</p>}
               {e.status !== "closed" && (
                 <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-3">
-                  {e.link && (
-                    <a href={e.link} target="_blank" rel="noopener noreferrer" className="btn btn-green !px-4 !py-2 text-sm">{d.exams.registerNow}</a>
-                  )}
+                  {/* primary action: carry the sitting into the application, whichever route is approved */}
+                  <a
+                    href={e.link || `mailto:${email}?subject=${encodeURIComponent(d.exams.startApplication + ": " + t(e.title, locale))}&body=${encodeURIComponent(d.exams.applyBody.replace("{title}", t(e.title, locale)).replace("{date}", dated ? fmtDate(e.date, locale) : t(e.dateText, locale)).replace("{programme}", e.programme))}`}
+                    {...(e.link ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                    className="btn btn-green !px-4 !py-2 text-sm"
+                  >{d.exams.startApplication}</a>
                   {wa && (
                     <a href={`https://wa.me/${wa}?text=${encodeURIComponent(d.exams.waMessage + t(e.title, locale))}`} target="_blank" rel="noopener noreferrer" className={"inline-flex items-center gap-1.5 text-sm " + link}>
                       <Icon name="whatsapp" className="h-5 w-5 text-[#1f8f4e]" />{d.exams.askWhatsapp}
@@ -247,7 +251,8 @@ export function EventCards({ events, locale, past = false }: { events: Doc<Proje
             {t(e.speaker, locale) && <p className="mt-2 text-sm"><span className="font-bold text-green-800">{d.events.speaker}:</span> {t(e.speaker, locale)}</p>}
             {t(e.format, locale) && <p className="mt-1 inline-flex items-center gap-1.5 text-sm text-ink/70"><Icon name="pin" className="h-4 w-4 text-gold-600" />{t(e.format, locale)}</p>}
             <div className="mt-auto flex flex-wrap gap-3 pt-4">
-              {!past && e.status !== "closed" && e.link && <a href={e.link} target="_blank" rel="noopener noreferrer" className="btn btn-gold !py-2">{d.events.register}</a>}
+              {!past && !eventEnded(e) && e.status !== "closed" && validRegistrationLink(e.link) && <a href={e.link} target="_blank" rel="noopener noreferrer" className="btn btn-gold !py-2">{d.events.register}</a>}
+              {!past && !eventEnded(e) && e.status !== "closed" && !validRegistrationLink(e.link) && <span className="text-sm font-bold text-ink/60">{d.events.linkSoon}</span>}
               {!past && e.status === "closed" && <span className="text-sm font-bold text-ink/60">{d.events.full}</span>}
               {past && e.recording && <a href={e.recording} target="_blank" rel="noopener noreferrer" className="btn btn-green !py-2">{d.events.recording}</a>}
             </div>

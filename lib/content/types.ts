@@ -104,6 +104,7 @@ export type ProjectEventDoc = {
   description: L;
   date: string; // YYYY-MM-DD
   time: string; // free text, e.g. "6:00 PM - 7:30 PM (KSA)"
+  endTime?: string; // HH:MM, Asia/Riyadh; the session moves to "past" after this
   format: L; // e.g. Online (Zoom) / Riyadh
   speaker: L;
   image: string;

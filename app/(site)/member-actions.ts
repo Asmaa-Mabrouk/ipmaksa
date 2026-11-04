@@ -8,6 +8,7 @@ import { checkPassword, createMember, endMemberSession, findMember, getMember, s
 import { sendPasswordChanged, sendReset, sendWelcome } from "@/lib/member-mail";
 import { burnResetToken, createResetToken, readResetToken } from "@/lib/reset";
 import { hashPassword } from "@/lib/auth";
+import { cleanState } from "@/lib/levels";
 import type { MemberDoc } from "@/lib/content/types";
 
 export type AuthState = { error?: string; saved?: boolean; values?: Record<string, string> };
@@ -135,18 +136,12 @@ export async function updateProfile(_: AuthState, fd: FormData): Promise<AuthSta
   return { saved: true };
 }
 
-/** Remembers the member's "Find your level" answers so the result is still there when they come back. */
-export async function saveLevelAnswers(a: { role: string; complexity: string; years: string; leadership: string }): Promise<void> {
+/** Remembers the member's "Find your level" entries so the result is still there when they come back. */
+export async function saveLevelState(state: unknown): Promise<void> {
   const m = await getMember();
   if (!m) return;
-  const pick = (v: unknown, ok: string[]) => (typeof v === "string" && ok.includes(v) ? v : "");
-  const levelAnswers = {
-    role: pick(a.role, ["project", "programme", "portfolio", "assisting", "none"]),
-    complexity: pick(a.complexity, ["moderate", "complex", "veryComplex"]),
-    years: pick(a.years, ["lt3", "y3", "y5"]),
-    leadership: pick(a.leadership, ["yes", "no"]),
-  };
-  await getStore().put("members", m.id, { ...m.data, levelAnswers } as unknown as Record<string, unknown>);
+  const levelState = cleanState(state);
+  await getStore().put("members", m.id, { ...m.data, levelState } as unknown as Record<string, unknown>);
 }
 
 /** Change only the profile photo (the browser resizes it to a small square first). */

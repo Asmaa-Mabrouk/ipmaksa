@@ -131,7 +131,7 @@ export type ProjectEventDoc = {
 export type BadgeDoc = { title: L; description: L; image: string; icon: string; order: number };
 export type MemberBadge = { id: string; awardedAt: string; note: string };
 export type MemberDoc = {
-  levelAnswers?: { role: string; complexity: string; years: string; leadership: string };
+  levelState?: { entries: unknown[]; noExperience: boolean };
   email: string;
   firstName: string;
   lastName: string;

@@ -12,8 +12,8 @@ import { getStore } from "@/lib/content/store";
 import type { BadgeDoc } from "@/lib/content/types";
 import { getDict, isLocale, t } from "@/lib/i18n";
 import { getMember } from "@/lib/members";
-import { logoutMember, saveLevelAnswers } from "../../member-actions";
-import type { FinderAnswers } from "@/lib/levels";
+import { logoutMember, saveLevelState } from "../../member-actions";
+import { cleanState } from "@/lib/levels";
 
 export const metadata: Metadata = { robots: { index: false } };
 export const dynamic = "force-dynamic";
@@ -87,7 +87,7 @@ export default async function Profile({ params, searchParams }: { params: Promis
           </section>
         )}
         {tab === "level" && (
-          <LevelFinderSection lang={lang} initial={m.data.levelAnswers as FinderAnswers | undefined} onSave={saveLevelAnswers} person={{ name, email: m.data.email, country: countryName }} />
+          <LevelFinderSection lang={lang} initial={cleanState(m.data.levelState)} onSave={saveLevelState} person={{ name, email: m.data.email, country: countryName }} />
         )}
       </div>
     </div>

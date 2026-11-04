@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { pageMeta } from "@/lib/seo";
 import { notFound } from "next/navigation";
+import { CompareLevels } from "@/components/CompareLevels";
 import { FaqList, JourneyCycle, PrepareBlock } from "@/components/Journey";
 import { JoinBand, PageHero } from "@/components/Sections";
 import { getJourney, getSettings } from "@/lib/content/api";
@@ -20,6 +21,7 @@ export default async function JourneyPage({ params }: { params: Promise<{ lang: 
   return (
     <>
       <PageHero title={getDict(lang).nav.journey} intro={t(j.cycleIntro, lang)} />
+      <CompareLevels locale={lang} />
       <JourneyCycle j={j} locale={lang} />
       <PrepareBlock j={j} locale={lang} />
       <FaqList j={j} locale={lang} email={s.email} />

@@ -32,7 +32,7 @@ export default async function Membership({ params }: { params: Promise<{ lang: s
           </div>
         )}
       </section>
-      <section className="mx-auto max-w-5xl px-4 pb-16 sm:px-6"><LevelFinderSection lang={lang} /></section>
+      <section id="find-your-level" className="mx-auto max-w-5xl scroll-mt-24 px-4 pb-16 sm:px-6"><LevelFinderSection lang={lang} /></section>
       <JoinBand locale={lang} title={d.joinCta} />
     </>
   );

@@ -5,6 +5,7 @@ import { Icon } from "@/components/Icon";
 import { FaqList } from "@/components/Journey";
 import { BenefitsGrid, EventCards, ExamCards, NewsSlider, JoinBand, SectionTitle, TeamCard } from "@/components/Sections";
 import { Carousel } from "@/components/Carousel";
+import { RowSlider } from "@/components/RowSlider";
 import { telHref } from "@/components/SiteChrome";
 import { getBenefits, getEvents, getExams, getHome, getJourney, getNews, getSettings, getTeam } from "@/lib/content/api";
 import { eventEnded } from "@/lib/events";
@@ -270,12 +271,8 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
       <section id="team" className="scroll-mt-24 bg-white py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <SectionTitle title={d.sections.team} intro={d.team.cbNote} />
-          {/* tablet and desktop: cards; phones: a slider */}
-          <ul className="mt-8 hidden gap-5 md:grid md:grid-cols-3 lg:grid-cols-4">
-            {team.map((p) => <TeamCard key={p.id} person={p} locale={lang} />)}
-          </ul>
-          <div className="mt-8 md:hidden">
-            <Carousel label={d.sections.team} prev={d.slider.prev} next={d.slider.next} slideClass="w-[72%]" slides={team.map((p) => <TeamCard key={p.id} person={p} locale={lang} as="div" />)} />
+          <div className="mt-8">
+            <RowSlider label={d.sections.team} prev={d.slider.prev} next={d.slider.next} slides={team.map((p) => <TeamCard key={p.id} person={p} locale={lang} as="div" />)} />
           </div>
         </div>
       </section>

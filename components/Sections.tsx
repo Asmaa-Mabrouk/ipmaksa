@@ -128,26 +128,25 @@ export function TeamCard({ person, locale, as: Tag = "li" }: { person: Doc<TeamD
   const d = getDict(locale);
   const p = person.data;
   return (
-    <Tag className="flex flex-col">
-      {/* arch frame: the mashrabiya / doorway shape, not a rounded rectangle */}
-      <div className="rounded-t-[999px] border border-gold-500 p-1.5">
-        <div className="relative aspect-[4/5] overflow-hidden rounded-t-[999px] bg-green-50">
+    <Tag className="h-full">
+      <div className="flex h-full flex-col overflow-hidden rounded-2xl border border-green-900/10 bg-white shadow-sm">
+        <div className="relative aspect-[4/5] bg-green-50">
           {p.photo ? (
-            <Image src={p.photo} alt={t(p.name, locale)} fill sizes="(min-width:1024px) 25vw, (min-width:640px) 45vw, 90vw" className="object-cover object-top" />
+            <Image src={p.photo} alt={t(p.name, locale)} fill sizes="(min-width:1024px) 20vw, (min-width:768px) 33vw, 70vw" className="object-cover object-top" />
           ) : (
             <div className="flex h-full items-center justify-center bg-green-900 text-6xl font-extrabold text-gold-300">{t(p.name, locale).trim().charAt(0)}</div>
           )}
         </div>
-      </div>
-      <div className="flex flex-1 flex-col pt-4">
-        <h3 className="text-lg font-extrabold leading-snug text-green-900">{t(p.name, locale)}</h3>
-        <p className="mt-0.5 font-semibold text-gold-600">{t(p.role, locale)}</p>
-        {t(p.bio, locale) && <p className="mt-2 text-sm leading-6 text-ink/75">{t(p.bio, locale)}</p>}
-        {p.linkedin && (
-          <a href={p.linkedin} target="_blank" rel="noopener noreferrer" className="mt-auto inline-flex items-center gap-2 pt-3 text-sm font-bold text-green-700 hover:text-green-950" aria-label={`${t(p.name, locale)} – ${d.team.linkedin}`}>
-            <Icon name="linkedin" className="h-5 w-5" /> LinkedIn
-          </a>
-        )}
+        <div className="flex flex-1 flex-col border-t-4 border-gold-500 p-4">
+          <h3 className="text-lg font-extrabold leading-snug text-green-900">{t(p.name, locale)}</h3>
+          <p className="mt-0.5 font-semibold text-gold-600">{t(p.role, locale)}</p>
+          {t(p.bio, locale) && <p className="mt-2 line-clamp-3 text-sm leading-6 text-ink/75">{t(p.bio, locale)}</p>}
+          {p.linkedin && (
+            <a href={p.linkedin} target="_blank" rel="noopener noreferrer" className="mt-auto inline-flex items-center gap-2 pt-3 text-sm font-bold text-green-700 hover:text-green-950" aria-label={`${t(p.name, locale)} – ${d.team.linkedin}`}>
+              <Icon name="linkedin" className="h-5 w-5" /> LinkedIn
+            </a>
+          )}
+        </div>
       </div>
     </Tag>
   );

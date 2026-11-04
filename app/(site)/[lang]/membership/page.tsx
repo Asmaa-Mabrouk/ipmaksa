@@ -6,7 +6,7 @@ import { BenefitsGrid, JoinBand, PageHero, SectionTitle } from "@/components/Sec
 import { getBenefits, getPage, getSettings } from "@/lib/content/api";
 import { LevelFinderSection } from "@/components/LevelFinderSection";
 import { getDict, isLocale, t } from "@/lib/i18n";
-import { Markdown } from "@/lib/markdown";
+import { PricingBlocks } from "@/components/Pricing";
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const { lang } = await params;
@@ -26,8 +26,8 @@ export default async function Membership({ params }: { params: Promise<{ lang: s
         <SectionTitle title={d.sections.benefits} intro={d.sections.benefitsIntro} />
         <div className="mt-8"><BenefitsGrid benefits={benefits} locale={lang} /></div>
         {page && t(page.data.body, lang) && (
-          <div className="mt-10 max-w-3xl">
-            <Markdown source={t(page.data.body, lang)} />
+          <div className="mt-14">
+            <PricingBlocks source={t(page.data.body, lang)} perYearLabel={lang === "ar" ? "سنوياً" : "per year"} />
             <a href={s.myIpmaUrl || "https://myipma.ipma.world"} target="_blank" rel="noopener noreferrer" className="btn btn-gold mt-8">{lang === "ar" ? "انضم عبر MyIPMA" : "Join through MyIPMA"}</a>
           </div>
         )}

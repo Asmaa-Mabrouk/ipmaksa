@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { useId, useState } from "react";
+import { useEffect, useId, useState } from "react";
 import { type FinderAnswers, type LevelForm, needsComplexity, needsLeadership, needsYears, recommend } from "@/lib/levels";
 import type { Dict } from "@/lib/i18n";
 
@@ -24,19 +24,59 @@ function Question<T extends string>({ name, legend, hint, options, value, onChan
   );
 }
 
-export function LevelFinder({ d, levels, email }: { d: Dict["finder"]; levels: Record<"A" | "B" | "C" | "D", LevelInfo>; email: string }) {
+const KEY = "ipma-level-answers";
+
+export function LevelFinder({ d, levels, email, initial, onSave, person }: {
+  d: Dict["finder"];
+  levels: Record<"A" | "B" | "C" | "D", LevelInfo>;
+  email: string;
+  /** Signed-in member: answers already saved on their profile, and the action that saves new ones. */
+  initial?: FinderAnswers;
+  onSave?: (a: FinderAnswers) => Promise<void>;
+  person?: { name: string; email: string; country: string };
+}) {
   const id = useId();
-  const [a, setA] = useState<FinderAnswers>(EMPTY);
-  const set = (patch: Partial<FinderAnswers>) => setA((p) => ({ ...p, ...patch }));
+  const [a, setA] = useState<FinderAnswers>(initial ?? EMPTY);
+  const [copied, setCopied] = useState(false);
+  // Visitors who are not signed in: remember the answers in this browser so the result is still there after they come back.
+  useEffect(() => {
+    if (onSave || initial) return;
+    try {
+      const v = JSON.parse(localStorage.getItem(KEY) || "null");
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- browser storage is only readable after hydration
+      if (v && typeof v === "object") setA({ ...EMPTY, ...v });
+    } catch {}
+  }, [onSave, initial]);
+  const update = (next: FinderAnswers) => {
+    setA(next);
+    if (onSave) onSave(next).catch(() => {});
+    else {
+      try { localStorage.setItem(KEY, JSON.stringify(next)); } catch {}
+    }
+  };
+  const set = (patch: Partial<FinderAnswers>) => update({ ...a, ...patch });
   const result = recommend(a);
   const lv = result ? levels[result.level] : null;
-  const mail = result ? `mailto:${email}?subject=${encodeURIComponent(d.mailSubject.replace("{level}", result.level))}` : "";
+  const subject = result ? d.mailSubject.replace("{level}", result.level) : "";
+  const body = result && lv
+    ? d.mailGreeting + "\n\n" + d.mailBody
+        .replace("{level}", result.level)
+        .replaceAll("{name}", person?.name || "________")
+        .replace("{email}", person?.email || "________")
+        .replace("{country}", person?.country || "________")
+        .replace("{forms}", lv.forms.map((f) => "- " + f.label).join("\n"))
+    : "";
+  const mail = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  const gmail = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(email)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  const copy = async () => {
+    try { await navigator.clipboard.writeText(email); setCopied(true); setTimeout(() => setCopied(false), 2000); } catch {}
+  };
   return (
     <section aria-labelledby={id} className="rounded-3xl border border-gold-500/50 bg-white p-6 shadow-sm sm:p-10">
       <h2 id={id} className="text-2xl font-extrabold text-green-900 sm:text-3xl">{d.title}</h2>
       <p className="mt-2 max-w-3xl leading-8 text-ink/75">{d.intro}</p>
 
-      <Question name="role" legend={d.q1} value={a.role} onChange={(v) => setA({ ...EMPTY, role: v })} options={(Object.keys(d.roles) as (keyof typeof d.roles)[]).map((k) => [k, d.roles[k]] as [typeof k, string])} />
+      <Question name="role" legend={d.q1} value={a.role} onChange={(v) => update({ ...EMPTY, role: v })} options={(Object.keys(d.roles) as (keyof typeof d.roles)[]).map((k) => [k, d.roles[k]] as [typeof k, string])} />
       {needsComplexity(a) && <Question name="complexity" legend={d.q2} value={a.complexity} onChange={(v) => set({ complexity: v, years: "", leadership: "" })} options={(Object.keys(d.complexities) as (keyof typeof d.complexities)[]).map((k) => [k, d.complexities[k]] as [typeof k, string])} />}
       {needsYears(a) && <Question name="years" legend={d.q3} hint={d.yearsHint} value={a.years} onChange={(v) => set({ years: v, leadership: "" })} options={(Object.keys(d.years) as (keyof typeof d.years)[]).map((k) => [k, d.years[k]] as [typeof k, string])} />}
       {needsLeadership(a) && <Question name="leadership" legend={d.q4} value={a.leadership} onChange={(v) => set({ leadership: v })} options={[["yes", d.yes], ["no", d.no]]} />}
@@ -51,19 +91,25 @@ export function LevelFinder({ d, levels, email }: { d: Dict["finder"]; levels: R
             <p className="mt-3 max-w-3xl border-s-4 border-gold-500 ps-4 text-sm leading-7 text-white/80">{d.indicative}</p>
             <Link href={lv.href} className="mt-4 inline-block font-bold text-gold-300 underline decoration-2 underline-offset-4">{d.learnMore}</Link>
 
-            {lv.forms.length > 0 && (
-              <div className="mt-7 rounded-xl bg-white p-5 text-green-950">
-                <h3 className="text-lg font-extrabold">{d.formsTitle}</h3>
-                <p className="mt-1 text-sm text-ink/70">{d.formsText}</p>
+            <div className="mt-7 rounded-xl bg-white p-5 text-green-950">
+              <h3 className="text-lg font-extrabold">{d.formsTitle}</h3>
+              <p className="mt-1 text-sm font-semibold text-green-800">{d.step1}</p>
+              {lv.forms.length > 0 && (
                 <ul className="mt-3 grid gap-2 sm:grid-cols-2">
                   {lv.forms.map((f) => (
                     <li key={f.url}><a href={f.url} download target="_blank" rel="noopener noreferrer" className="block rounded-lg border border-green-900/15 px-4 py-2.5 text-sm font-bold text-green-900 transition hover:border-gold-500 hover:bg-green-50">{f.label}</a></li>
                   ))}
                 </ul>
-                <a href={mail} className="btn btn-gold mt-5">{d.send}</a>
+              )}
+              <p className="mt-5 text-sm font-semibold text-green-800">{d.step2.replace("{email}", email)}</p>
+              <div className="mt-3 flex flex-wrap gap-3">
+                <a href={mail} className="btn btn-gold">{d.openMail}</a>
+                <a href={gmail} target="_blank" rel="noopener noreferrer" className="btn btn-outline !border-green-900/30 !text-green-900">{d.openGmail}</a>
+                <button type="button" onClick={copy} className="btn btn-outline !border-green-900/30 !text-green-900">{copied ? d.copied : d.copyAddress}</button>
               </div>
-            )}
-            <button type="button" onClick={() => setA(EMPTY)} className="mt-6 text-sm font-bold text-white/80 underline underline-offset-4 hover:text-white">{d.restart}</button>
+              <p className="mt-3 text-sm text-ink/70">{d.sendHelp}</p>
+            </div>
+            <button type="button" onClick={() => update(EMPTY)} className="mt-6 text-sm font-bold text-white/80 underline underline-offset-4 hover:text-white">{d.restart}</button>
           </div>
         )}
       </div>

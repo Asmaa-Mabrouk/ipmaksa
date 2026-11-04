@@ -135,6 +135,20 @@ export async function updateProfile(_: AuthState, fd: FormData): Promise<AuthSta
   return { saved: true };
 }
 
+/** Remembers the member's "Find your level" answers so the result is still there when they come back. */
+export async function saveLevelAnswers(a: { role: string; complexity: string; years: string; leadership: string }): Promise<void> {
+  const m = await getMember();
+  if (!m) return;
+  const pick = (v: unknown, ok: string[]) => (typeof v === "string" && ok.includes(v) ? v : "");
+  const levelAnswers = {
+    role: pick(a.role, ["project", "programme", "portfolio", "assisting", "none"]),
+    complexity: pick(a.complexity, ["moderate", "complex", "veryComplex"]),
+    years: pick(a.years, ["lt3", "y3", "y5"]),
+    leadership: pick(a.leadership, ["yes", "no"]),
+  };
+  await getStore().put("members", m.id, { ...m.data, levelAnswers } as unknown as Record<string, unknown>);
+}
+
 /** Change only the profile photo (the browser resizes it to a small square first). */
 export async function uploadPhoto(fd: FormData): Promise<{ ok: boolean; error?: "photo" | "generic" }> {
   const m = await getMember();

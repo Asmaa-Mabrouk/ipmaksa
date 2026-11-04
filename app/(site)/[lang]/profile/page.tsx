@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { ProfileForm } from "@/components/AuthForms";
 import { AvatarUpload } from "@/components/AvatarUpload";
@@ -11,13 +12,16 @@ import { getStore } from "@/lib/content/store";
 import type { BadgeDoc } from "@/lib/content/types";
 import { getDict, isLocale, t } from "@/lib/i18n";
 import { getMember } from "@/lib/members";
-import { logoutMember } from "../../member-actions";
+import { logoutMember, saveLevelAnswers } from "../../member-actions";
+import type { FinderAnswers } from "@/lib/levels";
 
 export const metadata: Metadata = { robots: { index: false } };
 export const dynamic = "force-dynamic";
 
-export default async function Profile({ params }: { params: Promise<{ lang: string }> }) {
+export default async function Profile({ params, searchParams }: { params: Promise<{ lang: string }>; searchParams: Promise<{ tab?: string }> }) {
   const { lang } = await params;
+  const { tab: tabParam } = await searchParams;
+  const tab = tabParam === "info" || tabParam === "level" ? tabParam : "badges";
   if (!isLocale(lang)) notFound();
   const m = await getMember();
   if (!m) redirect(`/${lang}/login`);
@@ -41,10 +45,22 @@ export default async function Profile({ params }: { params: Promise<{ lang: stri
         <form action={logoutMember.bind(null, lang)}><button className="btn btn-outline text-white">{d.signOut}</button></form>
       </section>
 
-      <section className="mt-10">
-        <h2 className="text-2xl font-extrabold text-green-900">{d.badges}</h2>
+      <nav aria-label={d.tabsLabel} className="mt-8 border-b border-green-900/10">
+        <ul className="flex gap-1 overflow-x-auto">
+          {([["badges", d.badges], ["info", d.tabInfo], ["level", d.tabLevel]] as const).map(([id, label]) => (
+            <li key={id}>
+              <Link href={`/${lang}/profile?tab=${id}`} aria-current={id === tab ? "page" : undefined} className={"block whitespace-nowrap border-b-4 px-5 py-3.5 font-bold transition " + (id === tab ? "border-gold-500 text-green-900" : "border-transparent text-green-800/70 hover:text-green-900")}>{label}</Link>
+            </li>
+          ))}
+        </ul>
+      </nav>
+
+      <div className="mt-8">
+        {tab === "badges" && (
+      <section>
+        <h2 className="sr-only">{d.badges}</h2>
         {earned.length ? (
-          <ul className="mt-5 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {earned.map(({ b, def }) => (
               <li key={b.id} className="flex items-start gap-4 rounded-2xl border border-green-100 bg-white p-5 shadow-sm">
                 <span className={"relative flex shrink-0 items-center justify-center " + (def.image ? "h-24 w-24" : "h-20 w-20 overflow-hidden rounded-full bg-gold-100 text-gold-600 ring-2 ring-gold-500")}>
@@ -59,16 +75,21 @@ export default async function Profile({ params }: { params: Promise<{ lang: stri
             ))}
           </ul>
         ) : (
-          <p className="mt-5 rounded-2xl bg-white p-8 text-center text-ink/70 shadow-sm">{d.noBadges}</p>
+          <p className="rounded-2xl bg-white p-8 text-center text-ink/70 shadow-sm">{d.noBadges}</p>
         )}
       </section>
 
-      <div className="mt-10"><LevelFinderSection lang={lang} /></div>
-
-      <details className="mt-10 rounded-2xl border border-green-100 bg-white p-5 shadow-sm">
-        <summary className="cursor-pointer text-lg font-extrabold text-green-900">{d.edit}</summary>
-        <div className="mt-5"><ProfileForm d={d} countries={countries} first={m.data.firstName} last={m.data.lastName} country={m.data.country} /></div>
-      </details>
+        )}
+        {tab === "info" && (
+          <section className="rounded-2xl border border-green-100 bg-white p-5 shadow-sm sm:p-8">
+            <h2 className="mb-5 text-xl font-extrabold text-green-900">{d.edit}</h2>
+            <ProfileForm d={d} countries={countries} first={m.data.firstName} last={m.data.lastName} country={m.data.country} />
+          </section>
+        )}
+        {tab === "level" && (
+          <LevelFinderSection lang={lang} initial={m.data.levelAnswers as FinderAnswers | undefined} onSave={saveLevelAnswers} person={{ name, email: m.data.email, country: countryName }} />
+        )}
+      </div>
     </div>
   );
 }

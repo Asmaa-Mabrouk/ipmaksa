@@ -3,12 +3,14 @@ import Link from "next/link";
 import { useEffect, useId, useState } from "react";
 import { COMPLEXITIES, EMPTY_STATE, type Entry, type FinderState, type LevelForm, ROLES, cleanState, evaluate, newEntry, suggest } from "@/lib/levels";
 import type { Dict } from "@/lib/i18n";
+import { MonthPicker } from "@/components/MonthPicker";
 
 type LevelInfo = { title: string; href: string; forms: LevelForm[] };
 const KEY = "ipma-level-finder-v2";
 const field = "mt-1 w-full rounded-lg border border-green-900/20 bg-white px-3 py-2.5 text-green-950 focus:border-green-700 focus:outline-none focus:ring-2 focus:ring-green-700/30";
 
-export function LevelFinder({ d, levels, email, initial, onSave, person }: {
+export function LevelFinder({ d, levels, email, initial, onSave, person, locale }: {
+  locale: string;
   d: Dict["finder"];
   levels: Record<"A" | "B" | "C" | "D", LevelInfo>;
   email: string;
@@ -92,11 +94,11 @@ export function LevelFinder({ d, levels, email, initial, onSave, person }: {
                 </label>
               )}
               <label className="block text-sm font-bold text-green-900">{d.from}
-                <input type="month" className={field} value={e.from} onChange={(ev) => setEntry(i, { from: ev.target.value })} dir="ltr" />
+                <MonthPicker className={field} locale={locale} placeholder={d.pickMonth} value={e.from} onChange={(v) => setEntry(i, { from: v })} />
               </label>
               <div>
                 <label className="block text-sm font-bold text-green-900">{d.to}
-                  <input type="month" className={field + (e.to ? "" : " opacity-50")} value={e.to} disabled={!e.to} onChange={(ev) => setEntry(i, { to: ev.target.value })} dir="ltr" />
+                  <MonthPicker className={field + (e.to ? "" : " opacity-50")} locale={locale} placeholder={d.pickMonth} value={e.to} disabled={!e.to} onChange={(v) => setEntry(i, { to: v })} />
                 </label>
                 <label className="mt-2 flex items-center gap-2 text-sm text-green-900">
                   <input type="checkbox" className="h-4 w-4 accent-green-800" checked={!e.to} onChange={(ev) => setEntry(i, { to: ev.target.checked ? "" : `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}` })} />

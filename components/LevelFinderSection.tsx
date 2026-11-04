@@ -11,5 +11,5 @@ export async function LevelFinderSection({ lang, initial, onSave, person }: { la
   const [s, a, b, c, dd] = await Promise.all([getSettings(), getPage("ipma-level-a"), getPage("ipma-level-b"), getPage("ipma-level-c"), getPage("ipma-level-d")]);
   const info = (id: string, p: typeof a) => ({ title: p ? t(p.data.title, lang) : id, href: `/${lang}/${id}`, forms: p ? levelForms(t(p.data.body, lang)) : [] });
   const levels = { A: info("ipma-level-a", a), B: info("ipma-level-b", b), C: info("ipma-level-c", c), D: info("ipma-level-d", dd) };
-  return <LevelFinder d={d.finder} levels={levels} email={s.certEmail || "ca@ipmaksa.world"} initial={initial} onSave={onSave} person={person} />;
+  return <LevelFinder locale={lang} d={d.finder} levels={levels} email={s.certEmail || "ca@ipmaksa.world"} initial={initial} onSave={onSave} person={person} />;
 }

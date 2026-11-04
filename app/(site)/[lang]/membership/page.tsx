@@ -28,7 +28,7 @@ export default async function Membership({ params }: { params: Promise<{ lang: s
         {page && t(page.data.body, lang) && (
           <div className="mt-14">
             <PricingBlocks source={t(page.data.body, lang)} perYearLabel={lang === "ar" ? "سنوياً" : "per year"} />
-            <a href={s.myIpmaUrl || "https://myipma.ipma.world"} target="_blank" rel="noopener noreferrer" className="btn btn-gold mt-8">{lang === "ar" ? "انضم عبر MyIPMA" : "Join through MyIPMA"}</a>
+            <div className="mt-10 flex justify-center"><a href={s.myIpmaUrl || "https://myipma.ipma.world"} target="_blank" rel="noopener noreferrer" className="btn btn-gold">{lang === "ar" ? "انضم عبر MyIPMA" : "Join through MyIPMA"}</a></div>
           </div>
         )}
       </section>

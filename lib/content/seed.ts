@@ -147,6 +147,7 @@ const home = {
 const settings = {
   email: "care@ipmaksa.world",
   certEmail: "ca@ipmaksa.world",
+  myIpmaUrl: "https://myipma.ipma.world",
   phone: "+966 50 365 6644",
   whatsapp: "966503656644",
   address: l("الظهران، المملكة العربية السعودية", "Dhahran, Saudi Arabia"),

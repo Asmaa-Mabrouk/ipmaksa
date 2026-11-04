@@ -349,6 +349,7 @@ export const COLLECTIONS: CollectionDef[] = [
     fields: [
       { key: "email", label: "Public email (support)", type: "email" },
       { key: "certEmail", label: "Certification applications email", type: "email", help: "Where applications and certification enquiries go. Defaults to ca@ipmaksa.world." },
+      { key: "myIpmaUrl", label: "MyIPMA link (membership sign-up button)", type: "url", help: "Where the Membership page sends people to join. Defaults to https://myipma.ipma.world." },
       { key: "phone", label: "Phone number (shown prominently)", type: "text", help: "e.g. +966 5X XXX XXXX" },
       { key: "whatsapp", label: "WhatsApp number (digits only, with country code)", type: "text" },
       { key: "address", label: "Address", type: "text", i18n: true },

@@ -4,6 +4,7 @@ import { notFound, redirect } from "next/navigation";
 import { ProfileForm } from "@/components/AuthForms";
 import { AvatarUpload } from "@/components/AvatarUpload";
 import { Icon } from "@/components/Icon";
+import { LevelFinderSection } from "@/components/LevelFinderSection";
 import { fmtDate } from "@/components/Sections";
 import { countryList } from "@/lib/countries";
 import { getStore } from "@/lib/content/store";
@@ -61,6 +62,8 @@ export default async function Profile({ params }: { params: Promise<{ lang: stri
           <p className="mt-5 rounded-2xl bg-white p-8 text-center text-ink/70 shadow-sm">{d.noBadges}</p>
         )}
       </section>
+
+      <div className="mt-10"><LevelFinderSection lang={lang} /></div>
 
       <details className="mt-10 rounded-2xl border border-green-100 bg-white p-5 shadow-sm">
         <summary className="cursor-pointer text-lg font-extrabold text-green-900">{d.edit}</summary>

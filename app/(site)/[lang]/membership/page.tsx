@@ -4,8 +4,7 @@ import { notFound } from "next/navigation";
 import { Icon } from "@/components/Icon";
 import { BenefitsGrid, JoinBand, PageHero, SectionTitle } from "@/components/Sections";
 import { getBenefits, getPage, getSettings } from "@/lib/content/api";
-import { LevelFinder } from "@/components/LevelFinder";
-import { levelForms } from "@/lib/levels";
+import { LevelFinderSection } from "@/components/LevelFinderSection";
 import { getDict, isLocale, t } from "@/lib/i18n";
 import { Markdown } from "@/lib/markdown";
 
@@ -19,9 +18,7 @@ export default async function Membership({ params }: { params: Promise<{ lang: s
   const { lang } = await params;
   if (!isLocale(lang)) notFound();
   const d = getDict(lang);
-  const [page, benefits, s, la, lb, lc, ld] = await Promise.all([getPage("membership"), getBenefits(), getSettings(), getPage("ipma-level-a"), getPage("ipma-level-b"), getPage("ipma-level-c"), getPage("ipma-level-d")]);
-  const info = (id: string, p: typeof la) => ({ title: p ? t(p.data.title, lang) : id, href: `/${lang}/${id}`, forms: p ? levelForms(t(p.data.body, lang)) : [] });
-  const levels = { A: info("ipma-level-a", la), B: info("ipma-level-b", lb), C: info("ipma-level-c", lc), D: info("ipma-level-d", ld) };
+  const [page, benefits, s] = await Promise.all([getPage("membership"), getBenefits(), getSettings()]);
   return (
     <>
       <PageHero title={page ? t(page.data.title, lang) : d.nav.membership} intro={page ? t(page.data.intro, lang) : undefined} image={page?.data.image || undefined} />
@@ -35,7 +32,7 @@ export default async function Membership({ params }: { params: Promise<{ lang: s
           </div>
         )}
       </section>
-      <section className="mx-auto max-w-5xl px-4 pb-16 sm:px-6"><LevelFinder d={d.finder} levels={levels} email={s.certEmail || "ca@ipmaksa.world"} /></section>
+      <section className="mx-auto max-w-5xl px-4 pb-16 sm:px-6"><LevelFinderSection lang={lang} /></section>
       <JoinBand locale={lang} title={d.joinCta} />
     </>
   );

@@ -5,7 +5,7 @@ import { Carousel } from "./Carousel";
 import { eventEnded, validRegistrationLink } from "@/lib/events";
 import { telHref } from "./SiteChrome";
 import { getDict, t } from "@/lib/i18n";
-import type { BenefitDoc, Doc, ExamDoc, Locale, NewsDoc, ProjectEventDoc, SiteSettings, TeamDoc } from "@/lib/content/types";
+import type { ArticleDoc, BenefitDoc, Doc, ExamDoc, Locale, NewsDoc, ProjectEventDoc, SiteSettings, TeamDoc } from "@/lib/content/types";
 
 export const fmtDate = (iso: string, locale: Locale, opts: Intl.DateTimeFormatOptions = { day: "numeric", month: "long", year: "numeric" }) =>
   new Intl.DateTimeFormat(getDict(locale).date.locale, { ...opts, timeZone: "UTC" }).format(new Date(iso + "T00:00:00Z"));
@@ -257,6 +257,107 @@ export function EventCards({ events, locale, past = false }: { events: Doc<Proje
               {past && e.recording && <a href={e.recording} target="_blank" rel="noopener noreferrer" className="btn btn-green !py-2">{d.events.recording}</a>}
             </div>
           </div>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+/** Sub-navigation shared by the Project Connect Magazine pages. */
+export function MagazineTabs({ locale, current }: { locale: Locale; current: "about" | "articles" | "guidelines" }) {
+  const d = getDict(locale);
+  const base = `/${locale}/project-connect/magazine`;
+  const tabs = [
+    ["about", d.magazine.nav.about, base],
+    ["articles", d.magazine.nav.articles, `${base}/articles`],
+    ["guidelines", d.magazine.nav.guidelines, `${base}/guidelines`],
+  ] as const;
+  return (
+    <nav aria-label={d.magazine.name} className="border-b border-green-900/10 bg-white">
+      <ul className="mx-auto flex max-w-7xl gap-1 overflow-x-auto px-4 sm:px-6">
+        {tabs.map(([id, label, href]) => (
+          <li key={id}>
+            <Link href={href} aria-current={id === current ? "page" : undefined} className={"block whitespace-nowrap border-b-4 px-4 py-4 text-sm font-bold transition " + (id === current ? "border-gold-500 text-green-900" : "border-transparent text-green-800/70 hover:text-green-900")}>{label}</Link>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  );
+}
+
+export function readMinutes(text: string) {
+  return Math.max(1, Math.round(text.trim().split(/\s+/).length / 200));
+}
+
+export function columnLabel(column: string, locale: Locale) {
+  const cols = getDict(locale).magazine.columns as Record<string, string>;
+  return cols[column] ?? "";
+}
+
+/** Column filter for the Articles page: plain links, so it works without scripts. */
+export function ColumnTabs({ locale, current }: { locale: Locale; current: string }) {
+  const d = getDict(locale);
+  const base = `/${locale}/project-connect/magazine/articles`;
+  const items: [string, string, string][] = [["", d.magazine.allColumns, base], ...Object.entries(d.magazine.columns).map(([v, label]) => [v, label, `${base}?column=${v}`] as [string, string, string])];
+  return (
+    <nav aria-label={d.magazine.columnsLabel} className="mb-10">
+      <ul className="flex flex-wrap gap-2">
+        {items.map(([v, label, href]) => (
+          <li key={v || "all"}>
+            <Link href={href} aria-current={v === current ? "true" : undefined} className={"block rounded-full border px-4 py-1.5 text-sm font-bold transition " + (v === current ? "border-green-900 bg-green-900 text-white" : "border-green-900/20 bg-white text-green-900 hover:border-gold-500")}>{label}</Link>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  );
+}
+
+function ArticleMeta({ a, locale }: { a: ArticleDoc; locale: Locale }) {
+  const d = getDict(locale);
+  return (
+    <p className="text-sm font-semibold text-gold-600">
+      {columnLabel(a.column, locale) && <span className="font-extrabold text-green-800">{columnLabel(a.column, locale)}</span>}
+      {columnLabel(a.column, locale) && " · "}
+      {a.date && <time dateTime={a.date}>{fmtDate(a.date, locale)}</time>}
+      {a.date && " · "}
+      {readMinutes(t(a.body, locale))} {d.magazine.minRead}
+    </p>
+  );
+}
+
+/** The featured article: large, at the top of the Articles page. */
+export function FeaturedArticle({ id, a, locale }: { id: string; a: ArticleDoc; locale: Locale }) {
+  const d = getDict(locale);
+  return (
+    <Link href={`/${locale}/project-connect/magazine/articles/${id}`} className="group mb-14 grid overflow-hidden rounded-2xl bg-green-900 text-white md:grid-cols-2">
+      {a.image && <div className="relative aspect-[16/10] md:aspect-auto md:min-h-72"><Image src={a.image} alt="" fill priority sizes="(min-width:768px) 50vw, 100vw" className="object-cover" /></div>}
+      <div className={"p-7 sm:p-10 " + (a.image ? "" : "md:col-span-2")}>
+        <p className="inline-block rounded-full bg-gold-500 px-3 py-1 text-xs font-extrabold text-green-950">{d.magazine.featured}</p>
+        <h2 className="mt-4 text-2xl font-extrabold leading-snug decoration-gold-500 decoration-2 underline-offset-4 group-hover:underline sm:text-3xl">{t(a.title, locale)}</h2>
+        <p className="mt-3 line-clamp-4 text-lg leading-8 text-white/85">{t(a.excerpt, locale)}</p>
+        <p className="mt-4 text-sm text-white/75">
+          {t(a.author, locale) && <span className="font-bold text-white">{d.magazine.by} {t(a.author, locale)}</span>}
+          {t(a.author, locale) && " · "}
+          {columnLabel(a.column, locale)}
+        </p>
+      </div>
+    </Link>
+  );
+}
+
+export function ArticleCards({ items, locale }: { items: Doc<ArticleDoc>[]; locale: Locale }) {
+  const d = getDict(locale);
+  return (
+    <ul className="grid gap-x-8 gap-y-10 md:grid-cols-2 lg:grid-cols-3">
+      {items.map(({ id, data: a }) => (
+        <li key={id} className="group h-full">
+          <Link href={`/${locale}/project-connect/magazine/articles/${id}`} className="flex h-full flex-col rounded-xl border border-green-900/10 bg-white p-5 transition hover:border-gold-500">
+            {a.image && <div className="relative -mx-5 -mt-5 mb-4 aspect-[16/9] overflow-hidden rounded-t-xl bg-green-900"><Image src={a.image} alt="" fill sizes="(min-width:1024px) 33vw, (min-width:768px) 50vw, 100vw" className="object-cover" /></div>}
+            <ArticleMeta a={a} locale={locale} />
+            <h3 className="mt-2 text-xl font-extrabold leading-snug text-green-900 decoration-gold-500 decoration-2 underline-offset-4 group-hover:underline">{t(a.title, locale)}</h3>
+            <p className="mt-2 line-clamp-3 leading-7 text-ink/75">{t(a.excerpt, locale)}</p>
+            {t(a.author, locale) && <p className="mt-auto pt-4 text-sm font-bold text-green-800">{d.magazine.by} {t(a.author, locale)}</p>}
+          </Link>
         </li>
       ))}
     </ul>

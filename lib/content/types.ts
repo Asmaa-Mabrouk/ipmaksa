@@ -97,6 +97,19 @@ export type NewsDoc = {
   published: boolean;
 };
 
+export type ArticleDoc = {
+  title: L;
+  excerpt: L;
+  body: L;
+  author: L;
+  authorRole: L;
+  column: string;
+  featured: boolean;
+  date: string;
+  image: string;
+  published: boolean;
+};
+
 export type Doc<T> = { id: string; data: T };
 
 export type ProjectEventDoc = {

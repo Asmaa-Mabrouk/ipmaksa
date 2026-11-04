@@ -25,7 +25,16 @@ const pool = new Pool({ connectionString: url, ssl });
       const key = `${col}:${id}`;
       if (targets.length && !targets.some((t) => t === col || t === key)) continue;
       const { rows } = await pool.query("SELECT data FROM documents WHERE collection=$1 AND id=$2", [col, id]);
-      if (!rows.length) continue; // not materialised yet: the site already shows the seed
+      if (!rows.length) {
+        // Missing document: add it only when the collection already lives in the database,
+        // otherwise the site is still showing the seed and will pick the new document up itself.
+        const n = await pool.query("SELECT 1 FROM documents WHERE collection=$1 LIMIT 1", [col]);
+        if (!n.rowCount) continue;
+        changed++;
+        console.log(`${apply ? "adding  " : "missing "} ${key}`);
+        if (apply) await pool.query("INSERT INTO documents (collection, id, data) VALUES ($1,$2,$3)", [col, id, JSON.stringify(data)]);
+        continue;
+      }
       if (JSON.stringify(rows[0].data) === JSON.stringify(data)) continue;
       changed++;
       console.log(`${apply ? "updating" : "differs "} ${key}`);

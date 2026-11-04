@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { pageMeta } from "@/lib/seo";
 import Image from "next/image";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { EventCards, JoinBand, PageHero } from "@/components/Sections";
 import { getEvents, getPage } from "@/lib/content/api";
@@ -52,6 +53,13 @@ export default async function ProjectConnect({ params }: { params: Promise<{ lan
             <Image src="/images/project-connect-logo.webp" alt="Project Connect – ملتقى المشاريع" width={497} height={700} className="h-auto w-full" />
           </div>
         </div>
+        <Link href={`/${lang}/project-connect/magazine`} className="mb-12 flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-gold-500/60 bg-green-900 p-6 text-white transition hover:bg-green-800">
+          <span>
+            <span className="block text-2xl font-extrabold">{d.magazine.name}</span>
+            <span className="mt-1 block max-w-2xl text-white/85">{d.magazine.cardText}</span>
+          </span>
+          <span className="btn btn-gold">{d.magazine.readMagazine}</span>
+        </Link>
         <h2 className="mb-6 text-2xl font-extrabold text-green-900">{d.events.upcoming}</h2>
         {upcoming.length ? <EventCards events={upcoming} locale={lang} /> : <p className="rounded-xl border border-green-900/15 bg-white p-8 text-center text-ink/70">{d.events.none}</p>}
         {past.length > 0 && (

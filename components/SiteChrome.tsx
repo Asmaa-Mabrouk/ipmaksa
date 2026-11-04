@@ -36,16 +36,16 @@ export async function TopBar({ locale }: { locale: Locale }) {
 const NAV_FEATURED = "whitespace-nowrap rounded-full border border-gold-500/70 bg-gold-500/15 px-3 py-1.5 font-bold text-gold-300 transition hover:bg-gold-500 hover:text-green-950";
 const NAV_LINK = "whitespace-nowrap rounded-lg px-2.5 py-2 font-bold text-white transition hover:bg-white/10 hover:text-gold-300";
 
-function Menu({ label, items, base, locale }: { label: string; items: { id: string; data: { title: { ar: string; en: string } } }[]; base: string; locale: Locale }) {
+function Menu({ label, items, base, locale, featured }: { label: string; items: { id: string; href?: string; data: { title: { ar: string; en: string } } }[]; base: string; locale: Locale; featured?: boolean }) {
   return (
     <div className="group relative">
-      <button type="button" className={`${NAV_LINK} inline-flex items-center gap-1`} aria-haspopup="true">
+      <button type="button" className={`${featured ? NAV_FEATURED : NAV_LINK} inline-flex items-center gap-1`} aria-haspopup="true">
         {label}
         <Icon name="chevron" className="h-4 w-4" />
       </button>
       <div className="invisible absolute start-0 top-full z-50 min-w-72 translate-y-1 rounded-2xl border border-green-100 bg-white p-2 opacity-0 shadow-xl transition group-focus-within:visible group-focus-within:opacity-100 group-hover:visible group-hover:opacity-100">
         {items.map((p) => (
-          <Link key={p.id} href={`${base}/${p.id}`} className="block rounded-xl px-4 py-2.5 text-sm font-semibold text-green-900 hover:bg-green-50">
+          <Link key={p.id} href={p.href ?? `${base}/${p.id}`} className="block rounded-xl px-4 py-2.5 text-sm font-semibold text-green-900 hover:bg-green-50">
             {t(p.data.title, locale)}
           </Link>
         ))}
@@ -63,6 +63,12 @@ export async function Header({ locale }: { locale: Locale }) {
   const journeyItem = { id: "certification-journey", data: { title: { ar: d.nav.journey, en: d.nav.journey } } } as unknown as (typeof pages)[number];
   const cert = [...grp("certification"), journeyItem];
   const link = NAV_LINK;
+  const pc = [
+    { id: "pc-podcast", href: `${base}/project-connect`, data: { title: { ar: d.magazine.nav.podcast, en: d.magazine.nav.podcast } } },
+    { id: "pc-about", href: `${base}/project-connect/magazine`, data: { title: { ar: d.magazine.nav.about, en: d.magazine.nav.about } } },
+    { id: "pc-articles", href: `${base}/project-connect/magazine/articles`, data: { title: { ar: d.magazine.nav.articles, en: d.magazine.nav.articles } } },
+    { id: "pc-guidelines", href: `${base}/project-connect/magazine/guidelines`, data: { title: { ar: d.magazine.nav.guidelines, en: d.magazine.nav.guidelines } } },
+  ];
 
   const kids = (list: typeof about) => list.map((p) => ({ label: t(p.data.title, locale), href: `${base}/${p.id}` }));
   const mobile: MobileItem[] = [
@@ -70,7 +76,7 @@ export async function Header({ locale }: { locale: Locale }) {
     { label: d.nav.about, children: kids(about) },
     { label: d.nav.certification, children: kids(cert) },
     { label: d.nav.examDates, href: `${base}/exam-dates` },
-    { label: d.nav.projectConnect, href: `${base}/project-connect`, featured: true },
+    { label: d.nav.projectConnect, featured: true, children: pc.map((i) => ({ label: t(i.data.title, locale), href: i.href })) },
     { label: d.nav.membership, href: `${base}/membership` },
     { label: d.nav.team, href: `${base}/team` },
     { label: d.nav.news, href: `${base}/news` },
@@ -91,7 +97,7 @@ export async function Header({ locale }: { locale: Locale }) {
           <Menu label={d.nav.about} items={about} base={base} locale={locale} />
           <Menu label={d.nav.certification} items={cert} base={base} locale={locale} />
           <Link href={`${base}/exam-dates`} className={link}>{d.nav.examDates}</Link>
-          <Link href={`${base}/project-connect`} className={NAV_FEATURED}>{d.nav.projectConnect}</Link>
+          <Menu label={d.nav.projectConnect} items={pc} base={base} locale={locale} featured />
           <Link href={`${base}/membership`} className={link}>{d.nav.membership}</Link>
           <Link href={`${base}/team`} className={link}>{d.nav.team}</Link>
           <Link href={`${base}/news`} className={link}>{d.nav.news}</Link>
@@ -128,6 +134,7 @@ export async function Footer({ locale }: { locale: Locale }) {
     [d.nav.journey, `${base}/certification-journey`],
     [d.nav.examDates, `${base}/exam-dates`],
     [d.nav.projectConnect, `${base}/project-connect`],
+    [d.magazine.name, `${base}/project-connect/magazine`],
     [d.nav.membership, `${base}/membership`],
     [d.nav.team, `${base}/team`],
     [d.nav.news, `${base}/news`],

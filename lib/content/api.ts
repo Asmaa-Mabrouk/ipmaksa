@@ -4,7 +4,7 @@ import { getStore } from "./store";
 import { SEED } from "./seed";
 import { JOURNEY } from "./seed-journey";
 import type { JourneyDoc,
-  BenefitDoc, Doc, ExamDoc, HomeDoc, NewsDoc, PageDoc, ProjectEventDoc, SiteSettings, TeamDoc,
+  ArticleDoc, BenefitDoc, Doc, ExamDoc, HomeDoc, NewsDoc, PageDoc, ProjectEventDoc, SiteSettings, TeamDoc,
 } from "./types";
 
 async function all<T>(collection: string): Promise<Doc<T>[]> {
@@ -54,6 +54,13 @@ export const getNews = cache(async () =>
     .sort((a, b) => b.data.date.localeCompare(a.data.date)),
 );
 export const getNewsItem = cache(async (slug: string) => (await getNews()).find((n) => n.id === slug) ?? null);
+
+export const getArticles = cache(async () =>
+  (await all<ArticleDoc>("articles"))
+    .filter((a) => a.data.published)
+    .sort((a, b) => b.data.date.localeCompare(a.data.date)),
+);
+export const getArticle = cache(async (slug: string) => (await getArticles()).find((a) => a.id === slug) ?? null);
 
 export const getEvents = cache(async () =>
   (await all<ProjectEventDoc>("events")).sort((a, b) => a.data.date.localeCompare(b.data.date)),

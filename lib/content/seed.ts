@@ -339,6 +339,34 @@ const pages: Record<string, P> = {
       "## What counts?\n- Training, courses and workshops.\n- Attending conferences and events such as the Global Project Management Forum.\n- Writing, teaching and professional mentoring.\n- Professional practice and learning from projects.\n\nYou need at least 35 CPD hours for each year since your previous certification. Read the [recertification and CPD points guide (PDF)](https://ipmaksa.world/wp-content/uploads/2026/04/IPMAKSA_Recertification-and-Continuing-Professional-Development-CPD-Points-Guide.pdf).",
     ),
   }),
+  "project-connect-magazine": page({
+    group: "magazine",
+    needsReview: true,
+    image: "/images/diriyah-dusk.webp",
+    title: l("ما هي مجلة ملتقى المشاريع؟", "What is Project Connect Magazine?"),
+    intro: l(
+      "مقالات عملية من مجتمع ملتقى المشاريع عن المشاريع والكفاءات والشهادات.",
+      "Practical articles from the Project Connect community on projects, competences and certification.",
+    ),
+    body: l(
+      'مجلة ملتقى المشاريع هي المنصة المكتوبة لملتقى المشاريع، مجتمع IPMA السعودية للمهنيين العاملين في إدارة المشاريع بالمملكة. تنشر مقالات عملية عن إدارة المشاريع والبرامج والمحافظ، وعن الكفاءات التي تقف خلف التنفيذ الجيد، وعن كيف يبني الأفراد والمؤسسات هذه الكفاءات.\n\n## ماذا ستجد فيها\n- **خبرة الممارسين:** مشاريع حقيقية، وما نجح وما لم ينجح، وما كان الكاتب سيفعله بشكل مختلف.\n- **الكفاءات والشهادات:** كيف يُطبَّق إطار IPMA للكفاءات ونظام الشهادات IPMA 4-L-C في العمل اليومي.\n- **أفكار من المجتمع:** مقالات تتابع حلقات ملتقى المشاريع والندوات، يكتبها المتحدثون والضيوف.\n- **التطوير المهني:** إرشادات في التعلّم والإرشاد المهني والحفاظ على كفاءتك محدَّثة.\n\n## لمن هي\nمديرو المشاريع والبرامج والمحافظ، وأعضاء الفرق، والمهنيون الحاصلون على الشهادات والمتقدمون لها، والمؤسسات التي يعملون بها.\n\n## اقرأ وشارك\nتصفّح [المقالات](/ar/project-connect/magazine/articles). وإذا كان لديك ما تشاركه، فاطّلع على [إرشادات المحتوى](/ar/project-connect/magazine/guidelines) و[تواصل معنا](/ar/contact) بفكرتك.',
+      "Project Connect Magazine is the written home of Project Connect, IPMA KSA's community for project professionals in the Kingdom. It publishes practical articles on project, programme and portfolio management, on the competences behind good delivery, and on how people and organisations are building them.\n\n## What you will find\n- **Practitioner experience:** real projects, what worked, what did not, and what the author would do differently.\n- **Competences and certification:** how the IPMA competence framework and the IPMA 4-L-C certification system apply in everyday work.\n- **Ideas from the community:** follow-ups to Project Connect episodes and webinars, written by speakers and guests.\n- **Professional development:** guidance on learning, mentoring and keeping your competence current.\n\n## Who it is for\nProject, programme and portfolio managers, team members, certified professionals and candidates, and the organisations that employ them.\n\n## Read and contribute\nBrowse the [articles](/en/project-connect/magazine/articles). If you have something to share, read the [content guidelines](/en/project-connect/magazine/guidelines) and [contact us](/en/contact) with your idea.",
+    ),
+  }),
+  "project-connect-magazine-guidelines": page({
+    group: "magazine",
+    needsReview: true,
+    image: "/images/diriyah-dusk.webp",
+    title: l("إرشادات المحتوى", "Content guidelines"),
+    intro: l(
+      "كل ما تحتاج معرفته قبل أن تكتب لمجلة ملتقى المشاريع.",
+      "Everything you need to know before writing for Project Connect Magazine.",
+    ),
+    body: l(
+      'تساعد هذه الإرشادات الكتّاب على الكتابة لمجلة ملتقى المشاريع، وتساعد محرّرينا على المراجعة بإنصاف واتساق.\n\n## الأعمدة\nينتمي كل مقال إلى عمود واحد:\n- **آراء ونقاشات:** موقف يُدافَع عنه بالأدلة.\n- **حوار:** محادثة أو مقابلة.\n- **حكايات مشاريع:** قصة مشروع تُروى بصدق.\n- **موضوع ساخن:** قضية راهنة في المهنة.\n- **بحث وأكاديميا:** نتائج ودراسات ومنظورات أكاديمية.\n- **الشباب المهنيون:** أصوات وأسئلة المهنيين في بداية مسيرتهم.\n\n## المواضيع التي ننشرها\n- إدارة المشاريع والبرامج والمحافظ في الممارسة العملية.\n- الكفاءات والتطوير المهني، بما في ذلك موضوعات كفاءات IPMA وشهاداتها.\n- دروس مستفادة من مشاريع حقيقية في المملكة وخارجها.\n- تأملات تتابع حلقات ملتقى المشاريع والندوات.\n\n## ما الذي نبحث عنه\n- **مفيد:** يستطيع القارئ أن يطبّق شيئاً بعد القراءة.\n- **أصيل:** من كتابتك، ولم يُنشر في مكان آخر، وليس نصاً مولَّداً يُقدَّم على أنه تجربتك.\n- **محدد:** أمثلة وأرقام وسياق بدل العموميات.\n- **متوازن:** وجهة نظر واضحة دون هجوم على أشخاص أو جهات.\n\n## الشكل\n- **الطول:** ثلاثة أشكال، وهي التالية.\n- **تحديث سريع:** أقل من 500 كلمة. خبر أو ملاحظة قصيرة أو نصيحة سريعة.\n- **مقال قصير:** من 1,000 إلى 2,500 كلمة تقريباً. حجة أو حالة أو درس مستفاد.\n- **مقال مميّز:** من 2,500 إلى 4,000 كلمة تقريباً. موضوع معمّق بالأدلة والأمثلة.\n- **اللغة:** العربية أو الإنجليزية. ويمكننا نشر النسختين إذا قدّمتهما معاً.\n- **البناء:** ملخص قصير من جملتين أو ثلاث، وعناوين واضحة، وفقرات قصيرة.\n- **بيانات الكاتب:** اسمك ودورك وجهة عملك، وسطر قصير عنك.\n- **الصور:** فقط الصور التي تملكها أو لديك إذن باستخدامها، مع وصف مختصر.\n\n## الأخلاقيات والسرية والحياد\n- لا تكشف معلومات سرية عن عميل أو جهة عمل أو متقدم للشهادة. اجعل الحالات مجهولة بحيث لا يمكن التعرف على أحد دون موافقته الكتابية.\n- لا تروّج لمنتجات أو جهات تدريب أو خدمات. اذكر أداة أو جهة فقط إذا كان ذلك ضرورياً للفكرة، وأخبرنا بأي علاقة لك بها.\n- لا تنشر أسئلة اختبارات أو مواد تقييم أو أي شيء قد يمسّ نزاهة شهادات IPMA.\n- انسب المصادر إلى أصحابها، واقتبس منها بدقة واختصار.\n- المجلة ليست قناة للشكاوى أو التظلمات، فهذه لها إجراءاتها الرسمية.\n\n## مراحل المراجعة\n1. **أرسل فكرتك أو مسودتك** عبر [صفحة التواصل](/ar/contact)، مع عنوان مبدئي وملخص من سطرين.\n2. **المراجعة التحريرية:** نتحقق من الملاءمة والجودة والدقة والنقاط أعلاه، وقد نطلب تعديلات.\n3. **الاعتماد:** نتفق معك على النص النهائي والعنوان وموعد النشر.\n4. **النشر:** يُنشر المقال على الموقع باسمك.\n\nالنشر وفق تقدير هيئة التحرير. وبإرسالك تؤكد أن العمل من تأليفك، وتوافق على أن تنشره IPMA السعودية على موقعها وقنواتها مع نسبته إليك. ويبقى لك حق إعادة نشره في مكان آخر بعد نشره عندنا، مع الإشارة إلى المجلة كمصدر أصلي.\n\nجاهز للكتابة؟ [تواصل معنا](/ar/contact) بفكرتك.',
+      "These guidelines help authors write for Project Connect Magazine and help our editors review fairly and consistently.\n\n## Columns\nEvery article belongs to one column:\n- **Arguments:** a position, argued with evidence.\n- **Dialogue:** a conversation or interview.\n- **Storytelling:** a project story, told honestly.\n- **Hot topic:** a current issue in the profession.\n- **Research and academia:** findings, studies and academic perspectives.\n- **Young professionals:** voices and questions from early-career professionals.\n\n## Topics we publish\n- Project, programme and portfolio management in practice.\n- Competences and professional development, including IPMA competence and certification topics.\n- Lessons learned from real projects in the Kingdom and beyond.\n- Reflections that follow up Project Connect episodes and webinars.\n\n## What we look for\n- **Useful:** a reader should be able to apply something after reading.\n- **Original:** written by you, not published elsewhere, and not generated text presented as your own experience.\n- **Specific:** examples, numbers and context rather than general claims.\n- **Balanced:** a clear point of view, stated without attacking people or organisations.\n\n## Format\n- **Length:** one of three formats, listed next.\n- **Quick update:** under 500 words. A news item, a short observation or a quick tip.\n- **Short essay:** about 1,000 to 2,500 words. An argument, a case or a lesson learned.\n- **Featured article:** about 2,500 to 4,000 words. An in-depth piece with evidence and examples.\n- **Language:** Arabic or English. We can publish both versions when you provide them.\n- **Structure:** a short summary of two or three sentences, clear headings, and short paragraphs.\n- **Author details:** your name, role and organisation, and a short line about you.\n- **Images:** only images you own or have permission to use, with a short description.\n\n## Ethics, confidentiality and impartiality\n- Do not disclose confidential client, employer or candidate information. Anonymise cases so that no one can be identified without their written consent.\n- Do not promote products, training providers or services. Mention a tool or provider only when it is essential to the point, and tell us about any relationship you have with it.\n- Do not publish exam questions, assessment material or anything that could compromise the integrity of IPMA certification.\n- Credit your sources, and quote them accurately and briefly.\n- The magazine is not a channel for complaints or appeals. Those follow the official procedures.\n\n## Review process\n1. **Send your idea or draft** through the [contact page](/en/contact), with a working title and a two-line summary.\n2. **Editorial review:** we check fit, quality, accuracy and the points above, and may ask for changes.\n3. **Confirmation:** we agree the final text, title and publication date with you.\n4. **Publication:** the article is published on the website with your byline.\n\nPublication is at the editors' discretion. By submitting, you confirm the work is yours and agree that IPMA KSA may publish it on its website and social channels, with you credited. You keep the right to republish it elsewhere after publication, mentioning the magazine as the original source.\n\nReady to write? [Contact us](/en/contact) with your idea.",
+    ),
+  }),
   "ipma-croatia-collaboration": page({
     group: "certification",
     needsReview: true,
@@ -708,6 +736,23 @@ export const SEED: Record<string, Record<string, unknown>> = {
   journey: { main: JOURNEY },
   settings: { site: settings },
   pages,
+  articles: {
+    "sample-article": {
+      title: l("عنوان المقال", "Article title"),
+      excerpt: l("ملخص من جملتين أو ثلاث يظهر في صفحة المقالات.", "A two or three sentence summary that appears on the Articles page."),
+      body: l(
+        "اكتب المقال هنا. استخدم عناوين ثانوية وفقرات قصيرة.\n\n## عنوان ثانوي\nنص الفقرة.",
+        "Write the article here. Use subheadings and short paragraphs.\n\n## A subheading\nParagraph text.",
+      ),
+      author: l("اسم الكاتب", "Author name"),
+      authorRole: l("الدور والجهة", "Role and organisation"),
+      column: "storytelling",
+      featured: false,
+      date: "2026-11-04",
+      image: "",
+      published: false,
+    },
+  },
   team,
   exams,
   events: {

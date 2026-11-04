@@ -31,7 +31,8 @@ export const EMPTY_STATE: FinderState = { entries: [], noExperience: false };
 
 export const ROLES: Role[] = ["project", "programme", "portfolio", "assisting"];
 export const COMPLEXITIES: Complexity[] = ["moderate", "complex", "veryComplex"];
-export const newEntry = (): Entry => ({ role: "project", complexity: "complex", strategic: false, from: "", to: "", label: "" });
+const thisMonth = () => { const n = new Date(); return `${n.getFullYear()}-${String(n.getMonth() + 1).padStart(2, "0")}`; };
+export const newEntry = (): Entry => ({ role: "project", complexity: "complex", strategic: false, from: "", to: thisMonth(), label: "" });
 
 /** Keeps only well-formed data (used on the server before saving, and when reading it back). */
 export function cleanState(v: unknown): FinderState {

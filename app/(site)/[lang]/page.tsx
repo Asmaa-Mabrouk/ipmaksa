@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { Icon } from "@/components/Icon";
 import { FaqList } from "@/components/Journey";
 import { BenefitsGrid, EventCards, ExamCards, NewsSlider, JoinBand, SectionTitle, TeamCard } from "@/components/Sections";
+import { Carousel } from "@/components/Carousel";
 import { telHref } from "@/components/SiteChrome";
 import { getBenefits, getEvents, getExams, getHome, getJourney, getNews, getSettings, getTeam } from "@/lib/content/api";
 import { eventEnded } from "@/lib/events";
@@ -266,15 +267,16 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
       </section>
 
       {/* TEAM */}
-      <section className="bg-white py-20">
+      <section id="team" className="scroll-mt-24 bg-white py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
-          <div className="flex flex-wrap items-end justify-between gap-4">
-            <SectionTitle title={d.sections.team} />
-            <Link href={`${base}/team`} className="btn btn-green">{d.viewAll}</Link>
-          </div>
-          <ul className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
-            {team.slice(0, 5).map((p) => <TeamCard key={p.id} person={p} locale={lang} />)}
+          <SectionTitle title={d.sections.team} intro={d.team.cbNote} />
+          {/* tablet and desktop: cards; phones: a slider */}
+          <ul className="mt-8 hidden gap-5 md:grid md:grid-cols-3 lg:grid-cols-4">
+            {team.map((p) => <TeamCard key={p.id} person={p} locale={lang} />)}
           </ul>
+          <div className="mt-8 md:hidden">
+            <Carousel label={d.sections.team} prev={d.slider.prev} next={d.slider.next} slideClass="w-[72%]" slides={team.map((p) => <TeamCard key={p.id} person={p} locale={lang} as="div" />)} />
+          </div>
         </div>
       </section>
 

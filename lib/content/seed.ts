@@ -548,7 +548,7 @@ const team = {
     bio: l("", ""),
     photo: "/images/team/muhammad-mohsin.webp",
     linkedin: "",
-    order: 4,
+    order: 5,
   },
   "asmaa-mabrouk": {
     name: l("أسماء مبروك", "Asmaa Mabrouk"),
@@ -557,7 +557,7 @@ const team = {
     bio: l("", ""),
     photo: "/images/team/asmaa-mabrouk.webp",
     linkedin: "",
-    order: 5,
+    order: 4,
   },
   "jehad-alamri": {
     name: l("د. جهاد العمري", "Dr. Jehad Al Amri"),

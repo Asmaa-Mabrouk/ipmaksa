@@ -20,6 +20,19 @@ export function Carousel({ slides, label, prev, next, slideClass = "w-[78%] sm:w
     setActive(best);
   }, []);
 
+  // Open with the second slide in the centre and its neighbours showing on both sides (the first slide when there is only one).
+  useEffect(() => {
+    const el = track.current;
+    const child = el?.children[Math.min(1, slides.length - 1)] as HTMLElement | undefined;
+    if (el && child) {
+      const c = child.getBoundingClientRect();
+      const t = el.getBoundingClientRect();
+      el.scrollLeft += c.left + c.width / 2 - (t.left + t.width / 2);
+    }
+    update();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   useEffect(() => {
     update();
     window.addEventListener("resize", update);

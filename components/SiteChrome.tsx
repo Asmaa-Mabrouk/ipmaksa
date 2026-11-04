@@ -78,7 +78,7 @@ export async function Header({ locale }: { locale: Locale }) {
     { label: d.nav.examDates, href: `${base}/exam-dates` },
     { label: d.nav.projectConnect, featured: true, children: pc.map((i) => ({ label: t(i.data.title, locale), href: i.href })) },
     { label: d.nav.membership, href: `${base}/membership` },
-    { label: d.nav.team, href: `${base}/team` },
+    { label: d.nav.team, href: `${base}#team` },
     { label: d.nav.news, href: `${base}/news` },
     { label: d.nav.contact, href: `${base}/contact` },
     { label: d.account.signIn, href: `${base}/login` },
@@ -99,7 +99,7 @@ export async function Header({ locale }: { locale: Locale }) {
           <Link href={`${base}/exam-dates`} className={link}>{d.nav.examDates}</Link>
           <Menu label={d.nav.projectConnect} items={pc} base={base} locale={locale} featured />
           <Link href={`${base}/membership`} className={link}>{d.nav.membership}</Link>
-          <Link href={`${base}/team`} className={link}>{d.nav.team}</Link>
+          <Link href={`${base}#team`} className={link}>{d.nav.team}</Link>
           <Link href={`${base}/news`} className={link}>{d.nav.news}</Link>
           <Link href={`${base}/contact`} className={link}>{d.nav.contact}</Link>
         </nav>
@@ -136,7 +136,7 @@ export async function Footer({ locale }: { locale: Locale }) {
     [d.nav.projectConnect, `${base}/project-connect`],
     [d.magazine.name, `${base}/project-connect/magazine`],
     [d.nav.membership, `${base}/membership`],
-    [d.nav.team, `${base}/team`],
+    [d.nav.team, `${base}#team`],
     [d.nav.news, `${base}/news`],
     [d.nav.contact, `${base}/contact`],
   ];

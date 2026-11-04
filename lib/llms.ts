@@ -26,7 +26,6 @@ export async function buildLlms(full: boolean) {
     ["Project Connect (ملتقى المشاريع)", "/project-connect", "Webinars, workshops and meetups for project professionals."],
     ["Membership", "/membership", "Membership benefits and how to create an account."],
     ["News", "/news", "Announcements and updates."],
-    ["Team", "/team", "The people behind IPMA KSA."],
     ["Contact", "/contact", "Contact form, email and phone."],
   ];
   for (const [n, p, d] of main) out.push(`- [${n}](${SITE}/en${p === "/" ? "" : p}): ${d} Arabic: ${SITE}/ar${p === "/" ? "" : p}`);
